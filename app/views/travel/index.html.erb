@@ -1,0 +1,40 @@
+<div class="row">
+<div class="panel panel-default">
+  <div class="panel-heading">
+  Travel
+  </div>
+  <div class="panel-body">
+    <%= form_for(:travel, url: route_travel_index_path, html: { role: "form" }, :remote => true, data: { update_target: 'trave_route_results' }) do |f| %>
+    <%= f.hidden_field :to_system_id, :id => "to_system_id" %>
+    <%= f.hidden_field :from_system_id, :id => "from_system_id" %>
+      <%= f.autocomplete_field :to_system, autocomplete_solar_system_name_travel_index_path,:"data-autocomplete-label" => "Sorry, nothing found." %>
+      <%= f.autocomplete_field :from_system, autocomplete_solar_system_name_travel_index_path,:"data-autocomplete-label" => "Sorry, nothing found." %>
+      <%= f.submit 'Route' %>
+    <% end %>
+
+    <hr />
+
+    <div id="trave_route_results">
+
+    </div>
+  </div>
+</div>
+</div>
+
+<%= javascript_tag do %>
+  $('#travel_to_system').bind('railsAutocomplete.select', function(event, data){
+    $( "#to_system_id" ).val(data.item.id);
+  });
+  $('#travel_from_system').bind('railsAutocomplete.select', function(event, data){
+    $( "#from_system_id" ).val(data.item.id);
+  });
+  $(function() {
+      /* Convenience for forms or links that return HTML from a remote ajax call.
+      The returned markup will be inserted into the element id specified.
+       */
+      $('form[data-update-target]').on('ajax:success', function(evt, data) {
+          var target = $(this).data('update-target');
+          $('#' + target).html(data);
+      });
+  });
+<% end %>

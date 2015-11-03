@@ -1,0 +1,26 @@
+<%= @user.username%>
+
+<%= form_for(:role, url: role_add_admin_users_path, html: { role: "form" }) do |f| %>
+  <div class="form-group">
+    <%= f.label :role %>
+    <%= f.collection_select :id, Role.all, :id, :name, prompt: true %>
+  </div>
+  <%= f.submit  'Add Role', class: "btn btn-primary" %>
+<% end %>
+
+<table>
+<thead>
+<tr>
+  <th>Role</th>
+  <th></th>
+</tr>
+</thead>
+<tbody>
+<% @user.roles.each do |r| %>
+<tr>
+  <td><%=r.name%></td>
+  <td><%= link_to 'Delete', role_delete_admin_users_path(:role_id => r.id), :method => 'post'%></td>
+</tr>
+<% end %>
+</tbody>
+</table>

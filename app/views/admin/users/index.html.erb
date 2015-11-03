@@ -1,0 +1,23 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Main Char</th>
+      <th>Last Login</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |w| %>
+    <tr>
+      <td><%= w.username%></td>
+      <td><%= w.email%></td>
+      <td></td>
+      <td><abbr class="timeago" title="<%= w.last_login_at.to_formatted_s(:iso8601) if !w.last_login_at.nil?  %>"></abbr></td>
+      <td><%= link_to 'Edit',admin_user_path(w.id)%></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= will_paginate @users %>

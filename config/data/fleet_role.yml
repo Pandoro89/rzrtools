@@ -1,0 +1,13 @@
+---
+- id: 1
+  name: Fleet
+- id: 2
+  name: Logistics
+- id: 3
+  name: Command Ship
+- id: 4
+  name: Black Ops
+- id: 5
+  name: Capital
+- id: 5
+  name: Super/Titan

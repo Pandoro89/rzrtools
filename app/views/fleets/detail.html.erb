@@ -1,0 +1,22 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Main</th>
+      <th>Corp</th>
+      <th>Ship</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @fleet_positions.each do |fp| %>
+    <tr>
+      <td><%=fp.char_name%></td>
+      <td><%=fp.main_name%></td>
+      <td><%=fp.corp_name%></td>
+      <td><%=fp.ship_name%></td>
+      <td><%=fp.fleet_role%></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

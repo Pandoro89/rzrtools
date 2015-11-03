@@ -1,0 +1,61 @@
+<div class="panel panel-default">
+Link for Fleet: <%= link_to pap_path, pap_path %>
+</div>
+
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#manage" aria-controls="home" role="tab" data-toggle="tab">Manage</a></li>
+    <li role="presentation"><a href="#details" aria-controls="profile" role="tab" data-toggle="tab">Details</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="manage">
+      <div >
+  <div class="row">
+    <div class="col-md-2">FC</div>
+    <div class="col-md-2">CO-FC</div>
+    <div class="col-md-2">Logi Anchor</div>
+    <div class="col-md-2">Scouts</div>
+  </div>
+  <div class="row">
+    <div class="col-md-2" id="fc-list">FC</div>
+    <div class="col-md-2" id="cofc-list">CO-FC</div>
+    <div class="col-md-2" id="logi-list">Logi Anchor</div>
+    <div class="col-md-2" id="scout-list">Scouts</div>
+  </div>
+</div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="details">...</div>
+  </div>
+
+</div>
+
+
+<%= javascript_tag do %>
+
+
+  $(function() {
+
+      updateAllSpecialLists();
+      updateDetailTab();
+
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        e.target // newly activated tab
+        e.relatedTarget // previous active tab
+      })
+  });
+
+  function updateAllSpecialLists(){
+    $('#fc-list').load('<%= special_role_fleets_path%>?fleet_position[special_role]=FC');
+    $('#cofc-list').load('<%= special_role_fleets_path%>?fleet_position[special_role]=Co-FC');
+    $('#logi-list').load('<%= special_role_fleets_path%>?fleet_position[special_role]=Logistics');
+    $('#scout-list').load('<%= special_role_fleets_path%>?fleet_position[special_role]=Scouts');
+  }
+
+  function updateDetailTab(){
+    $('#details').load('<%= detail_fleets_path%>');
+  }
+<% end %>

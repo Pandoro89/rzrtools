@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= t('.sign_in', :default => "Sign in") %></h4>
+  </div>
+  <div class="panel-body">
+    <%= form_for(current_user, url: users_path, html: { role: "form" }) do |f| %>
+      <div class="form-group">
+        <%= f.label :username %>
+        <%= f.text_field :username, autofocus: true, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.text_field :email, autofocus: true, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password %>
+        <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :main_char_id, "Main Character" %>
+        <%= f.collection_select :main_char_id, Character.where(:user_id => @user.id), :char_id, :char_name, prompt: true %>
+      </div>
+      <div class="form-group">
+        <label>API Keys</label>
+        <%= f.nested_fields_for :api_keys,class_name: "Eve::ApiKey" do |ff| %>
+          <%= ff.remove_nested_fields_link %>
+          <%= ff.text_field :key_code %>
+          <%= ff.text_field :vcode %>
+        <% end %>
+      </div>
+      <div>
+      <%= f.add_nested_fields_link :api_keys %>
+      </div>
+      <hr />
+      <%= f.submit 'Save', class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
