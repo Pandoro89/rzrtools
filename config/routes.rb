@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'users#me'
 
+  mount SecuredResqueServer, :at => "/rstatus"
+
   resources :sessions, :only => [:new,:create] do
     collection do
       match 'destroy', :via => [:get, :delete], :as => :destroy

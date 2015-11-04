@@ -22,9 +22,12 @@ class User < ActiveRecord::Base
    accepts_nested_attributes_for :api_keys, allow_destroy: true
 
 
-
   def before_add_method(role)
     # do something before it gets added
+  end
+
+  def admin?
+    self.has_role? "Admin"
   end
 
   def self.login(username, password)
