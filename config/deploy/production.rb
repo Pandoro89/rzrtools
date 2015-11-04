@@ -21,6 +21,7 @@
 #role :web, %w{rzrtools@46.101.77.93}#, other_property: :other_value
 #role :db,  %w{rzrtools@46.101.77.93}
 role :resque_worker, "46.101.77.93"
+role :resque_scheduler, "46.101.77.93"
 set :resque_log_file, "log/resque.log"
 #role :resque_scheduler, "46.101.77.93"
 server '46.101.77.93', user: 'rzrtools', roles: %w{web app db}
