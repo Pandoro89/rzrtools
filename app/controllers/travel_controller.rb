@@ -7,7 +7,7 @@ class TravelController < ApplicationController
 
   def route
     d = []
-    d.concat JumpBridge.all.map {|j| [j.from_solar_system_id,j.to_solar_system_id,1]}
+    d.concat JumpBridge.all.map {|j| [j.from_solar_system_id,j.to_solar_system_id,1]} if params[:travel][:use_jump_bridges].to_i == 1
     d.concat Eve::SolarSystemJump.all.map { |e| [e.from_solar_system_id,e.to_solar_system_id,5] }
     # TODO: inject bridges
     logger.debug d.size

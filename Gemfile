@@ -28,7 +28,7 @@ gem 'responders'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'mini_record'
 
-gem 'mysql2'
+gem 'mysql2', '~> 0.4.1'
 gem 'transaction_retry'
 gem 'static_model'
 
@@ -46,6 +46,10 @@ gem 'roman-numerals'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'capistrano', '~> 3.4.0'
+gem 'capistrano-rails', '~> 1.1'
+gem 'capistrano-rbenv'
+
 gem 'redis'
 gem 'pry-rails'
 
