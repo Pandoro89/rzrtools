@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :find_user, :except => [:ping]
+  before_filter :find_user, :except => [:ping, :new, :create, :reset_password, :recover_password]
   #before_filter :require_global_admin, :except => [:ping, :show, :profile] # show has it's own auth check
   # TODO Check for valid user ID
 
@@ -10,14 +10,6 @@ class UsersController < ApplicationController
   end
 
   def profile 
-
-  end
-
-  def logout
-    
-  end
-
-  def register
   end
 
   def update
@@ -37,6 +29,20 @@ class UsersController < ApplicationController
     redirect_to 
   end
 
+  def new 
+    @user = User.new
+  end
+
+  def create
+    @user = User.create(user_params)
+    if @user.save
+      redirect_to profile_path
+    else
+      render 'new'
+    end
+  end
+
+
   protected ###################################################
 
   def find_user
@@ -47,7 +53,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:username,:email, :main_char_id,api_keys_attributes:[:key_code,:vcode,:_destroy,:id])
+    params.require(:user).permit(:username,:email, :password, :password_confirmation, :main_char_id,api_keys_attributes:[:key_code,:vcode,:_destroy,:id])
   end
 
   def eve_api_params

@@ -1,2 +1,2 @@
-class Admin::JumpBridgesController < ApplicationController
+class Admin::JumpBridgesController < Admin::ApplicationController
 end

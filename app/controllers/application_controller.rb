@@ -90,7 +90,14 @@ class ApplicationController < ActionController::Base
   end
   
   def require_global_admin
-    unless @current_user && @current_user.admin? 
+    unless current_user && current_user.admin? 
+      flash[:error] = "You must be an administrator to perform that action."
+      redirect_to root_path 
+    end
+  end
+
+  def require_scout_commander_or_higher
+    unless current_user and (current_user.admin? or current_user.scout_commander? or current_user.military_advisor?)
       flash[:error] = "You must be an administrator to perform that action."
       redirect_to root_path 
     end

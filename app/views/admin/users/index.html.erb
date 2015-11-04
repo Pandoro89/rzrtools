@@ -9,13 +9,13 @@
     </tr>
   </thead>
   <tbody>
-  <% @users.each do |w| %>
+  <% @users.each do |r| %>
     <tr>
-      <td><%= w.username%></td>
-      <td><%= w.email%></td>
-      <td></td>
-      <td><abbr class="timeago" title="<%= w.last_login_at.to_formatted_s(:iso8601) if !w.last_login_at.nil?  %>"></abbr></td>
-      <td><%= link_to 'Edit',admin_user_path(w.id)%></td>
+      <td><%= r.username%></td>
+      <td><%= r.email%></td>
+      <td><%= "#{r.main_char.try(:char_name)} - #{r.main_char.try(:alliance_name)}" %></td>
+      <td><abbr class="timeago" title="<%= r.last_login_at.to_formatted_s(:iso8601) if !r.last_login_at.nil?  %>"></abbr></td>
+      <td><%= link_to 'Edit',admin_user_path(r.id)%> | <%= link_to 'Delete',admin_user_path(r.id), :method => :delete %></td>
     </tr>
   <% end %>
   </tbody>

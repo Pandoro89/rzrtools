@@ -1,2 +1,2 @@
-class Admin::OperationsController < ApplicationController
+class Admin::OperationsController < Admin::ApplicationController
 end

@@ -1,4 +1,4 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < Admin::ApplicationController
   before_filter :find_user, :except => [:index]
   before_filter :require_global_admin
 
@@ -22,6 +22,14 @@ class Admin::UsersController < ApplicationController
       @user.remove_role r.name
     end
     redirect_to admin_user_path
+  end
+
+  def delete
+    if @user.delete
+      flash[:success] = "User deleted."
+    else
+      flash[:error] = "The use could not be deleted."
+    end
   end
 
   protected 

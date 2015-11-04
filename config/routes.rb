@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   constraints resque_web_constraint do
-    mount ResqueWeb::Engine => 'admin/resque_web'
+    mount ResqueWeb::Engine => '/admin/resque_web', as: 'resque_web'
   end
 
   resources :sessions, :only => [:new,:create] do
@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     get :profile, :on => :collection
     patch :update, :on => :collection
   end
+  get 'profile' =>  'users#profile', :as => 'profile'
+
   resources :fleets, param: :token do
     get    ':token/manage' => 'fleets#manage', :on => :collection, :as => 'manage'
     get    ':token/detail' => 'fleets#detail', :on => :collection, :as => 'detail'

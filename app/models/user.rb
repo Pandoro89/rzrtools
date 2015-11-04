@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
   has_many :api_keys, class_name: "Eve::ApiKey"
   has_many :roles, :through => :users_roles
-  belongs_to :main_char, class_name: "Character", foreign_key: :char_id
+  belongs_to :main_char, class_name: "Character"
 
   has_secure_password
   validates :username, uniqueness: true
@@ -25,11 +25,21 @@ class User < ActiveRecord::Base
 
   def before_add_method(role)
     # do something before it gets added
+    add_role "Razor Member" if role == "Fleet Commander"
   end
 
   def admin?
-    self.has_role? "Admin"
+    has_role? "Admin"
   end
+
+  def scout_commander?
+    has_role? "Scout Commander"
+  end
+
+  def military_advisor?
+    has_role? "Military Advisor"
+  end  
+
 
   def self.login(username, password)
     return nil if username.blank?
