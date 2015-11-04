@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :api_keys, class_name: "Eve::ApiKey"
   has_many :roles, :through => :users_roles
   belongs_to :main_char, class_name: "Character"
+  has_many :characters, class_name: "Character"
 
   has_secure_password
   validates :username, uniqueness: true
@@ -61,7 +62,7 @@ class User < ActiveRecord::Base
 
   def self.remove_roles_for_non_alliance
     User.all.each do |u|
-      u.roles.each {|r| user.remove_role r} if Character.where(:user_id => u.id, :alliance_id => ALLIANCE_ID).count == 0
+      u.roles.each {|r| u.remove_role r} if Character.where(:user_id => u.id, :alliance_id => ALLIANCE_ID).count == 0
     end
   end
 

@@ -4,3 +4,9 @@ import_zkillboard_watchlist:
   custom_job_class: "ImportZkillboardWatchlistJob"
   args:
   description: "Update supers/titans"
+update_api_keys_job:
+  cron: "0 0 * * *"
+  queue: medium
+  custom_job_class: "UpdateApiKeysJob"
+  args:
+  description: "Update users api keys"

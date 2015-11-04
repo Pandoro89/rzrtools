@@ -6,7 +6,6 @@ class Eve::ApiKey < ActiveRecord::Base
   property :vcode,            type: :string, limit: 255
   property :access_mask,            type: :string, limit: 50 
   property :expires_at,            type: :datetime
-
   timestamps
 
   belongs_to :user
@@ -27,9 +26,10 @@ class Eve::ApiKey < ActiveRecord::Base
         char.corp_name = character.corporationName
         char.save
     }
+  end
 
-
-    result
+  def self.update_all_characters
+    Eve::ApiKey.all.each{ |a| a.update_characters}
   end
 
 end
