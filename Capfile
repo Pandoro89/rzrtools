@@ -23,7 +23,7 @@ require 'capistrano/deploy'
  require 'capistrano/rails/migrations'
  require "capistrano-resque"
  require 'capistrano/unicorn_nginx'
- require "whenever/capistrano"
+ #require "whenever/capistrano"
 # require 'capistrano/passenger'
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined

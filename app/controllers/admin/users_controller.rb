@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_filter :find_user, :except => [:index]
+  before_filter :require_global_admin
 
   def index
     params[:page] = 1 if !params[:page]
