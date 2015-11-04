@@ -14,7 +14,7 @@ set :branch, "master"
 set :deploy_to, '/home/rzrtools/app'
 
 # '/usr/local/rbenv'
-#set :rbenv_ruby, '2.2.3'
+set :rbenv_ruby, '2.2.0'
 #set :rbenv_type, :system # or :system, depends on your rbenv setup
 
 
