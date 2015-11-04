@@ -68,6 +68,7 @@ gem 'bcrypt'
 gem 'iconv'
 gem 'identity_cache'
 gem 'rails4-autocomplete'
+gem "capistrano-resque", "~> 0.2.2", require: false
 
 group :web do
   gem 'haml'
