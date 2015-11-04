@@ -4,6 +4,7 @@ class Graph
   def initialize(graph)
     @vertices = Hash.new{ |h,k| h[k] = Vertex.new(k, [], Float::INFINITY) }
     @edges = {}
+    
     graph.each do |(v1, v2, dist)|
       @vertices[v1].neighbors << v2
       @vertices[v2].neighbors << v1
