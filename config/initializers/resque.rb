@@ -9,5 +9,5 @@ require 'resque/scheduler/server'
 Resque::Plugins::Status::Hash.expire_in = 1.day
 
 Resque.redis = "localhost:6379"
-Resque.redis.namespace = "resque:rzrtools"
+#Resque.redis.namespace = "resque:rzrtools"
 Resque::Scheduler.dynamic = true
