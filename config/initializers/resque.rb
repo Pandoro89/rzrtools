@@ -1,4 +1,4 @@
-require 'resque' 
+#require 'resque' 
 require 'resque/server'
 require 'resque/status_server'
 require 'resque/failure/redis'
