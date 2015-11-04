@@ -67,7 +67,11 @@ GEM
       capistrano
       resque
       resque-scheduler
+    capistrano-unicorn-nginx (3.4.0)
+      capistrano (>= 3.1)
+      sshkit (>= 1.2.0)
     chronic (0.10.2)
+    cityhash (0.8.1)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -306,6 +310,8 @@ DEPENDENCIES
   capistrano-rails (~> 1.1)
   capistrano-rbenv
   capistrano-resque (~> 0.2.2)
+  capistrano-unicorn-nginx
+  cityhash
   coffee-rails (~> 4.1.0)
   eaal
   haml

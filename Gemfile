@@ -65,6 +65,7 @@ gem 'httparty'
 gem 'safe_cookies'
 gem 'sanitize'
 gem 'bcrypt'
+gem 'cityhash'
 gem 'iconv'
 gem 'identity_cache'
 gem 'rails4-autocomplete'
@@ -79,6 +80,7 @@ group :web do
 end
 
 group :development, :test do
+  gem 'capistrano-unicorn-nginx'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 

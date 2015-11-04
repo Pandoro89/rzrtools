@@ -17,10 +17,15 @@
 # property set. Specify the username and a domain or IP for the server.
 # Don't use `:all`, it's a meta role.
 
-role :app, %w{rzrtools@46.101.77.93} #, my_property: :my_value
-role :web, %w{rzrtools@46.101.77.93}#, other_property: :other_value
-role :db,  %w{rzrtools@46.101.77.93}
-
+#role :app, %w{rzrtools@46.101.77.93} #, my_property: :my_value
+#role :web, %w{rzrtools@46.101.77.93}#, other_property: :other_value
+#role :db,  %w{rzrtools@46.101.77.93}
+role :resque_worker, "46.101.77.93"
+server '46.101.77.93', user: 'rzrtools', roles: %w{web app db}
+set :nginx_server_name, 'app.eve-razor.com'
+set :nginx_use_ssl, false
+#set :nginx_ssl_cert, '/home/rzrtools/ebfbc329-ffbb-47aa-9c4e-34f47724e09f.public.pem'
+#set :nginx_ssl_cert_key, '/home/rzrtools/ebfbc329-ffbb-47aa-9c4e-34f47724e09f.private.pem'
 
 
 # Configuration

@@ -1,4 +1,4 @@
-class Admins::ApplicationController < ApplicationController
+class Admin::ApplicationController < ApplicationController
   before_filter :authorize_ma_or_higher
 
   def authorize_ma_or_higher

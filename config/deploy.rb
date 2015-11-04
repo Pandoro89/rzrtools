@@ -31,10 +31,11 @@ set :deploy_to, '/home/rzrtools/app'
 # set :log_level, :debug
 
 # Default value for :pty is false
-set :pty, false
+set :pty, true
 set :ssh_options, {
   forward_agent: true
 }
+
 
 set :default_environment, {
   'PATH' => "$PATH:$HOME/.gem/bin"
@@ -92,6 +93,7 @@ namespace :deploy do
   # end
 
   after 'deploy:updated', 'deploy:migrate'
+  after "deploy:restart", "resque:restart"
 
 
 end
