@@ -1,3 +1,6 @@
+require "resque_web"
+ResqueWeb::Engine.eager_load! # hack
+
 Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -5,7 +8,17 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'users#me'
 
-  mount SecuredResqueServer, :at => "/rstatus"
+# config/routes.rb
+
+
+  resque_web_constraint = lambda do |request|
+    cu = User.find_by_id(request.session[:user_id])
+    cu.present? && cu.respond_to?(:admin?) && cu.admin?
+  end
+
+  constraints resque_web_constraint do
+    mount ResqueWeb::Engine => 'admin/resque_web'
+  end
 
   resources :sessions, :only => [:new,:create] do
     collection do

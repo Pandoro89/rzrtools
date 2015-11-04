@@ -35,6 +35,11 @@ gem 'static_model'
 gem 'resque'
 gem 'resque-pool'
 gem 'resque-status'
+gem 'resque-scheduler'
+  gem 'resque-web', require: 'resque_web'
+  gem 'resque-scheduler-web'
+
+
 gem 'nested_form_fields'
 gem 'roman-numerals'
 
@@ -58,7 +63,7 @@ gem 'eaal'
 
 gem 'rolify'
 
-gem 'whenever', :require => nil
+# gem 'whenever', :require => nil
 gem 'will_paginate'
 gem 'secure_headers'
 gem 'httparty'
