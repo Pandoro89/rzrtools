@@ -1,4 +1,5 @@
 class WatchlistsController < ApplicationController
+  before_filter :require_igb_razor_or_user
   autocomplete :alliance_cache, :name, :class_name => "Eve::AllianceCache"
 
   def index

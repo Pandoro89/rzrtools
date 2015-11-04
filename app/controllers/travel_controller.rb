@@ -1,5 +1,5 @@
 class TravelController < ApplicationController
-
+  before_filter :require_igb_razor_or_user
   autocomplete :solar_system, :name, :class_name => "Eve::SolarSystem"
 
   def index
