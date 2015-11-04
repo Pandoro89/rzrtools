@@ -36,3 +36,9 @@ namespace :resque do
 
   task :scheduler => :setup_schedule
 end
+
+task 'resque:pool:setup' do
+  Resque::Pool.after_prefork do |job|
+    Resque.redis.client.reconnect
+  end
+end
