@@ -12,6 +12,12 @@ class Eve::ApiKey < ActiveRecord::Base
 
   validates :key_code, presence: true, :on=>:create
   validates :vcode, presence: true, :on=>:create
+
+  after_save :queue_update
+
+  def queue_update
+    Resque.enqueue UpdateApiKeyJob, id
+  end
   
   def update_characters
     api = EAAL::API.new(key_code, vcode)

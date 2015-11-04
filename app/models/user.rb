@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }, :on=>:create
   validates :password_confirmation, :presence=>true, :if => :password_digest_changed?
 
-   accepts_nested_attributes_for :api_keys, allow_destroy: true
+  accepts_nested_attributes_for :api_keys, allow_destroy: true
 
 
   def before_add_method(role)
