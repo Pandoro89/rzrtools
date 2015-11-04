@@ -14,7 +14,7 @@ set :branch, "master"
 set :deploy_to, '/home/rzrtools/app'
 
 # '/usr/local/rbenv'
-set :rbenv_ruby, '2.2.0'
+#set :rbenv_ruby, '2.2.3'
 #set :rbenv_type, :system # or :system, depends on your rbenv setup
 
 
@@ -34,6 +34,10 @@ set :rbenv_ruby, '2.2.0'
 set :pty, false
 set :ssh_options, {
   forward_agent: true
+}
+
+set :default_environment, {
+  'PATH' => "$PATH:$HOME/.gem/bin"
 }
 
 # Default value for :linked_files is []
