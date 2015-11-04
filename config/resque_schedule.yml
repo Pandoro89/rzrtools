@@ -1,0 +1,6 @@
+import_zkillboard_watchlist:
+  cron: "0 0 * * *"
+  queue: low
+  custom_job_class: "ImportZkillboardWatchlistJob"
+  args:
+  description: "Update supers/titans"
