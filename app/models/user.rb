@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   timestamps
 
   has_many :api_keys, class_name: "Eve::ApiKey"
+  has_many :roles, :through => :users_roles
   belongs_to :main_char, class_name: "Character", foreign_key: :char_id
 
   has_secure_password
