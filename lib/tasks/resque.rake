@@ -1,7 +1,10 @@
 # Resque tasks
 require 'resque/tasks'
 require 'resque/scheduler/tasks'
-task 'resque:setup' => :environment
+task 'resque:setup' => :environment do
+  Resque.redis = "localhost:6379"
+  Resque.redis.namespace = "resque:rzrtools"
+end
 
 # namespace :resque do
 #   task :setup do
