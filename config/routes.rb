@@ -17,7 +17,8 @@ Rails.application.routes.draw do
   end
 
   constraints resque_web_constraint do
-    mount ResqueWeb::Engine => '/admin/resque_web', as: 'resque_web'
+    # mount ResqueWeb::Engine => '/admin/resque_web', as: 'resque_web'
+    mount Resque::Server.new, :at => "/admin/resque_web", as: 'resque_web'
   end
 
   resources :sessions, :only => [:new,:create] do
