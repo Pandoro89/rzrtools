@@ -1,12 +1,14 @@
 import_zkillboard_watchlist:
-  cron: "0 0 * * *"
+  every:
+    - "1h"
   queue: low
   custom_job_class: "ImportZkillboardWatchlistJob"
   args:
   description: "Update supers/titans"
 update_api_keys_job:
-  cron: "0 0 * * *"
-  queue: medium
+  every:
+    - "1h"
+  queue: mediumw
   custom_job_class: "UpdateApiKeysJob"
   args:
   description: "Update users api keys"
