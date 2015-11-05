@@ -23,7 +23,8 @@
 role :resque_worker, "46.101.77.93"
 role :resque_scheduler, "46.101.77.93"
 set :resque_log_file, "log/resque.log"
-#role :resque_scheduler, "46.101.77.93"
+set :resque_environment_task, true
+
 server '46.101.77.93', user: 'rzrtools', roles: %w{web app db}
 set :nginx_server_name, 'app.eve-razor.com'
 set :nginx_use_ssl, false
