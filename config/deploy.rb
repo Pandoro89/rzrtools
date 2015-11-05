@@ -63,9 +63,9 @@ namespace :deploy do
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+      within release_path do
+        execute :rake, 'cache:clear'
+      end
     end
   end
 
@@ -87,13 +87,25 @@ namespace :deploy do
     end
   end
 
+  def kill_processes_matching(name)
+    run "ps -ef | grep #{name} | grep -v grep | awk '{print $2}' | xargs kill || echo 'no process with name #{name} found'"
+  end
+
+  task :cleanup_resque do
+    kill_processes_matching "resque"
+  end
+
   # task :seed_db, :roles => [:db] do
   #   env = fetch(:rails_env)
   #   run "cd #{release_path} && bundle exec rails runner -e #{env} db/seeds.rb" if env != "production"
   # end
 
   after 'deploy:updated', 'deploy:migrate'
-  after "deploy:restart", "resque:restart"
+  before 'deploy:updating', 'resque:stop'
+  before 'deploy:updating', 'resque:scheduler:stop'
+  before 'deploy:updating', 'deploy:cleanup_resque'
+  after 'deploy:finishing', 'resque:start'
+  after 'deploy:finishing', 'resque:scheduler:start'
 
 
 end
