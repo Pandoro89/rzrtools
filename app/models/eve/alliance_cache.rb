@@ -9,6 +9,7 @@ class Eve::AllianceCache < ActiveRecord::Base
   timestamps
 
   def self.add_or_update(id, name)
+    return if name.nil?
     a = self.find_or_create_by(id: id)
     a.name = name
     a.save

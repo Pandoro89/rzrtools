@@ -3,6 +3,7 @@ class Fleet < ActiveRecord::Base
   property :fc_name,                     type: :string, limit: 255
   property :fleet_name,                  type: :string, limit: 255
   property :fleet_time,                  type: :string, limit: 50
+  property :fleet_at,                    type: :datetime
   property :fleet_coms,                  type: :string, limit: 50
   property :description,                 type: :text
   property :close_at,                    type: :datetime

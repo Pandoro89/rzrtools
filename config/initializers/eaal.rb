@@ -1,0 +1,1 @@
+EAAL.cache = EAAL::Cache::FileCache.new(File.join(Rails.root,"tmp","eaal"))

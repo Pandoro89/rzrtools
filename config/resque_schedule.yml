@@ -12,3 +12,10 @@ update_api_keys_job:
   custom_job_class: "UpdateApiKeysJob"
   args:
   description: "Update users api keys"
+import_igb_pap_job:
+  every:
+    - "1h"
+  queue: low
+  custom_job_class: "ImportIgbPapJob"
+  args:
+  description: "Update igb pap"

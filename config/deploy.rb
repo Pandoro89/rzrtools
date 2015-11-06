@@ -87,12 +87,13 @@ namespace :deploy do
     end
   end
 
-  def kill_processes_matching(name)
-    run "ps -ef | grep #{name} | grep -v grep | awk '{print $2}' | xargs kill || echo 'no process with name #{name} found'"
-  end
+  
 
   task :cleanup_resque do
-    kill_processes_matching "resque"
+    on roles(:app) do
+      name = "resque"
+      execute "ps -ef | grep #{name} | grep -v grep | awk '{print $2}' | xargs kill || echo 'no process with name #{name} found'"
+    end
   end
 
   # task :seed_db, :roles => [:db] do
@@ -101,8 +102,8 @@ namespace :deploy do
   # end
 
   after 'deploy:updated', 'deploy:migrate'
-  before 'deploy:updating', 'resque:stop'
-  before 'deploy:updating', 'resque:scheduler:stop'
+  #before 'deploy:updating', 'resque:stop'
+  #before 'deploy:updating', 'resque:scheduler:stop'
   before 'deploy:updating', 'deploy:cleanup_resque'
   after 'deploy:finishing', 'resque:start'
   after 'deploy:finishing', 'resque:scheduler:start'
