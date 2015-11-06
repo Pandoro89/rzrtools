@@ -15,7 +15,7 @@ class ImportCharacterByNameJob < Resque::Job
       begin
         char.alliance_id = result2.allianceID if result2.allianceID
         char.alliance_name = result2.alliance if result2.alliance
-        Eve::AllianceCache.add_or_update(result2.allianceID,result2.alliance) if result2.allianceID
+        Eve::AllianceCache.add_or_update(result2.allianceID,result2.alliance) if result2.allianceID and !result2.alliance.nil?
       rescue NoMethodError
         # NOOP
       end

@@ -25,7 +25,7 @@ class ImportZkillboardWatchlistJob < Resque::Job
         w.ship_type_name = Eve::InvType.find(r['victim']['shipTypeID']).name
         w.solar_system_name = Eve::SolarSystem.find(r['solarSystemID']).name
         Eve::CorporationCache.add_or_update(w.corp_id, w.corp_name)
-        Eve::AllianceCache.add_or_update(w.alliance_id, w.alliance_name)
+        Eve::AllianceCache.add_or_update(w.alliance_id, w.alliance_name) if !w.alliance_name.nil?
         w.save
       end
 
@@ -43,7 +43,7 @@ class ImportZkillboardWatchlistJob < Resque::Job
           w.ship_type_name = Eve::InvType.find(a['shipTypeID']).name
           w.solar_system_name = Eve::SolarSystem.find(r['solarSystemID']).name
           Eve::CorporationCache.add_or_update(w.corp_id, w.corp_name)
-          Eve::AllianceCache.add_or_update(w.alliance_id, w.alliance_name)
+          Eve::AllianceCache.add_or_update(w.alliance_id, w.alliance_name) if !w.alliance_name.nil?
           w.save
         end
       }
