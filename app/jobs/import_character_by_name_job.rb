@@ -12,11 +12,11 @@ class ImportCharacterByNameJob < Resque::Job
       result2 = api.CharacterInfo(:characterID => char.id)
       char.corporation_id = result2.corporationID
       char.corp_name = result2.corporation
-      char.alliance_id = result2.allianceID
-      char.alliance_name = result2.alliance
+      char.alliance_id = result2.allianceID if result2.allianceID
+      char.alliance_name = result2.alliance if result2.alliance
       char.save
-      Eve::AllianceCache.add_or_update(result2.allianceID,result2.alliance)
-      Eve::CorporationCache.add_or_update(result2.corporationID,result2.corporation)
+      Eve::AllianceCache.add_or_update(result2.allianceID,result2.alliance) if result2.allianceID
+      Eve::CorporationCache.add_or_update(result2.corporationID,result2.corporation) if result2.corporationID
       FleetPosition.where(:char_name => name).update_all(:character_id => char.id)
     }
   end
