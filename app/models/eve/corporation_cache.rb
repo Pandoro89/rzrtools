@@ -29,7 +29,7 @@ class Eve::CorporationCache < ActiveRecord::Base
     c.ticker = result.ticker
     c.member_count = result.memberCount
     c.save
-    Eve::AllianceCache.add_or_update(result.allianceID, result.allianceName)
+    Eve::AllianceCache.add_or_update(result.allianceID, result.allianceName) if result.allianceID > 0 and result.allianceName
   end
   
 end
