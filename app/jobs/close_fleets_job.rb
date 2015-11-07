@@ -8,7 +8,7 @@ class CloseFleetsJob < Resque::Job
       # Ignore it if no one joined
       f.update_attributes(:status => 2) if f.fleet_positions.size == 0
       # Discard if?
-      f.update_attributes(:status => 2) if f.fleet_positions.size < 5 and !fleet.has_capitals?
+      f.update_attributes(:status => 2) if f.fleet_positions.size < 5 and !f.has_capitals?
 
       # Resque.enqueue FleetUpdateRole
     }
