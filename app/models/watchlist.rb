@@ -12,11 +12,11 @@ class Watchlist < ActiveRecord::Base
   property :ship_type_id,            type: :integer,limit: 8, default: "0" 
   property :last_seen_at,            type: :datetime
   property :deleted_at,                    type: :datetime
-  property :type,               type: :integer, default: "1" # 1 = Ship, 2 = FC
+  property :wl_type,               type: :integer, default: "1" # 1 = Ship, 2 = FC
   timestamps
   acts_as_paranoid
 
-  def type_name
+  def wl_type
     return "FC" if type == 2
     "Ship"
   end
