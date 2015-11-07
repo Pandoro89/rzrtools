@@ -15,4 +15,6 @@ class Eve::SolarSystem < ActiveRecord::Base
   property :hub,            type: :integer
   property :regional,            type: :integer
   property :security,            type: :float
+
+  belongs_to :region
 end
