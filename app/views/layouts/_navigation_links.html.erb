@@ -14,10 +14,19 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
   <ul class="dropdown-menu">
+    <% if current_user.admin? or current_user.troika? or current_user.military_advisor? %>
     <li><a href="/admin/users">Users</a></li>
     <li><a href="/admin/jump_bridges">Jump Bridges</a></li>
+    <% end %>
+    <% if current_user.admin? or current_user.troika? %>
+    <li><a href="/admin/fleet_position_rules">Fleet Rules</a></li>
+    <% end %>
+    <% if current_user.admin? or current_user.troika? or current_user.military_advisor? or current_user.scout_commander? %>
     <li><a href="/admin/watchlists">Watchlist</a></li>
+    <% end %>
+    <% if current_user.admin? %>
     <li role="separator" class="divider"></li>
     <li><a href="/admin/resque_web">Resque</a></li>
+    <% end %>
   </ul>
 </li>
