@@ -1,1 +1,33 @@
-_form.html.erb
+  <%= f.hidden_field :ship_type_id, :id => "ship_type_id", :value => @fleet_position_rule.ship_type_id %>
+  <%= f.hidden_field :eve_group_id, :id => "eve_group_id", :value => @fleet_position_rule.eve_group_id %>
+  <div class="form-group">
+    <%= f.label :fleet_role %>
+    <%= f.text_field :fleet_role %>
+  </div>
+  <div class="form-group">
+    <%= f.label :points %>
+    <%= f.text_field :points %>
+  </div>
+  <div class="form-group">
+    <%= f.label :eve_group %>
+    <%= f.autocomplete_field :eve_group, autocomplete_group_name_fleets_path,:value => Eve::Group.find_by_id(@fleet_position_rule.eve_group_id).try(:name), :"data-autocomplete-label" => "Sorry, nothing found." %>
+  </div>
+  <div class="form-group">
+    <%= f.label :inv_type %>
+    <%= f.autocomplete_field :inv_type, autocomplete_inv_type_name_fleets_path,:value => Eve::InvType.find_by_id(@fleet_position_rule.ship_type_id).try(:name), :"data-autocomplete-label" => "Sorry, nothing found." %>
+  </div>
+
+  <%= f.submit 'Save', class: "btn btn-primary" %>
+
+<%= javascript_tag do %>
+  $('#fleet_position_rule_eve_group').bind('railsAutocomplete.select', function(event, data){
+    $( "#eve_group_id" ).val(data.item.id);
+    $( "#ship_type_id" ).val(0);
+    $('#fleet_position_rule_inv_type').val('');
+  });
+  $('#fleet_position_rule_inv_type').bind('railsAutocomplete.select', function(event, data){
+    $( "#ship_type_id" ).val(data.item.id);
+    $( "#eve_group_id" ).val(0);
+    $('#fleet_position_rule_eve_group').val('');
+  });
+<% end %>

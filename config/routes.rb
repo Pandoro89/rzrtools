@@ -40,6 +40,8 @@ Rails.application.routes.draw do
     # patch  ':token' => 'fleets#update'
     # put    ':token' => 'fleets#update'
     get :autocomplete_character_char_name, :on => :collection
+    get :autocomplete_inv_type_name, :on => :collection
+    get :autocomplete_group_name, :on => :collection
     match ':token/special_role' => 'fleets#special_role', :via => [:get, :post], :on => :collection, :as => :special_role
   end
   resources :watchlists do 
@@ -64,6 +66,7 @@ Rails.application.routes.draw do
     resources :operations
     resources :jump_bridges
     resources :watchlists
+    resources :fleet_position_rules
   end
 
   # Example of regular route:

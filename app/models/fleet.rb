@@ -14,6 +14,15 @@ class Fleet < ActiveRecord::Base
 
   before_create :initialize_fleet
 
+  scope :open, -> { where(status: 0) }
+  scope :closed, -> { where(status: 1) }
+  scope :ignored, -> { where(status: 2) }
+
+  def initialize_fleet
+    self.token = Digest::SHA1.hexdigest([Time.now, rand].join)
+    self.close_at = DateTime.now + 1.hour
+  end
+
   def to_s
     # We use this to match our exported information, otherwise we don't really care
     "#{fleet_name}, #{fc_name}, #{fleet_time}, #{fleet_coms}"
@@ -40,11 +49,6 @@ class Fleet < ActiveRecord::Base
     false
   end
 
-  def initialize_fleet
-    self.token = Digest::SHA1.hexdigest([Time.now, rand].join)
-    self.close_at = DateTime.now + 1.hour
-  end
-
   def join(character)
     pap = FleetPosition.create(:fleet => self, :character => character) if FleetPosition.where(:fleet_id => self.id,:character_id => character.id).count < 1
     if pap.nil?
@@ -53,7 +57,7 @@ class Fleet < ActiveRecord::Base
     pap.set_from_env(character.env)
     pap.save
     # Resque.enqueue SingleFleetPositionRulesJob pap.id
-    FleetPositionRules.apply_rules(pap.id)
+    FleetPositionRule.apply_rules(pap.id)
   end
 
   def join_with_special_role(character, special_role)

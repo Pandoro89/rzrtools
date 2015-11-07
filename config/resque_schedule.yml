@@ -19,3 +19,10 @@ import_igb_pap_job:
   custom_job_class: "ImportIgbPapJob"
   args:
   description: "Update igb pap"
+close_fleets_job:
+  every:
+    - "5m"
+  queue: medium
+  custom_job_class: "CloseFleetsJob"
+  args:
+  description: "close open fleets"

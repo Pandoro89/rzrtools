@@ -1,6 +1,8 @@
+<%= link_to "Add Fleet Position Rule", new_admin_fleet_position_rule_path, :class => "btn btn-primary"%>
 <table class="table">
   <thead>
     <tr>
+      <th>Points</th>
       <th>Role</th>
       <th>Special Role</th>
       <th>Ship Group</th>
@@ -9,6 +11,15 @@
     </tr>
   </thead>
   <tbody>
-    
+  <% @fleet_position_rules.each do |r| %>
+    <tr>
+      <td><%= r.points %></td>
+      <td><%= r.fleet_role %></td>
+      <td><%= r.special_role %></td>
+      <td><%= r.eve_group.try(:name) %></td>
+      <td><%= r.ship_type.try(:name) %></td>
+      <td><%= link_to "Edit", edit_admin_fleet_position_rule_path(r.id) %> | <%= link_to "Delete", admin_fleet_position_rule_path(r.id), :method => :delete%></td>
+    </tr>
+  <% end %> 
   </tbody>
 </table>

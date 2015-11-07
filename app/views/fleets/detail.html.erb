@@ -14,9 +14,13 @@
       <td><%=fp.char_name%></td>
       <td><%=fp.main_name%></td>
       <td><%=fp.corp_name%></td>
-      <td><%=fp.ship_name%></td>
+      <td><%=fp.ship_type_name%></td>
       <td><%=fp.fleet_role%></td>
     </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= javascript_tag do %>
+  $('#details-badge').html(<%=@fleet_positions.size%>);
+<% end %>

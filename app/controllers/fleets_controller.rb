@@ -1,12 +1,14 @@
 class FleetsController < ApplicationController
   before_filter :get_character, :only => [:join, :index]
   before_filter :require_igb, :only => [:join, :leave]
-  before_filter :find_fleet_by_token, :only => [:show, :join, :purge, :edit, :update, :destroy, :special_role]
+  before_filter :find_fleet_by_token, :only => [:show, :join, :purge, :edit, :update, :destroy, :special_role, :detail]
   # TODO Find a way to do this as a background task instead
   before_filter :purge_fleets, :only => [:index]
   before_filter :require_igb_razor_or_user, :only => [:index, :create]
 
   autocomplete :character, :char_name
+  autocomplete :group, :name, :class_name => "Eve::Group"
+  autocomplete :inv_type, :name, :class_name => "Eve::InvType"
 
   def index
 

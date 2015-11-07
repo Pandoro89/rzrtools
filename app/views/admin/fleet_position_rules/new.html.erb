@@ -3,7 +3,8 @@
     <h4><%= 'New' %></h4>
   </div>
   <div class="panel-body">
-    <%= form_for(@user, url: users_path, html: { role: "form" }) do |f| %>
-      <div class="form-group">
-        <%= f.label :username %>
-        <%= f.tex
+  <%= form_for(@fleet_position_rule, url: admin_fleet_position_rules_path, html: { role: "form" }) do |f| %>
+    <%= render 'admin/fleet_position_rules/form', :f => f %>
+  <% end %>
+  </div>
+</div>

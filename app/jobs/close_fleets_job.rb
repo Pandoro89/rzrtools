@@ -1,4 +1,4 @@
-class ImportCharacterByNameJob < Resque::Job
+class CloseFleetsJob < Resque::Job
   @queue = :high
 
   def selfperform()

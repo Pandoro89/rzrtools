@@ -1,4 +1,4 @@
-class FleetPositionRules < ActiveRecord::Base
+class FleetPositionRule < ActiveRecord::Base
   create_table options: "ENGINE=InnoDB ROW_FORMAT=COMPRESSED DEFAULT CHARSET=utf8mb4"
 
     property :eve_group_id,       type: :integer, default: "0"
@@ -8,9 +8,12 @@ class FleetPositionRules < ActiveRecord::Base
     property :points,             type: :integer, default: "1"
 
 
+    belongs_to :ship_type, :class_name => "Eve::InvType"
+    belongs_to :eve_group, :class_name => "Eve::Group"
+
     def self.apply_rules_to_fleets
       Fleet.where("created_at > ?", DateTime.now-1.hour).each { |f| 
-        f.fleet_positions.each {|fp| FleetPositionRules.apply_rules(fp) }
+        f.fleet_positions.each {|fp| FleetPositionRule.apply_rules(fp) }
       }
     end
 

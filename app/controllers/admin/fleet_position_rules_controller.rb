@@ -1,9 +1,9 @@
-class Admin::ApplicationController < ApplicationController
+class Admin::FleetPositionRulesController < ApplicationController
   before_filter :require_global_admin
   before_filter :find_fleet_position_rule, :except => [:index,:new,:create]
 
   def index
-    @fleet_position_rules = FleetPositionRule.all
+    @fleet_position_rules = FleetPositionRule.all.order(:points => :desc, :fleet_role => :asc)
   end
 
   def new
@@ -11,10 +11,10 @@ class Admin::ApplicationController < ApplicationController
   end
 
   def create
-    @fleet_position_rule = FleetPositionRule.create(params)
+    @fleet_position_rule = FleetPositionRule.create(form_params)
     if @fleet_position_rule.save
       flash[:success] = "Rule saved."
-      redirect_to 
+      return redirect_to admin_fleet_position_rules_path
     end
     render 'new'
   end
@@ -23,21 +23,25 @@ class Admin::ApplicationController < ApplicationController
   end
 
   def update
-    if @fleet_position_rule.update(user_params)
+    if @fleet_position_rule.update(form_params)
       flash[:success] = "Rule saved."
     end
-    redirect_to 
+    return redirect_to admin_fleet_position_rules_path
   end
 
-  def delete
-    if @fleet_position_rule.save
+  def destroy
+    if @fleet_position_rule.delete
       flash[:success] = "Rule deleted."
     end
-    redirect_to 
+    return redirect_to admin_fleet_position_rules_path
   end
 
   protected
     def find_fleet_position_rule
       @fleet_position_rule ||= FleetPositionRule.find(params[:id])
+    end
+
+    def form_params
+      params.require(:fleet_position_rule).permit(:eve_group_id, :ship_type_id, :fleet_role, :special_role, :points)
     end
 end
