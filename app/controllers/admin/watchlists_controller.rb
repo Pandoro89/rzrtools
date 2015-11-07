@@ -1,4 +1,5 @@
 class Admin::WatchlistsController < Admin::ApplicationController
+  before_filter :require_scout_commander_or_higher
   before_filter :find_watchlist, :except => [:index, :new, :create]
 
   def index

@@ -3,7 +3,7 @@ class Admin::FleetPositionRulesController < ApplicationController
   before_filter :find_fleet_position_rule, :except => [:index,:new,:create]
 
   def index
-    @fleet_position_rules = FleetPositionRule.all.order(:points => :desc, :fleet_role => :asc)
+    @fleet_position_rules = FleetPositionRule.all.order(:fleet_role => :asc, :points => :desc)
   end
 
   def new

@@ -1,6 +1,6 @@
 class Admin::UsersController < Admin::ApplicationController
+  before_filter :require_military_advisor_or_higher
   before_filter :find_user, :except => [:index]
-  before_filter :require_global_admin
 
   def index
     params[:page] = 1 if !params[:page]

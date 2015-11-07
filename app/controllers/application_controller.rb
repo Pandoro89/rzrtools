@@ -102,4 +102,11 @@ class ApplicationController < ActionController::Base
       redirect_to root_path 
     end
   end
+
+  def require_military_advisor_or_higher
+    unless current_user and (current_user.admin? or current_user.military_advisor?)
+      flash[:error] = "You must be an administrator to perform that action."
+      redirect_to root_path 
+    end
+  end
 end
