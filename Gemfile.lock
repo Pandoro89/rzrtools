@@ -156,6 +156,8 @@ GEM
       mini_portile (~> 0.6.0)
     nokogumbo (1.4.1)
       nokogiri
+    paranoia (2.0.4)
+      activerecord (~> 4.0)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -337,6 +339,7 @@ DEPENDENCIES
   mini_record
   mysql2
   nested_form_fields
+  paranoia (~> 2.0)
   pry-rails
   rails (= 4.2.4)
   rails4-autocomplete

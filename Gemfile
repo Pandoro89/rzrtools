@@ -27,6 +27,7 @@ gem 'responders'
 
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'mini_record'
+gem "paranoia", "~> 2.0"
 
 gem 'mysql2'
 gem 'transaction_retry'

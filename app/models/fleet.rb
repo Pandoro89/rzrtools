@@ -10,6 +10,8 @@ class Fleet < ActiveRecord::Base
   property :status,                      type: :integer, default: "0"
   timestamps
 
+  has_many :fleet_positions
+
   before_create :initialize_fleet
 
   def to_s
@@ -30,6 +32,11 @@ class Fleet < ActiveRecord::Base
 
   def closed?
     return true if status == 1
+    false
+  end
+
+  def has_capitals?
+    return true if fleet_positions.where(:fleet_role => [])
     false
   end
 

@@ -62,6 +62,8 @@ Rails.application.routes.draw do
       post ':id/role_delete' => 'users#role_delete', :on => :collection, :as => 'role_delete'
     end
     resources :operations
+    resources :jump_bridges
+    resources :watchlists
   end
 
   # Example of regular route:

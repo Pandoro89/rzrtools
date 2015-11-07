@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   property :generation,                     type: :integer, default: "1"
   property :last_login_at,                  type: :datetime
   property :main_char_id,                     type: :integer
+  property :deleted_at,                    type: :datetime
   timestamps
 
   has_many :api_keys, class_name: "Eve::ApiKey"

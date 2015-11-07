@@ -21,11 +21,12 @@ class FleetPosition < ActiveRecord::Base
   property :ship_name,          type: :string, limit: 255, default: ""
   property :ship_type_id,       type: :integer, limit: 8 , default: "0"
   property :ship_type_name,     type: :string, limit: 255, default: ""
-  property :ship_group_id,       type: :integer, limit: 8 , default: "0"
-  property :ship_group_name,     type: :string, limit: 255, default: ""
+  property :ship_group_id,      type: :integer, limit: 8 , default: "0"
+  property :ship_group_name,    type: :string, limit: 255, default: ""
   property :rules_applied,      type: :boolean, default: "0"
   property :fleet_role,         type: :string, limit: 255, default: "Other" #as: "ENUM('Other','Fleet','Logistics','Command_Ship','Black_Ops','Capital','Super.Titan')"
   property :special_role,       type: :string, limit: 255, default: "none"  #as: "ENUM('none','FC','Co-FC','Logi_FC','Scout','Prober','Target_Caller')"
+  property :points,             type: :integer, default: "1"
   timestamps
 
   belongs_to :fleet

@@ -3,10 +3,20 @@
   
 </thead>
 <tbody>
+  <% prev_system_id = 0 %>
   <% @travel_systems.each do |s| %>
-  <tr>
-    <td><%= s.name%></td>
-  </tr>
+    <% jb = JumpBridge.where("(from_solar_system_id = ? AND to_solar_system_id = ?) OR (from_solar_system_id = ? AND to_solar_system_id = ?)",prev_system_id,s.id,s.id,prev_system_id).first %>
+    <% if !jb.nil? %>
+    <tr> 
+      <td>
+        <%= (jb.from_solar_system_id == prev_system_id)? "@ p#{jb.from_planet}-m#{jb.from_moon}" : "@ p#{jb.to_planet}-m#{jb.to_moon}" %>
+      </td>
+    </tr>
+    <% end %>
+    <tr>
+      <td><%= s.name %></td>
+    </tr>
+    <% prev_system_id = s.id %>
   <% end %>
 </tbody>
 </table>

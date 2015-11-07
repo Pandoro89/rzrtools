@@ -1,2 +1,48 @@
 class Admin::JumpBridgesController < Admin::ApplicationController
+  before_filter :find_jump_bridge, :except => [:index, :new, :create]
+
+  def index
+    @jump_bridges = JumpBridge.all
+  end
+
+  def edit
+  end
+
+  def new
+    @jump_bridge = JumpBridge.new
+  end
+
+  def create
+    @jump_bridge = JumpBridge.create(form_params)
+    if @jump_bridge.save
+      flash[:success] = "Jump bridge saved."
+      return  redirect_to admin_jump_bridges_path
+    end
+    render 'new'
+  end
+
+  def update
+    if @jump_bridge.update(form_params)
+      flash[:success] = "Jump bridge saved."
+      return redirect_to admin_jump_bridges_path
+    end
+    render 'edit'
+  end
+
+  def destroy
+    if @jump_bridge.delete
+      flash[:success] = "Jump bridge deleted."
+    end
+
+    redirect_to admin_jump_bridges_path
+  end
+
+  protected
+    def find_jump_bridge
+      @jump_bridge ||= JumpBridge.find(params[:id])
+    end
+
+    def form_params
+      params.require(:jump_bridge).permit(:from_moon, :from_planet, :to_moon, :to_planet, :from_solar_system_id, :to_solar_system_id)
+    end
 end

@@ -9,6 +9,7 @@
     <%= f.hidden_field :from_system_id, :id => "from_system_id" %>
       <%= f.autocomplete_field :to_system, autocomplete_solar_system_name_travel_index_path,:"data-autocomplete-label" => "Sorry, nothing found." %>
       <%= f.autocomplete_field :from_system, autocomplete_solar_system_name_travel_index_path,:"data-autocomplete-label" => "Sorry, nothing found." %>
+      <%= f.select :use_jump_bridges, [["Use JB",1],["No JB",0]] %>
       <%= f.submit 'Route' %>
     <% end %>
 
