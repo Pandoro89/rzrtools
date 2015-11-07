@@ -37,5 +37,10 @@
           var target = $(this).data('update-target');
           $('#' + target).html(data);
       });
+
+    $( "form" ).submit(function( ) {
+      $('#trave_route_results').html("Herding goats...")
+    });
+
   });
 <% end %>
