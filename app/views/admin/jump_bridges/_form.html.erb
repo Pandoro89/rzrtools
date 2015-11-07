@@ -1,0 +1,37 @@
+  <%= f.hidden_field :from_solar_system_id, :id => "to_system_id", :value => @jump_bridge.to_solar_system_id %>
+  <%= f.hidden_field :to_solar_system_id, :id => "from_system_id", :value => @jump_bridge.from_solar_system_id %>
+  <div class="form-group">
+    <%= f.label :to_system %>
+    <%= f.autocomplete_field :to_system, autocomplete_solar_system_name_travel_index_path, :value => Eve::SolarSystem.find_by_id(@jump_bridge.to_solar_system_id).try(:name),:"data-autocomplete-label" => "Sorry, nothing found." %>
+  </div> 
+  <div class="form-group">
+    <%= f.label :to_planet %>
+    <%= f.text_field :to_planet %>
+  </div>
+  <div class="form-group">
+    <%= f.label :to_moon %>
+    <%= f.text_field :to_moon %>
+  </div>
+  <div class="form-group">
+    <%= f.label :from_system %>
+    <%= f.autocomplete_field :from_system, autocomplete_solar_system_name_travel_index_path,:value => Eve::SolarSystem.find_by_id(@jump_bridge.from_solar_system_id).try(:name), :"data-autocomplete-label" => "Sorry, nothing found." %>
+  </div>
+  <div class="form-group">
+    <%= f.label :from_planet %>
+    <%= f.text_field :from_planet %>
+  </div>
+  <div class="form-group">
+    <%= f.label :from_moon %>
+    <%= f.text_field :from_moon %>
+  </div>
+  <%= f.submit 'Save', class: "btn btn-primary" %>
+
+
+<%= javascript_tag do %>
+  $('#jump_bridge_to_system').bind('railsAutocomplete.select', function(event, data){
+    $( "#to_system_id" ).val(data.item.id);
+  });
+  $('#jump_bridge_from_system').bind('railsAutocomplete.select', function(event, data){
+    $( "#from_system_id" ).val(data.item.id);
+  });
+<% end %>

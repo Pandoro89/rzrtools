@@ -1,0 +1,19 @@
+<%= link_to "Add Jump Bridge", new_admin_jump_bridge_path, :class => "btn btn-primary"%>
+<table class="table">
+  <thead>
+    <tr>
+      <th>From</th>
+      <th>To</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @jump_bridges.each do |jb| %>
+    <tr>
+      <td><%= Eve::SolarSystem.find(jb.from_solar_system_id).name + " - P#{jb.from_planet}-M#{jb.from_moon}"%></td>
+      <td><%= Eve::SolarSystem.find(jb.to_solar_system_id).name + " - P#{jb.to_planet}-M#{jb.to_moon}"%></td>
+      <td><%= link_to "Edit", edit_admin_jump_bridge_path(jb.id) %> | <%= link_to "Delete", admin_jump_bridge_path(jb.id), :method => :delete%></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

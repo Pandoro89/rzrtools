@@ -1,0 +1,22 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>What</th>
+      <th>System</th>
+      <th>When</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @watchlists.each do |w| %>
+    <tr>
+      <td><%= w.char_name%></td>
+      <td><%= w.ship_type_name%></td>
+      <td><%= w.solar_system_name%></td>
+      <td><abbr class="timeago" title="<%= w.last_seen_at.to_formatted_s(:iso8601)  %>"></abbr></td>
+      <td></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

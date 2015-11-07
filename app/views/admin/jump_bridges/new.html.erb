@@ -1,0 +1,10 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= 'New' %></h4>
+  </div>
+  <div class="panel-body">
+  <%= form_for(@jump_bridge, url: admin_jump_bridges_path, html: { role: "form" }) do |f| %>
+    <%= render 'admin/jump_bridges/form', :f => f %>
+  <% end %>
+  </div>
+</div>

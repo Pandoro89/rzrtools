@@ -1,0 +1,9 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= 'New' %></h4>
+  </div>
+  <div class="panel-body">
+    <%= form_for(@user, url: users_path, html: { role: "form" }) do |f| %>
+      <div class="form-group">
+        <%= f.label :username %>
+        <%= f.tex
