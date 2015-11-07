@@ -1,7 +1,7 @@
 class CloseFleetsJob < Resque::Job
   @queue = :high
 
-  def selfperform()
+  def self.perform()
     Fleet.where("status=0 AND close_at <= ?",DateTime.now).each{ |f|
       # Close when we have people
       f.update_attributes(:status => 1) if f.fleet_positions.size > 5
