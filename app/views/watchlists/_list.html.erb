@@ -12,8 +12,8 @@
     <tr>
       <td><%= w.char_name%></td>
       <td><%= w.ship_type_name%></td>
-      <td><%= w.solar_system_name%></td>
-      <td><abbr class="timeago" title="<%= w.last_seen_at.to_formatted_s(:iso8601)  %>"></abbr></td>
+      <td><a href="http://evemaps.dotlan.net/search?q=<%= w.solar_system_name%>"><%= w.solar_system_name%></a> (<%= w.solar_system.try(:region).try(:name)%>)</td>
+      <td><%=((!w.z_kill_id.nil?)?"<a href=\"https://zkillboard.com/kill/#{w.z_kill_id}/\" target=\"_blank\">Last Seen</a>":"").html_safe%> <abbr class="timeago" title="<%= w.last_seen_at.to_formatted_s(:iso8601)  %>"></abbr></td>
     </tr>
   <% end %>
   </tbody>

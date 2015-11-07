@@ -37,6 +37,18 @@ namespace :import do
     end
   end
 
+  task :regions => :environment do
+    path = Rails.root.join('tmp/regions.csv') # or, whatever
+    CSV.foreach(path) do |row|
+      if !row[0].nil?
+        item = Eve::Region.find_or_create_by(id: row[0])
+        item.name = Iconv.conv('iso-8859-15', 'utf-8', row[1].gsub("\xC2\x96",'').gsub("\xC2\x93",'').gsub("\xC2\x94",'').gsub("\xC2\x91",'').gsub("\xC2\x92",'').strip)
+
+        item.save
+      end
+    end
+  end
+
   task :system_jumps => :environment do 
     path = Rails.root.join('tmp/system_jumps.csv') # or, whatever
     CSV.foreach(path) do |row|
