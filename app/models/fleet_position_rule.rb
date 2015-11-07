@@ -12,24 +12,26 @@ class FleetPositionRule < ActiveRecord::Base
     belongs_to :eve_group, :class_name => "Eve::Group"
 
     def self.apply_rules_to_fleets
-      Fleet.where("created_at > ?", DateTime.now-1.hour).each { |f| 
-        f.fleet_positions.each {|fp| FleetPositionRule.apply_rules(fp) }
+      Fleet.where("created_at > ? AND rules_applied = 0", DateTime.now-1.hour).each { |f| 
+        f.fleet_positions.each {|fp| FleetPositionRule.apply_rules(fp.id) }
       }
     end
 
 
     def self.apply_rules(fleet_position_id)
       pap = FleetPosition.find(fleet_position_id)
-      logger.debug("----- #{fleet_position_id}")
+      # logger.debug("----- #{fleet_position_id}")
       return if pap.nil?
 
       where("1=1", pap.ship_type_id).each { |r| 
         if r.eve_group_id == Eve::InvType.where(:id => pap.ship_type_id).first.eve_group_id
           pap.fleet_role = r.fleet_role
           pap.points = r.points
+          pap.rules_applied = 1
         elsif r.ship_type_id == pap.ship_type_id
-           pap.fleet_role = r.fleet_role
-           pap.points = r.points
+          pap.fleet_role = r.fleet_role
+          pap.points = r.points
+          pap.rules_applied = 1
         end
 
       }
