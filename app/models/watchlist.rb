@@ -14,13 +14,14 @@ class Watchlist < ActiveRecord::Base
   property :deleted_at,                    type: :datetime
   property :wl_type,               type: :integer, default: "1" # 1 = Ship, 2 = FC
   property :z_kill_id,            type: :integer,limit: 8
+  property :comment,            type: :text
   timestamps
   acts_as_paranoid
 
   belongs_to :solar_system, :class_name => "Eve::SolarSystem"
 
-  def wl_type
-    return "FC" if type == 2
+  def wl_type_to_s
+    return "FC" if wl_type == 2
     "Ship"
   end
 

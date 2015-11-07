@@ -13,7 +13,24 @@ class Admin::WatchlistsController < Admin::ApplicationController
   end
 
   def create
-    @watchlist = JumpBridge.create(form_params)
+    @watchlist = Watchlist.create(form_params)
+    api = EAAL::API.new("", "")
+    api.scope = "eve"
+    result = api.CharacterID(:names => @watchlist.char_name)
+    c = result.characters.first
+    if c and c.name == @watchlist.char_name
+      result2 = api.CharacterInfo(:characterID => c.characterID)
+      @watchlist.corp_id = result2.corporationID
+      @watchlist.corp_name = result2.corporation
+      begin
+        @watchlist.alliance_id = result2.allianceID if result2.allianceID
+        @watchlist.alliance_name = result2.alliance if result2.alliance
+        Eve::AllianceCache.add_or_update(result2.allianceID,result2.alliance) if result2.allianceID and !result2.alliance.nil?
+      rescue NoMethodError
+        # NOOP
+      end
+    end
+    
     if @watchlist.save
       flash[:success] = "Watchlist saved."
       return  redirect_to admin_watchlists_path
@@ -43,6 +60,6 @@ class Admin::WatchlistsController < Admin::ApplicationController
     end
 
     def form_params
-      params.require(:watchlist).permit(:from_moon, :from_planet, :to_moon, :to_planet, :from_solar_system_id, :to_solar_system_id)
+      params.require(:watchlist).permit(:last_seen_at, :char_name, :solar_system_name, :solar_system_id, :comment, :wl_type, :ship_type_name, :ship_type_id)
     end
 end

@@ -1,3 +1,4 @@
+<%= link_to "Add Watchlist", new_admin_watchlist_path, :class => "btn btn-primary"%>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -15,7 +16,7 @@
       <td><%= w.ship_type_name%></td>
       <td><%= w.solar_system_name%></td>
       <td><abbr class="timeago" title="<%= w.last_seen_at.to_formatted_s(:iso8601)  %>"></abbr></td>
-      <td></td>
+      <td><%= link_to "Edit", edit_admin_watchlist_path(w.id) %></td>
     </tr>
   <% end %>
   </tbody>

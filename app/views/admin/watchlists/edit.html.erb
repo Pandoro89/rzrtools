@@ -1,0 +1,10 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= 'Edit' %></h4>
+  </div>
+  <div class="panel-body">
+  <%= form_for(@watchlist, url: admin_watchlist_path, html: { role: "form" }) do |f| %>
+    <%= render 'admin/watchlists/form', :f => f %>
+  <% end %>
+  </div>
+</div>
