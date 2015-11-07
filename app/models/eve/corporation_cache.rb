@@ -17,6 +17,7 @@ class Eve::CorporationCache < ActiveRecord::Base
     a = self.find_or_create_by(id: id)
     a.name = name
     a.save
+    Resque.enqueue CorporationUpdateDetailsJob, id
   end
 
   def self.update_from_api(id)
