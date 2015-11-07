@@ -11,6 +11,8 @@ class CloseFleetsJob < Resque::Job
         f.update_attributes(:status => 1)
       end
 
+      f.save
+
       Resque.enqueue FleetUpdateRolesJob, f.id
     }
   end

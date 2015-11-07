@@ -14,11 +14,14 @@ class ImportIgbPapsJob < Resque::Job
       puts row
       when_date = row[6].split("/")
       fleet_at = DateTime.parse(when_date[2]+"-"+when_date[0]+"-"+when_date[1] +" " + row[7])
-      @fleet = Fleet.find_or_create_by(:description => row[3], :fleet_at =>fleet_at) if @fleet.nil? or @fleet.description != row["Fleet"]
+      @fleet = Fleet.find_or_create_by(:description => row[3]) if @fleet.nil? or @fleet.description != row["Fleet"]
       @fleet.created_at = fleet_at
       #@fleet.modified_at = fleet_at
       @fleet.save
       @pap = FleetPosition.find_or_create_by(:char_name => row[0], :fleet_id => @fleet.id)
+      @char = Character.where(:char_name => @pap.char_name).first
+      @pap.character_id = @char.id if !@char.nil?
+      @pap.created_at = fleet_at
       @pap.main_name = row[1]
       @pap.ship_type_name = row[4]
       @ship_item = Eve::InvType.where(:name => @pap.ship_type_name).first

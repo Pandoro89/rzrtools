@@ -21,7 +21,7 @@ class FleetPositionRule < ActiveRecord::Base
     def self.apply_rules(fleet_position_id)
       pap = FleetPosition.find(fleet_position_id)
       # logger.debug("----- #{fleet_position_id}")
-      return if pap.nil?
+      return if pap.nil? or pap.ship_type_id == 0
 
       where("1=1", pap.ship_type_id).each { |r| 
         if r.eve_group_id == Eve::InvType.where(:id => pap.ship_type_id).first.eve_group_id

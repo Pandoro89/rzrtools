@@ -19,6 +19,13 @@ import_igb_pap_job:
   custom_job_class: "ImportIgbPapJob"
   args:
   description: "Update igb pap"
+import_igb_fc_pap_job:
+  every:
+    - "1h"
+  queue: low
+  custom_job_class: "ImportIgbFcPapJob"
+  args:
+  description: "Update fc igb pap"
 close_fleets_job:
   every:
     - "5m"
