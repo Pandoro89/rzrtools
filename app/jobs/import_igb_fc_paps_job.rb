@@ -44,6 +44,7 @@ class ImportIgbFcPapsJob < Resque::Job
         @fleet.fc_name = fleet_split[1].strip
         @fleet.fleet_time = fleet_split[2].strip
         @fleet.fleet_coms = fleet_split[3].strip
+        @fleet.save
       end
 
     end

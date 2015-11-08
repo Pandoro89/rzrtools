@@ -34,6 +34,17 @@ class ImportIgbPapsJob < Resque::Job
       @pap.alliance_id = ALLIANCE_ID
       @pap.alliance_name = @razor.name
       @pap.save
+
+      # Mandudes Personal Jukebox, cartruce, 0:45, ts op 1
+      # svipuls, amiran omanid, 18:21, ts op 1
+      fleet_split = @fleet.description.split(",")
+      if fleet_split.size == 4
+        @fleet.fleet_name = fleet_split[0].strip
+        @fleet.fc_name = fleet_split[1].strip
+        @fleet.fleet_time = fleet_split[2].strip
+        @fleet.fleet_coms = fleet_split[3].strip
+        @fleet.save
+      end
       
     end
   end
