@@ -11,6 +11,7 @@
 <li>
   <a href="/fleets/">Fleets</a>
 </li>
+<% if current_user %>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
   <ul class="dropdown-menu">
@@ -30,3 +31,4 @@
     <% end %>
   </ul>
 </li>
+<% end %>
