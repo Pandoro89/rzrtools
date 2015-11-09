@@ -1,3 +1,3 @@
-ActiveModel::Serializer.setup do |config|
-  config.embed = :ids
-end
+# ActiveModel::Serializer.setup do |config|
+#   config.embed = :ids
+# end
