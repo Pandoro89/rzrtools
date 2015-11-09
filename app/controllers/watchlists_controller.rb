@@ -4,7 +4,11 @@ class WatchlistsController < ApplicationController
 
   def index
     @watchlists = []
-    @watchlists = Watchlist.where(:alliance_id => params[:alliance_id]).order(:last_seen_at => :desc) if params[:alliance_id]
+    if params[:alliance_id]
+      @watchlists = Watchlist.where(:alliance_id => params[:alliance_id]).order(:last_seen_at => :desc) 
+    else
+      @watchlists = Watchlist.where("last_seen_at >= ?",DateTime.now-3.hours).order(:last_seen_at => :desc)
+    end
   end
 
   def alliance
