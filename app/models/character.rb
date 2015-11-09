@@ -112,7 +112,7 @@ class Character < ActiveRecord::Base
     save
   end
 
-  def create_from_razor_smf(id, char_name, main_char_id, main_char_name)
+  def self.create_from_razor_smf(id, char_name, main_char_id, main_char_name)
     c = Character.find_or_initialize_by_char_name(char_name)
     m = Character.find_or_initialize_by_char_name(main_char_name)
     m.id = main_char_id
