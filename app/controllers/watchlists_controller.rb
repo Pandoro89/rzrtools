@@ -7,7 +7,7 @@ class WatchlistsController < ApplicationController
     if params[:alliance_id]
       @watchlists = Watchlist.where(:alliance_id => params[:alliance_id]).order(:last_seen_at => :desc) 
     else
-      @watchlists = Watchlist.where("last_seen_at >= ?",DateTime.now-12.hours).order(:last_seen_at => :desc)
+      @watchlists = Watchlist.where("last_seen_at >= ?",DateTime.now-6.hours).order(:last_seen_at => :desc)
     end
   end
 

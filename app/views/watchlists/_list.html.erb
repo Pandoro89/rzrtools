@@ -1,6 +1,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th></th>
       <th>Name</th>
       <th>What</th>
       <th>System</th>
@@ -10,6 +11,7 @@
   <tbody>
   <% @watchlists.each do |w| %>
     <tr>
+      <td><button type="button" onclick="CCPEVE.addContact(3018672)">+</button></td>
       <td><%= w.char_name%></td>
       <td><%= w.ship_type_name%></td>
       <td><a href="http://evemaps.dotlan.net/search?q=<%= w.solar_system_name%>"><%= w.solar_system_name%></a> (<%= w.solar_system.try(:region).try(:name)%>)</td>
