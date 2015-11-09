@@ -1,4 +1,4 @@
-class Api::V1::charactersController < Api::V1::BaseController
+class Api::V1::CharactersController < Api::V1::BaseController
 
   def create
     params[:characters].each do |c|
