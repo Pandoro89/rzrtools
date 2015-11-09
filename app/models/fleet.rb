@@ -14,7 +14,7 @@ class Fleet < ActiveRecord::Base
 
   before_create :initialize_fleet
 
-  validates :fleet_name, :presence => true, :if => :condition_testing?
+  # validates :fleet_name, :presence => true, :if => :condition_testing?
 
   scope :open, -> { where(status: 0) }
   scope :closed, -> { where(status: 1) }
