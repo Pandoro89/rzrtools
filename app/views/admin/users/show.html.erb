@@ -1,26 +1,41 @@
-<h4><%= @user.username%></h4>
+<h4>User: <%= @user.username%></h4>
 
-<%= form_for(:role, url: role_add_admin_users_path, html: { role: "form" }) do |f| %>
-  <div class="form-group">
-    <%= f.label :role %>
-    <%= f.collection_select :id, Role.where(:id => current_user.roles.collect{|ur| ur.id}), :id, :name, prompt: true %>
-  </div>
-  <%= f.submit  'Add Role', class: "btn btn-primary" %>
-<% end %>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Role</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @user.roles.each do |r| %>
-    <tr>
-      <td><%=r.name%></td>
-      <td><%= link_to 'Delete', role_delete_admin_users_path(:role_id => r.id), :method => 'post' if current_user.has_role? r.name%></td>
-    </tr>
+<div class="row">
+  <div class="col-md-4">
+    <%= form_for(:role, url: role_add_admin_users_path, html: { role: "form" }) do |f| %>
+      <div class="form-group">
+        <%= f.label :role %>
+        <%= f.collection_select :id, Role.where(:id => current_user.roles.collect{|ur| ur.id}), :id, :name, prompt: true %>
+      </div>
+      <%= f.submit  'Add Role', class: "btn btn-primary" %>
     <% end %>
-  </tbody>
-</table>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @user.roles.each do |r| %>
+        <tr>
+          <td><%=r.name%></td>
+          <td><%= link_to 'Delete', role_delete_admin_users_path(:role_id => r.id), :method => 'post' if current_user.has_role? r.name%></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-4">
+    <table class="table">
+    <tbody>
+      <% @user.characters.each do |c| %>
+      <tr>
+        <td><img src="http://image.eveonline.com/Character/<%=c.id%>_64.jpb"/> <%= c.char_name %> - <%= c.corp_name %> - <%=c.alliance_name %></td>
+      </tr>
+      <% end %>
+    </tbody>
+    </table>
+  </div>
+</div>

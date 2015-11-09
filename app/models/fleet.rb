@@ -14,6 +14,8 @@ class Fleet < ActiveRecord::Base
 
   before_create :initialize_fleet
 
+  validates :fleet_name, :presence => true, :if => :condition_testing?
+
   scope :open, -> { where(status: 0) }
   scope :closed, -> { where(status: 1) }
   scope :ignored, -> { where(status: 2) }
@@ -21,6 +23,10 @@ class Fleet < ActiveRecord::Base
   def initialize_fleet
     self.token = Digest::SHA1.hexdigest([Time.now, rand].join)
     self.close_at = DateTime.now + 1.hour
+  end
+
+  def validate_open_fleet_name
+   errors.add(:base, "There is already an open fleet with that name.") if Fleet.where(:name => name, :status => 0).size > 0
   end
 
   def to_s
@@ -47,6 +53,10 @@ class Fleet < ActiveRecord::Base
   def has_capitals?
     return true if fleet_positions.where(:fleet_role => [])
     false
+  end
+
+  def recent_fleets
+    
   end
 
   def join(character)

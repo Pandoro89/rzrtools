@@ -24,10 +24,20 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :api_keys, allow_destroy: true
 
+  after_save :queue_update
+
+  def queue_update
+    api_keys.each {|a| 
+      Resque.enqueue UpdateApiKeyJob, a.id
+    }
+  end
+
 
   def before_add_method(role)
     # do something before it gets added
     add_role "Razor Member" if role == "Fleet Commander"
+    add_role "Razor Member" if role == "Admin"
+    add_role "Razor Member" if role == "Troika"
   end
 
   def admin?

@@ -112,6 +112,17 @@ class Character < ActiveRecord::Base
     save
   end
 
+  def create_from_razor_smf(id, char_name, main_char_id, main_char_name)
+    c = Character.find_or_initialize_by_char_name(char_name)
+    m = Character.find_or_initialize_by_char_name(main_char_name)
+    m.id = main_char_id
+    m.save
+    c.id = id
+    c.main_char_id = main_char_id
+    c.main_name = main_char_name
+    c.save
+  end
+
   def set_from_env(env)
     self.env ||= env
     # set everything just in case member has changed corp, etc.

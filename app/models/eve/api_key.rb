@@ -10,8 +10,8 @@ class Eve::ApiKey < ActiveRecord::Base
 
   belongs_to :user
 
-  validates :key_code, presence: true, :on=>:create
-  validates :vcode, presence: true, :on=>:create
+  validates :key_code, presence: true
+  validates :vcode, presence: true
 
   after_create :queue_update
 
@@ -29,6 +29,7 @@ class Eve::ApiKey < ActiveRecord::Base
   end
   
   def update_characters
+    first_razor_char_id = 0
     api = EAAL::API.new(key_code, vcode)
     result = api.Characters
     result.characters.each{|character|
@@ -40,7 +41,12 @@ class Eve::ApiKey < ActiveRecord::Base
         char.corporation_id = character.corporationID
         char.corp_name = character.corporationName
         char.save
+        first_razor_char_id = character.characterID if ALLIANCE_ID==character.allianceID
     }
+
+    if user.main_char_id == 0
+      user.updatE_attributes(:main_char_id => first_razor_char_id)
+    end
   end
 
   def self.update_all_characters

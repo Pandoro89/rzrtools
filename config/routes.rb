@@ -69,6 +69,13 @@ Rails.application.routes.draw do
     resources :fleet_position_rules
   end
 
+  #api
+  namespace :api do
+    namespace :v1 do
+      resources :characters, only: [:index, :create, :show, :update, :destroy]
+    end
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
