@@ -8,7 +8,7 @@ import_zkillboard_watchlist:
 update_api_keys_job:
   every:
     - "1h"
-  queue: medium
+  queue: high
   custom_job_class: "UpdateApiKeysJob"
   args:
   description: "Update users api keys"

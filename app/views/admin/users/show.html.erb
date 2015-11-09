@@ -27,12 +27,12 @@
       </tbody>
     </table>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-6">
     <table class="table">
     <tbody>
       <% @user.characters.each do |c| %>
       <tr>
-        <td><img src="http://image.eveonline.com/Character/<%=c.id%>_64.jpb"/> <%= c.char_name %> - <%= c.corp_name %> - <%=c.alliance_name %></td>
+        <td><img src="https://imageserver.eveonline.com/Character/<%=c.id%>_64.jpg"/> <%= c.char_name %> - <%= c.corp_name %> - <%=c.alliance_name %></td>
       </tr>
       <% end %>
     </tbody>

@@ -19,7 +19,7 @@ class Admin::UsersController < Admin::ApplicationController
   def role_delete
     r = Role.find(params[:role_id])
     if r 
-      @user.remove_role r.name
+      @user.delete_role(r.name)
     end
     redirect_to admin_user_path
   end

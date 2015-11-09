@@ -13,9 +13,10 @@ class User < ActiveRecord::Base
   timestamps
 
   has_many :api_keys, class_name: "Eve::ApiKey"
-  has_many :roles, :through => :users_roles
+  has_many :roles, :through => :users_roles, dependent: :destroy
   belongs_to :main_char, class_name: "Character"
   has_many :characters, class_name: "Character"
+  # belongs_to :users_roles
 
   has_secure_password
   validates :username, uniqueness: true
@@ -26,12 +27,19 @@ class User < ActiveRecord::Base
 
   after_save :queue_update
 
+  def delete_role(role_name)
+    @r = Role.where(:name => role_name).first
+    return if !@r
+
+    roles.delete(@r)
+  end
+
+
   def queue_update
     api_keys.each {|a| 
       Resque.enqueue UpdateApiKeyJob, a.id
     }
   end
-
 
   def before_add_method(role)
     # do something before it gets added
@@ -42,6 +50,10 @@ class User < ActiveRecord::Base
 
   def admin?
     has_role? "Admin"
+  end
+
+  def troika?
+    has_role? "Troika"
   end
 
   def scout_commander?
@@ -73,7 +85,7 @@ class User < ActiveRecord::Base
 
   def self.remove_roles_for_non_alliance
     User.all.each do |u|
-      u.roles.each {|r| u.remove_role r} if Character.where(:user_id => u.id, :alliance_id => ALLIANCE_ID).count == 0
+      u.roles.each {|r| u.roles.delete(r)} if Character.where(:user_id => u.id, :alliance_id => ALLIANCE_ID).count == 0
     end
   end
 

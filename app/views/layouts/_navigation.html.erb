@@ -16,7 +16,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%=((current_user and current_user.main_char) ? "<img src=\"http://image.eveonline.com/#{current_user.main_char.id}_32.jpg\"/> #{current_user.main_char.char_name}" : 'Profile').html_safe%> <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%=((current_user and current_user.main_char) ? "<img src=\"https://imageserver.eveonline.com/Character/#{current_user.main_char.id}_32.jpg\"/> #{current_user.main_char.char_name}" : 'Profile').html_safe%> <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/profile">Profile</a></li>
             <li role="separator" class="divider"></li>
