@@ -18,10 +18,11 @@
 </div>
 
 <%= javascript_tag do %>
-  $('#watchlist_alliance').bind('railsAutocomplete.select', function(event, data){
+$('#watchlist_alliance').bind('railsAutocomplete.select', function(event, data){
   /* Do something here */
   $( "#watchlist_alliance_results" ).load( "/watchlists/alliance/?alliance_id=" +data.item.id,null, function() {
-    jQuery("abbr.timeago").timeago();
+    
   });
 });
+jQuery("abbr.timeago").timeago();
 <% end %>
