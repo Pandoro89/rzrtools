@@ -66,6 +66,7 @@ gem 'rolify'
 
 # gem 'whenever', :require => nil
 gem 'will_paginate'
+gem 'active_model_serializers'
 gem 'secure_headers'
 gem 'httparty'
 gem 'safe_cookies'
