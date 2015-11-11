@@ -8,9 +8,11 @@ class Fleet < ActiveRecord::Base
   property :description,                 type: :text
   property :close_at,                    type: :datetime
   property :status,                      type: :integer, default: "0"
+  property :created_by_id,               type: :integer
   timestamps
 
   has_many :fleet_positions
+  belongs_to :created_by, :class_name => "User"
 
   before_create :initialize_fleet
 
@@ -78,6 +80,17 @@ class Fleet < ActiveRecord::Base
     pap.special_role = special_role
     pap.char_name = character.char_name
     pap.main_name = character.main.char_name if character.main
+    pap.save
+  end
+
+  def remove_with_special_role(character, special_role)
+    return if FleetPosition.where(:fleet_id => self.id,:character_id => character.id).count < 1
+    pap = FleetPosition.where(:fleet_id => self.id,:character_id => character.id).first
+    pap.special_role = 'none'
+    if pap.ship_type_id.nil? or pap.ship_type_id <= 0
+      pap.delete 
+      return
+    end
     pap.save
   end
 end

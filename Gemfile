@@ -75,7 +75,7 @@ gem 'bcrypt'
 gem 'cityhash'
 gem 'iconv'
 gem 'identity_cache'
-gem 'rails4-autocomplete'
+gem 'rails-jquery-autocomplete'
 gem "capistrano-resque", "~> 0.2.2", require: false
 
 group :web do

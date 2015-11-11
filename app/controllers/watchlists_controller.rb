@@ -5,7 +5,9 @@ class WatchlistsController < ApplicationController
   def index
     @watchlists = []
     if params[:alliance_id]
-      @watchlists = Watchlist.where(:alliance_id => params[:alliance_id]).order(:last_seen_at => :desc) 
+      @watchlists = Watchlist.where(:alliance_id => params[:alliance_id]).order(:last_seen_at => :desc)
+    elsif params[:watchlist] and params[:watchlist][:alliance] and @alliance = Eve::AllianceCache.where(:name => params[:watchlist][:alliance]).first
+      @watchlists = Watchlist.where(:alliance_id => @alliance.id ).order(:last_seen_at => :desc)
     else
       @watchlists = Watchlist.where("last_seen_at >= ?",DateTime.now-6.hours).order(:last_seen_at => :desc)
     end

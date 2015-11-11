@@ -15,10 +15,10 @@ Link for Fleet: <%= link_to pap_url, pap_url %>
     <div role="tabpanel" class="tab-pane active" id="manage">
       <div >
   <div class="row">
-    <div class="col-md-2">FC</div>
-    <div class="col-md-2">CO-FC</div>
-    <div class="col-md-2">Logi Anchor</div>
-    <div class="col-md-2">Scouts</div>
+    <div class="col-md-2"><label>FC</label></div>
+    <div class="col-md-2"><label>CO-FC</label></div>
+    <div class="col-md-2"><label>Logi Anchor</label></div>
+    <div class="col-md-2"><label>Scouts</label></div>
   </div>
   <div class="row">
     <div class="col-md-2">
@@ -37,14 +37,14 @@ Link for Fleet: <%= link_to pap_url, pap_url %>
 
     </div>
     <div class="col-md-2">
-    <%= form_for(:fleet_position, url: special_role_fleets_path, html: { role: "form" }, :remote => true, data: { update_target: 'logi-list' }) do |f| %>
+    <%= form_for(:fleet_position, url: special_role_fleets_path, html: { role: "form" }, :remote => true, data: { update_target: 'logistics-list' }) do |f| %>
       <%= f.hidden_field :special_role, :value => "Logistics" %>
       <%= f.hidden_field :character_id, :id => "logi_fleet_position_character_id" %>
       <%= f.autocomplete_field :character_name, autocomplete_character_char_name_fleets_path,:"data-autocomplete-label" => "Sorry, nothing found.", :id => "logi_fleet_position_character_name" %>
     <% end %>      
     </div>
     <div class="col-md-2">
-    <%= form_for(:fleet_position, url: special_role_fleets_path, html: { role: "form" }, :remote => true, data: { update_target: 'scout-list' }) do |f| %>
+    <%= form_for(:fleet_position, url: special_role_fleets_path, html: { role: "form" }, :remote => true, data: { update_target: 'scouts-list' }) do |f| %>
       <%= f.hidden_field :special_role, :value => "Scouts" %>
       <%= f.hidden_field :character_id, :id => "scout_fleet_position_character_id" %>
       <%= f.autocomplete_field :character_name, autocomplete_character_char_name_fleets_path,:"data-autocomplete-label" => "Sorry, nothing found.", :id => "scout_fleet_position_character_name" %>
@@ -55,8 +55,8 @@ Link for Fleet: <%= link_to pap_url, pap_url %>
   <div class="row">
     <div class="col-md-2" id="fc-list">FC</div>
     <div class="col-md-2" id="cofc-list">CO-FC</div>
-    <div class="col-md-2" id="logi-list">Logi Anchor</div>
-    <div class="col-md-2" id="scout-list">Scouts</div>
+    <div class="col-md-2" id="logistics-list">Logi Anchor</div>
+    <div class="col-md-2" id="scouts-list">Scouts</div>
   </div>
 </div>
     </div>
@@ -91,6 +91,13 @@ Link for Fleet: <%= link_to pap_url, pap_url %>
           var target = $(this).data('update-target');
           $('#' + target).html(data);
       });
+
+
+      $(document).on('ajax:success', 'a[data-remote]', function(e, data, status, xhr){
+        var target = $($(e.target)[0]).attr('data-target');
+        $(target).html(data);
+      });
+
 
       updateAllSpecialLists();
       updateDetailTab();

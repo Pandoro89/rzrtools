@@ -25,6 +25,21 @@ class Watchlist < ActiveRecord::Base
     "Ship"
   end
 
+  def super?
+    return true if wl_type == 1 and Eve::InvType.where(:eve_group_id => 659 , :id => ship_type_id).size > 0
+    false
+  end
+
+  def titan?
+    return true if wl_type == 1 and Eve::InvType.where(:eve_group_id => 30 , :id => ship_type_id).size > 0
+    false
+  end
+
+  def fc?
+    return true if wl_type == 2 and !titan? and !super?
+    false
+  end
+
   def self.import_zkillboard
     @ship_type_ids = Eve::InvType.where("eve_group_id = 659 OR eve_group_id = 30").collect{|inv| inv.id}
     @ship_type_ids_s = @ship_type_ids.join(",")

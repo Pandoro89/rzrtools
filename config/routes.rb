@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     get :autocomplete_inv_type_name, :on => :collection
     get :autocomplete_group_name, :on => :collection
     match ':token/special_role' => 'fleets#special_role', :via => [:get, :post], :on => :collection, :as => :special_role
+    match ':token/remove_role' => 'fleets#remove_role', :via => [:delete], :on => :collection, :as => :remove_role
   end
   resources :watchlists do 
     get :autocomplete_alliance_cache_name, :on => :collection

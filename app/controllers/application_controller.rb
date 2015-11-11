@@ -98,6 +98,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_fc_or_higher
+    unless current_user and (current_user.admin? or current_user.scout_commander? or current_user.military_advisor? or current_user.fc? or current_user.troika?)
+      flash[:error] = "You must be an administrator to perform that action."
+      redirect_to root_path 
+    end
+  end
+
   def require_scout_commander_or_higher
     unless current_user and (current_user.admin? or current_user.scout_commander? or current_user.military_advisor?)
       flash[:error] = "You must be an administrator to perform that action."
