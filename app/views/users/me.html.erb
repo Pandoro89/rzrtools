@@ -1,5 +1,5 @@
 <div class="jumbotron">
   <h1>Welcome!</h1>
-  <p><%=@user.username%></p>
-  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+  <p><%= !@user.main_char.nil? ? @user.main_char.char_name : @user.username%></p>
+  
 </div>

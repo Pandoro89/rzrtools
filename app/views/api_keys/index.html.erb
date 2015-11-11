@@ -1,25 +1,35 @@
+<div>
 <%= link_to "Add API Key", new_api_key_path, :class => "btn btn-primary"%>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Key ID</th>
-      <th>vCode</th>
-      <th>Mask</th>
-      <th>Expires</th>
-      <th>Enables</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @api_keys.each do |r| %>
-    <tr>
-      <td><%= r.key_code %></td>
-      <td><%= r.vcode[0...6] %>...</td>
-      <td><%= r.access_mask %></td>
-      <td><%= r.expires_at %></td>
-      <td><%= r.characters.collect {|c| c.char_name }.join(", ") %></td>
-      <td><%= link_to "Edit", edit_api_key_path(r.id) %> | <%= link_to "Delete", api_key_path(r.id), :method => :delete, :confirm => "Are you sure you want to delete this key?" %></td>
-    </tr>
-  <% end %> 
-  </tbody>
-</table>
+</div>
+<% if @api_keys.size <= 0 %>
+  <br/>
+  <br/>
+  <div>
+  <p><strong>You must enter an API Key before you will be able to do anything on this site.</strong></p>
+  </div>
+<% else %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Key ID</th>
+        <th>vCode</th>
+        <th>Mask</th>
+        <th>Expires</th>
+        <th>Enables</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @api_keys.each do |r| %>
+      <tr>
+        <td><%= r.key_code %></td>
+        <td><%= r.vcode[0...6] %>...</td>
+        <td><%= r.access_mask %></td>
+        <td><%= r.expires_at %></td>
+        <td><%= r.characters.collect {|c| c.char_name }.join(", ") %></td>
+        <td><%= link_to "Edit", edit_api_key_path(r.id) %> | <%= link_to "Delete", api_key_path(r.id), :method => :delete, :confirm => "Are you sure you want to delete this key?" %></td>
+      </tr>
+    <% end %> 
+    </tbody>
+  </table>
+<% end %>
