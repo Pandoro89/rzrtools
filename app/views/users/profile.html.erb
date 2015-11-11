@@ -24,17 +24,6 @@
         <%= f.label :main_char_id, "Main Character" %>
         <%= f.select :main_char_id, Character.where(:user_id => @user.id).collect{|c| [c.char_name,c.id]}, {include_blank: 'None'} %>
       </div>
-      <div class="form-group">
-        <label>API Keys</label>
-        <%= f.nested_fields_for :api_keys,class_name: "Eve::ApiKey" do |ff| %>
-          <%= ff.remove_nested_fields_link %>
-          <%= ff.text_field :key_code %>
-          <%= ff.text_field :vcode %>
-        <% end %>
-      </div>
-      <div>
-      <%= f.add_nested_fields_link :api_keys %>
-      </div>
       <hr />
       <%= f.submit 'Save', class: "btn btn-primary" %>
     <% end %>

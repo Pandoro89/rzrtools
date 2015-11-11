@@ -19,7 +19,9 @@ class User < ActiveRecord::Base
   # belongs_to :users_roles
 
   has_secure_password
-  validates :username, uniqueness: true
+  validates :username, uniqueness: true, length: { minimum: 3 }
+  EMAIL_REGEX = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i
+  validates :email, uniqueness: true, length: { minimum: 3 }, :format => EMAIL_REGEX
   validates :password, presence: true, length: { minimum: 6 }, :on=>:create
   validates :password_confirmation, :presence=>true, :if => :password_digest_changed?
 
@@ -43,6 +45,7 @@ class User < ActiveRecord::Base
 
   def before_add_method(role)
     # do something before it gets added
+    add_role "Razor Member" if role == "Scout Commander"
     add_role "Razor Member" if role == "Fleet Commander"
     add_role "Razor Member" if role == "Admin"
     add_role "Razor Member" if role == "Troika"
@@ -62,6 +65,10 @@ class User < ActiveRecord::Base
 
   def military_advisor?
     has_role? "Military Advisor"
+  end  
+
+  def razor_member?
+    has_role? "Razor Member"
   end  
 
 

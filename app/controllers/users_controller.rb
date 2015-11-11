@@ -36,7 +36,10 @@ class UsersController < ApplicationController
   def create
     @user = User.create(user_params)
     if @user.save
-      redirect_to profile_path
+      session[:user_id] = user.id
+      session[:user_generation] = user.generation
+      
+      redirect_to api_keys_path
     else
       render 'new'
     end

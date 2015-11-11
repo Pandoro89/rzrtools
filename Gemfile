@@ -26,12 +26,15 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'responders'
 
 gem 'bootstrap-sass', '~> 3.3.5'
-gem 'mini_record'
-gem "paranoia", "~> 2.0"
+gem 'bootstrap_form'
 
+
+gem 'mini_record'
 gem 'mysql2'
 gem 'transaction_retry'
 gem 'static_model'
+gem "paranoia", "~> 2.0"
+
 
 gem 'resque'
 gem 'resque-pool'
@@ -77,6 +80,8 @@ gem 'iconv'
 gem 'identity_cache'
 gem 'rails-jquery-autocomplete'
 gem "capistrano-resque", "~> 0.2.2", require: false
+
+gem 'dalli'
 
 group :web do
   gem 'haml'

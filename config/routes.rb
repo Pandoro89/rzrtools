@@ -26,6 +26,9 @@ Rails.application.routes.draw do
       match 'destroy', :via => [:get, :delete], :as => :destroy
     end
   end
+  
+  resources :api_keys
+
   resources :users do
     get :me, :on => :collection
     get :profile, :on => :collection

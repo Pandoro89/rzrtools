@@ -1,5 +1,9 @@
 <div class="panel panel-default">
-Link for Fleet: <%= link_to pap_url, pap_url %>
+<div class="row">
+  <div class="col-md-6">
+  <strong>Link for Fleet:</strong> <%= link_to pap_url, pap_url %>
+  </div>
+</div>
 </div>
 
 <div>
@@ -25,14 +29,14 @@ Link for Fleet: <%= link_to pap_url, pap_url %>
     <%= form_for(:fleet_position, url: special_role_fleets_path, html: { role: "form" }, :remote => true, data: { update_target: 'fc-list' }) do |f| %>
       <%= f.hidden_field :special_role, :value => "FC" %>
       <%= f.hidden_field :character_id, :id => "fc_fleet_position_character_id" %>
-      <%= f.autocomplete_field :character_name, autocomplete_character_char_name_fleets_path,:"data-autocomplete-label" => "Sorry, nothing found.", :id => "fc_fleet_position_character_name" %>
+      <%= f.autocomplete_field :character_name, autocomplete_character_char_name_fleets_path,:"data-autocomplete-label" => "Sorry, nothing found.", :id => "fc_fleet_position_character_name", :placeholder => "FC" %>
     <% end %>
     </div>
     <div class="col-md-2">
       <%= form_for(:fleet_position, url: special_role_fleets_path, html: { role: "form" }, :remote => true, data: { update_target: 'cofc-list' }) do |f| %>
         <%= f.hidden_field :special_role, :value => "Co-FC" %>
         <%= f.hidden_field :character_id, :id => "cofc_fleet_position_character_id" %>
-        <%= f.autocomplete_field :character_name, autocomplete_character_char_name_fleets_path,:"data-autocomplete-label" => "Sorry, nothing found.", :id => "cofc_fleet_position_character_name" %>
+        <%= f.autocomplete_field :character_name, autocomplete_character_char_name_fleets_path,:"data-autocomplete-label" => "Sorry, nothing found.", :id => "cofc_fleet_position_character_name", :placeholder => "Co-FC" %>
       <% end %>
 
     </div>
@@ -40,14 +44,14 @@ Link for Fleet: <%= link_to pap_url, pap_url %>
     <%= form_for(:fleet_position, url: special_role_fleets_path, html: { role: "form" }, :remote => true, data: { update_target: 'logistics-list' }) do |f| %>
       <%= f.hidden_field :special_role, :value => "Logistics" %>
       <%= f.hidden_field :character_id, :id => "logi_fleet_position_character_id" %>
-      <%= f.autocomplete_field :character_name, autocomplete_character_char_name_fleets_path,:"data-autocomplete-label" => "Sorry, nothing found.", :id => "logi_fleet_position_character_name" %>
+      <%= f.autocomplete_field :character_name, autocomplete_character_char_name_fleets_path,:"data-autocomplete-label" => "Sorry, nothing found.", :id => "logi_fleet_position_character_name", :placeholder => "Logi Anchor" %>
     <% end %>      
     </div>
     <div class="col-md-2">
     <%= form_for(:fleet_position, url: special_role_fleets_path, html: { role: "form" }, :remote => true, data: { update_target: 'scouts-list' }) do |f| %>
       <%= f.hidden_field :special_role, :value => "Scouts" %>
       <%= f.hidden_field :character_id, :id => "scout_fleet_position_character_id" %>
-      <%= f.autocomplete_field :character_name, autocomplete_character_char_name_fleets_path,:"data-autocomplete-label" => "Sorry, nothing found.", :id => "scout_fleet_position_character_name" %>
+      <%= f.autocomplete_field :character_name, autocomplete_character_char_name_fleets_path,:"data-autocomplete-label" => "Sorry, nothing found.", :id => "scout_fleet_position_character_name", :placeholder => "Scouts" %>
     <% end %>   
 
     </div>

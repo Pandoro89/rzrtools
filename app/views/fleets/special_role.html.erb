@@ -9,7 +9,7 @@
     <% @special_roles.each do |s| %>
     <tr>
       <td><%= s.char_name %></td>
-      <td><%= link_to 'Remove', remove_role_fleets_path({:fleet_position => {:character_id => s.character_id,:special_role => s.special_role}}), {:method => :delete, :remote => true, 'data-target' => "\##{s.special_role.downcase.gsub(/(\W|\d)/, '')}-list"} %></td>
+      <td><%= link_to 'Remove', remove_role_fleets_path({:fleet_position => {:character_id => s.character_id,:special_role => s.special_role}}), {:method => :delete, :remote => true, 'data-target' => "\##{s.special_role.downcase.gsub(/(\W|\d)/, '')}-list"} if @fleet.open? %></td>
     </tr>
     <% end %>
   </tbody>

@@ -13,6 +13,9 @@
         <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
       </div>
       <%= f.submit  t('.sign_in', :default => "Sign in"), class: "btn btn-primary" %>
+      &nbsp;
+      &nbsp;
+      <%= link_to 'Register an Account',new_user_path %>
     <% end %>
   </div>
 </div>

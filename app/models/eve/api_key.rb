@@ -9,21 +9,23 @@ class Eve::ApiKey < ActiveRecord::Base
   timestamps
 
   belongs_to :user
+  has_many :characters, :foreign_key => :eve_api_key_id
 
   validates :key_code, presence: true
   validates :vcode, presence: true
 
   after_create :queue_update
+  before_destroy { |record| Character.where(:eve_api_key_id => record.id).update_attributes(:user_id => 0, :eve_api_key_id => 0) }
 
   def queue_update
-    Resque.enqueue UpdateApiKeyJob, id
+    Resque.enqueue UpdateApiKeyJob, id if !user.nil?
   end
 
   def update_access_mask
     api = EAAL::API.new(key_code, vcode)
     result = api.APIKeyInfo
     self.access_mask = result.key.attribs["accessMask"]
-    self.expires_at = result.key.attribs["expires"]
+    # self.expires_at = DateTime.parse(result.key.attribs["expires"])
     self.save
     return
   end
@@ -40,17 +42,21 @@ class Eve::ApiKey < ActiveRecord::Base
         char.alliance_name = character.allianceName
         char.corporation_id = character.corporationID
         char.corp_name = character.corporationName
+        char.eve_api_key_id = id
         char.save
-        first_razor_char_id = character.characterID if ALLIANCE_ID==character.allianceID
+        first_razor_char_id = character.characterID if ALLIANCE_ID == character.allianceID and first_razor_char_id == 0
     }
 
-    if user.main_char_id == 0
-      user.updatE_attributes(:main_char_id => first_razor_char_id)
+    # TODO: We should really diff the char_id's so we can know when a character "disappears" from the api, and do something with it
+
+    if user.main_char_id <= 0 and first_razor_char_id > 0
+      user.update_attributes(:main_char_id => first_razor_char_id)
+      user.add_role ROLE_RAZOR_MEMBER 
     end
   end
 
   def self.update_all_characters
-    Eve::ApiKey.all.each{ |a| a.update_characters}
+    Eve::ApiKey.all.each{ |a| a.update_characters }
   end
 
 end
