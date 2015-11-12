@@ -96,16 +96,16 @@ class Fleet < ActiveRecord::Base
   end
 
   def self.pilot_rewards_other(m, y)
-    first_date = Date.parse("#{y}-#{m}-1")
-    fleet_ids= Fleet.where("fleet_at >= ? and fleet_at <= ?", first_date, first_date.at_beginning_of_month.next_month).collect {|f| f.id }
+    first_date = DateTime.parse("#{y}-#{m}-1 00:00:00")
+    fleet_ids= Fleet.where("fleet_at >= ? and fleet_at < ?", first_date, first_date.at_beginning_of_month.next_month).collect {|f| f.id }
     paps=FleetPosition.where("fleet_id IN (?) AND ship_group_id != ? AND ship_type_id NOT IN (?)", fleet_ids, 832, [599]).order(:main_name, :char_name)
 
     Fleet.pilot_rewards(paps, 3_000_000_000)
   end
 
   def self.pilot_rewards_logistics(m, y)
-    first_date = Date.parse("#{y}-#{m}-1")
-    fleet_ids= Fleet.where("fleet_at >= ? and fleet_at <= ?", first_date, first_date.at_beginning_of_month.next_month).collect {|f| f.id }
+    first_date = DateTime.parse("#{y}-#{m}-1 00:00:00")
+    fleet_ids= Fleet.where("fleet_at >= ? and fleet_at < ?", first_date, first_date.at_beginning_of_month.next_month).collect {|f| f.id }
     paps = FleetPosition.where("fleet_id IN (?) AND (ship_group_id = ? OR ship_type_id IN (?))", fleet_ids, 832, [599]).order(:main_name, :char_name)
 
     Fleet.pilot_rewards(paps, 3_000_000_000)
@@ -147,7 +147,11 @@ class Fleet < ActiveRecord::Base
 
     #puts retRewards.to_json
 
-    perPap = pap_amt / sumPap;
+    if sumPap > 0
+      perPap = pap_amt / sumPap;
+    else
+      perPap = 0
+    end
     retRewards = retRewards.collect { |k,r|    
       if(r[:place] <= max_places)
         [:name => r[:name], :corp_name => r[:corp_name], :fleets => r[:fleets], :place => r[:place], :payout =>  perPap * r[:fleets]] 
