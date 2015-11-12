@@ -12,7 +12,7 @@
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Fleets <span class="caret"></span></a>
   <ul class="dropdown-menu">
     <li><a href="/fleets/">Open Fleets</a></li>
-    <% if current_user.can_make_paps? %>
+    <% if current_user and current_user.can_make_paps? %>
     <li><a href="/fleets/">Create Fleet</a></li>
     <li><a href="/fleets/ping_helper">Ping Helper</a></li>
     <% end %>
