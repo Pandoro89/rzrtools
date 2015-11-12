@@ -17,6 +17,7 @@ class ImportIgbFcPapsJob < Resque::Job
       joined_at = DateTime.parse(when_date[2]+"-"+when_date[0]+"-"+when_date[1] +" " + row[9])
       @fleet = Fleet.find_or_create_by(:description => row[3]) if @fleet.nil? or @fleet.description != row["Fleet"]
       @fleet.created_at = fleet_at
+      @fleet.fleet_at = fleet_at
       #@fleet.modified_at = fleet_at
       @fleet.save
       @pap = FleetPosition.find_or_create_by(:char_name => row[0], :fleet_id => @fleet.id)
