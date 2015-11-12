@@ -16,6 +16,8 @@
     <li><a href="/fleets/">Create Fleet</a></li>
     <li><a href="/fleets/ping_helper">Ping Helper</a></li>
     <% end %>
+    <li role="separator" class="divider"></li>
+    <li><a href="/fleets/rewards">Rewards</a></li>
   </ul>
 </li>
 <% if current_user and (current_user.troika? or current_user.military_advisor? or current_user.scout_commander? or current_user.admin?) %>
