@@ -25,6 +25,7 @@ class Fleet < ActiveRecord::Base
   def initialize_fleet
     self.token = Digest::SHA1.hexdigest([Time.now, rand].join)
     self.close_at = DateTime.now + 1.hour
+    self.fleet_at = DateTime.now
   end
 
   def validate_open_fleet_name
@@ -93,4 +94,68 @@ class Fleet < ActiveRecord::Base
     end
     pap.save
   end
-end
+
+  def self.pilot_rewards_other(m, y)
+    first_date = Date.parse("#{y}-#{m}-1")
+    fleet_ids= Fleet.where("fleet_at >= ? and fleet_at <= ?", first_date, first_date.at_beginning_of_month.next_month).collect {|f| f.id }
+    paps=FleetPosition.where("fleet_id IN (?) AND ship_group_id != ? AND ship_type_id NOT IN (?)", fleet_ids, 832, [599]).order(:main_name, :char_name)
+
+    Fleet.pilot_rewards(paps, 3_000_000_000)
+  end
+
+  def self.pilot_rewards_logistics(m, y)
+    first_date = Date.parse("#{y}-#{m}-1")
+    fleet_ids= Fleet.where("fleet_at >= ? and fleet_at <= ?", first_date, first_date.at_beginning_of_month.next_month).collect {|f| f.id }
+    paps = FleetPosition.where("fleet_id IN (?) AND (ship_group_id = ? OR ship_type_id IN (?))", fleet_ids, 832, [599]).order(:main_name, :char_name)
+
+    Fleet.pilot_rewards(paps, 3_000_000_000)
+  end
+
+  def self.pilot_rewards(paps, pap_amt)
+    max_places=20
+    retRewards = {}
+    paps.each {|p| 
+      name = (!p.main_name.nil?) ? p.main_name : p.char_name;
+      if retRewards[name].nil?
+        retRewards[name] = {:name => name, :corp_name =>  p.corp_name, :fleets => 1, :payout => nil, :place => -1}
+      else
+        retRewards[name][:fleets] += 1
+      end
+    }
+
+    retRewards = Hash[retRewards.sort_by{ |_, v| -v[:fleets] }]# .sort_by{|_key, value| value[:fleets]}.reverse!
+
+    p = 1
+    sumPap = 0
+    place = 1
+    realPlace = place
+    lastFleets = 0 
+    retRewards.each { |k,r| 
+      if(retRewards[k][:fleets] != lastFleets)
+        place = realPlace
+      end
+
+      retRewards[k][:place] = place
+
+      if place <= max_places
+        sumPap += retRewards[k][:fleets]
+      end
+
+      realPlace += 1
+      lastFleets = retRewards[k][:fleets]
+    }
+
+    #puts retRewards.to_json
+
+    perPap = pap_amt / sumPap;
+    retRewards = retRewards.collect { |k,r|    
+      if(r[:place] <= max_places)
+        [:name => r[:name], :corp_name => r[:corp_name], :fleets => r[:fleets], :place => r[:place], :payout =>  perPap * r[:fleets]] 
+      elsif r[:name] != ""
+        [:name => r[:name], :corp_name => r[:corp_name], :fleets => r[:fleets], :place => r[:place], :payout =>  0] 
+      end
+    }.reject{|r| r.nil? }.flatten
+
+    return retRewards
+  end
+end 

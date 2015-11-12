@@ -1,0 +1,96 @@
+<script type="text/javascript">
+      <!-- http://www.tizag.com/javascriptT/javascript-innerHTML.php -->
+      function createlines(){
+        var fleet = document.getElementById('fleet');
+        var time = document.getElementById('time');
+        var formup = document.getElementById('formup');
+        var fc = document.getElementById('fc');
+        var comms = document.getElementById('comms');
+        var cfcsrp = document.getElementById('cfcsrp');
+        var jabberroom = document.getElementById('jabberroom');
+        var comments = document.getElementById('comments');
+        var shiptypes = document.getElementById('shiptypes');
+
+        document.getElementById('ping').value = 'rzr-alert-bot: alert ' + ( jabberroom.value == '' ? 'rzr' : jabberroom.value) + ': ' + ( fleet.value == '' ? '' : 'Fleet Name: ' + fleet.value) + ( time.value == '' ? '' : ' || Time: ' + time.value) + ( fc.value == '' ? '' : ' || FC: ' + fc.value) + ( comms.value == '' ? '' : ' || Comms: ' + comms.value) + ( formup.value == '' ? '' : ' || Formup: ' + formup.value) + ( shiptypes.value == '' ? ( doctrine.value == '' ? '' : ' || Doctrine: ' + doctrine.value) : ' || Doctrine: ' + shiptypes.value) + ( fleet.value == '' ? '' : ( cfcsrp.value == '' ? '' : ' || Reimbursable: ' + cfcsrp.value)) + (comments.value == '' ? '' : ( fleet.value == '' ? '' : ' || Comments: ' ) + comments.value);
+        document.getElementById('cfcping').value = '!requestbcast all Fleet Name: ' + fleet.value + ( fc.value == '' ? '' : '\n' + ' || FC: ' + fc.value) + ( time.value == '' ? '' : ' || Time: ' + time.value) + ( shiptypes.value == '' ? ( doctrine.value == '' ? '' : ' || Shiptypes: ' + doctrine.value) : ' || Shiptypes: ' + shiptypes.value) + ( comms.value == '' ? '' : ' || Comms: ' + comms.value) + ( formup.value == '' ? '' : ' || Formup: ' + formup.value) + ( cfcsrp.value == '' ? '' : ' || Reimbursable: ' + cfcsrp.value) + ( comments.value == '' ? '' : ' || Comments: ' + comments.value);
+      };
+    </script>
+
+    <h1>RZR - ping helper</h1>
+    <table>
+      <tr><td><h2>Input</h2></td><td></td></tr>
+      <form onsubmit="return false" oninput="pap.value = fleet.value +' - '+ time.value">
+        <tr><td>Fleet Title</td><td><input type="text" id="fleet" style="width: 300px; height: 22px"></td></tr>
+        <tr><td>Time</td><td><input type="text" id="time" style="width: 300px; height: 22px"></td></tr>
+        <tr><td>FC name</td><td><input type="text" id="fc" style="width: 300px; height: 22px"></td></tr>
+        <tr><td>Comms / op channel</td><td><input type="text" id="comms" style="width: 300px; height: 22px"></td></tr>
+        <tr><td>Form-up location</td><td><input type="text" id="formup" style="width: 300px; height: 22px"></td></tr>
+        <tr><td>Fleet doctrine manual</td><td><input type="text" id="shiptypes" style="width: 300px; height: 22px"></td></tr>
+        <tr><td>Fleet doctrine list</td><td>
+          <select id="doctrine" style="width: 300px; height: 22px">
+          <option value=" " selected></option>
+          <option value="Cerberus Fleet: Boosts > Scimitar MWD > Cerberus HML > Huginn/Lachesis > Dictors > Ceptors">Cerberus HML</option>
+          <option value="Cerberus Fleet: Boosts > Scimitar MWD > Cerberus RLML > Huginn/Lachesis > Dictors > Ceptors">Cerberus RLML</option>
+          <option value="Caracal Fleet: Boosts > Scythe > Caracal HML > Bellicose > Dictors > Ceptors">Caracal HML / Scythe</option>
+          <option value="Caracal Fleet: Boosts > Burst AB > Caracal HML > Bellicose > Dictors > Ceptors">Caracal HML / Burst AB</option>
+          <option value="Caracal Fleet: Boosts > Scythe > Caracal RLML > Bellicose > Dictors > Ceptors">Caracal RLML / Scythe</option>
+          <option value="Caracal Fleet: Boosts > Burst AB > Caracal RLML > Bellicose > Dictors > Ceptors">Caracal RLML / Burst AB</option>
+          <option value="Feroxfleet: Offgrid Boosts > Ongrid Boosts (Claymore and Vulture) > Scimitar AB > Scythe/Osprey > Ferox > Huginn > Dictors > Lachesis > Vigils and Crucifiers/Maulus">Ferox (Firecrotch)</option>
+          <option value="Proteus/Legion ﻿Fleet: Boosts > AB Guardian/Oneiros > Proteus/Legion > Celestis/Lachesis > Ashimmu/Huginn > Tackle Loki > Dictors > Ceptors">Proteus</option>
+          <option value="Svipul Fleet: Boosts > Burst > Svipul > EAF's > Dictors > Ceptors">Svipul</option>
+          <option value="Tengu Fleet: Scimitar AB > Tengu > Huginn/Lachesis > Dictors > Ceptors">Tengu</option>
+          </select> note: manual entry gets priority over list</td></tr>
+        <tr><td>SRP able</td><td>
+          <select id="cfcsrp" style="width: 300px; height: 22px">
+          <option value="yes">yes</option>
+          <option value="no">no</option>
+          <option value="maybe">maybe</option>
+          <option value="stratop">Imperium stratop</option>
+          <option value="peacetime">Imperium peacetime</option>
+          </select>
+        </td></tr>
+        <tr><td>Comments</td><td><textarea type="text" id="comments" style="width: 300px; rows: 3" ></textarea></td></tr>
+        <tr><td>Jabber room</td><td>
+          <select id="jabberroom" style="width: 300px; height: 22px">
+          <option value="rzr" selected>rzr</option>
+          <option value="rzr-fc">rzr-fc</option>
+          <option value="rzr-military">rzr-military</option>
+          <option value="delta-force">delta-force</option>
+          <option value="rzr-diplo">rzr-diplo</option>
+          <option value="rzr-leadership">rzr-leadership</option>
+          <option value="rzr-mash">rzr-mash</option>
+          <option value="rzr-rofl">rzr-rofl</option>
+          <option value="rzr-scouts">rzr-scouts</option>
+          <option value="sofa">rzr-sofa</option>
+          <option value="rzr-super">rzr-super</option>
+          <option value="rzr-titan">rzr-titan</option>
+          <option value="antwe">antwe</option>
+          <option value="bovrl">bovrl</option>
+          <option value="cei">cei</option>
+          <option value="decad">decad</option>
+          <option value="gd">gd</option>
+          <option value="gld">gld</option>
+          <option value="hdhde">hdhde</option>
+          <option value="inet">inet</option>
+          <option value="minc">minc</option>
+          <option value="rg">rg</option>
+          <option value="tos">tos</option>
+          <option value="twen">twen</option>
+          <option value="vx9ig">vx9ig</option>
+          <option value="zet">zet</option>
+          </select>
+        RZR Ping</td></tr>
+        <tr><td></td><td>
+          <input type='button' onclick='createlines()' value='Submit' /><input type="reset" value="Reset">
+        </td></tr>
+        <tr><td><h2>output</h2></td><td>Copy paste the line below</td></tr>
+        <tr><td>RZR Ping</td><td><input onclick="this.select();" id="ping" style="background-color: grey; width: 300px; height: 22px" readonly></input></td></tr>
+        <tr><td>Imperium Ping</td><td><input onclick="this.select();" id="cfcping" style="background-color: grey; width: 300px; height: 22px" readonly></input></td></tr>
+      </form>
+    </table>
+    <br />
+    <h2>Instructions</h2>
+    This page helps you by allowing you to fill in some fields to create a copy/paste for either a pap-link or jabber-ping.<br />
+    Just fill in the boxes and hit "submit". After that, click one of the boxes at the bottom and press CTRL-C to copy the value to your clipboard.<br /><br />
+    Feedback you can give by sending me <a href="mailto:cei-maestro@eve-razor.com?subject=Feedback RZR-pap/ping helper&body=Awesome! Let me give you loads of isk!">an email</a>, sending me an evemail in-game or posting in <a href="https://www.eve-razor.com/forum/index.php?topic=42147.0">this thread</a>.<br /><br /><br />
+    <a href="mailto:cei-maestro@eve-razor.com?subject=Feedback RZR-pap/ping helper&body=Awesome! Let me give you loads of isk!">[CEI] Maestr0</a>

@@ -84,8 +84,15 @@ class FleetsController < ApplicationController
     end
   end
 
-  def destroy
+  def ping_helper
     # Do nothing for now
+  end
+
+  def rewards
+    month = params[:month] || DateTime.now.strftime("%m")
+    year = params[:year] || DateTime.now.strftime("%Y")
+    @other_pilot_rewards = Fleet.pilot_rewards_other(month,year)
+    @logi_pilot_rewards = Fleet.pilot_rewards_logistics(month,year)
   end
 
   protected ###################################################

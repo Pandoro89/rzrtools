@@ -1,18 +1,28 @@
-<%= link_to "Create Participation Link", new_fleet_path, class: "btn btn-primary" %> 
+<p>
+<div class="row">
+   <div class="col-md-6">
+   <%= link_to "Create Participation Link", new_fleet_path, class: "btn btn-primary" %> 
+   <%= link_to "Ping Helper", ping_helper_fleets_path, class: "btn btn-primary" %> 
+   </div>
+</div>
+</p>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h4>Open Paps</h4>
-  </div>
-  <div class="panel-body">
-  <ul>
-    <% Fleet.open.each do |f| %>
-      <li>
-      <%=link_to f.to_s, pap_path(f.token) %> 
-      <%=link_to "Manage", manage_fleets_path(f.token) if current_user.military_advisor? %>
-      </li>
-    <% end %>
-  </ul>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>Open Paps</h4>
+      </div>
+      <div class="panel-body">
+      <ul>
+        <% Fleet.open.each do |f| %>
+          <li>
+          <%=link_to f.to_s, pap_path(f.token) %> 
+          <%=link_to "Manage", manage_fleets_path(f.token) if current_user.military_advisor? %>
+          </li>
+        <% end %>
+      </ul>
+      </div>
+    </div>
   </div>
 </div>
-

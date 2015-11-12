@@ -6,6 +6,7 @@ ROLE_FLEET_COMMANDER = "Fleet Commander"
 ROLE_RAZOR_RECON = "Razor Recon"
 ROLE_RAZOR_SCOUT = "Razor Scout"
 ROLE_RAZOR_MEMBER = "Razor Member"
+ROLE_MAKE_PAPS = "PAP Creator"
 
 
 Rolify.configure do |config|

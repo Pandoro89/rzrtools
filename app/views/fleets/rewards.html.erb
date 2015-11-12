@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-md-6">
+    <h4>Fleet Rewards</h4>
+    <table class="table table-stripped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Corp</th>
+          <th>Fleets</th>
+          <th>Reward</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @other_pilot_rewards.each do |r|
+          
+         %>
+          <tr>
+            <td><%= r[:name] %></td>
+            <td><%= r[:corp_name] %></td>
+            <td><%= r[:fleets] %></td>
+            <td><%= number_to_currency(r[:payout]) %></td>
+          </tr>
+        <% end %>        
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <h4>Logistics Rewards</h4>
+    <table class="table table-stripped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Corp</th>
+          <th>Fleets</th>
+          <th>Reward</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @logi_pilot_rewards.each do |r|
+          
+         %>
+          <tr>
+            <td><%= r[:name] %></td>
+            <td><%= r[:corp_name] %></td>
+            <td><%= r[:fleets] %></td>
+            <td><%= number_to_currency(r[:payout]) %></td>
+          </tr>
+        <% end %>        
+      </tbody>
+    </table>
+  </div>
+</div>

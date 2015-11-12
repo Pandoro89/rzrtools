@@ -67,8 +67,16 @@ class User < ActiveRecord::Base
     has_role? "Military Advisor"
   end  
 
+  def fleet_commander?
+    has_role? ROLE_FLEET_COMMANDER
+  end  
+
   def razor_member?
     has_role? "Razor Member"
+  end
+
+  def can_make_paps?
+    has_role? ROLE_MAKE_PAPS or has_role? ROLE_FLEET_COMMANDER or has_role? ROLE_MILITARY_ADVISOR
   end  
 
 
