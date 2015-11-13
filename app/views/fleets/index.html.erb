@@ -18,7 +18,7 @@
         <% Fleet.open.each do |f| %>
           <li>
           <%=link_to f.to_s, pap_path(f.token) %> 
-          <%=link_to "Manage", manage_fleets_path(f.token) if current_user.military_advisor? %>
+          <%=link_to "Manage", manage_fleets_path(f.token) if current_user and current_user.military_advisor? %>
           </li>
         <% end %>
       </ul>
