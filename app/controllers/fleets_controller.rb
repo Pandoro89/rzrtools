@@ -89,8 +89,8 @@ class FleetsController < ApplicationController
   end
 
   def rewards
-    month = params[:month] || DateTime.now.strftime("%m")
-    year = params[:year] || DateTime.now.strftime("%Y")
+    month = params[:date][:month] || DateTime.now.strftime("%m")
+    year = params[:date][:year] || DateTime.now.strftime("%Y")
     @other_pilot_rewards = Fleet.pilot_rewards_other(month,year)
     @logi_pilot_rewards = Fleet.pilot_rewards_logistics(month,year)
   end
