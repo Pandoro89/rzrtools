@@ -1,8 +1,8 @@
 <div class="row">
 <p>
   <%= bootstrap_form_tag(:method => "get") do |f| %>
-    <%= select_month(Date.today) %>
-    <%= select_year(Date.today, start_year: 2014, end_year: Date.today.strftime("%Y").to_i) %>
+    <%= select_month(@month.to_i) %>
+    <%= select_year(@year.to_i, start_year: 2014, end_year: Date.today.strftime("%Y").to_i, selected: @year) %>
     <%= f.submit 'Change Month', class: "btn btn-primary" %>
   <% end %>
 </p>
@@ -15,7 +15,7 @@
         <tr>
           <th>Name</th>
           <th>Corp</th>
-          <th>Fleets</th>
+          <th>Points</th>
           <th>Reward</th>
         </tr>
       </thead>
@@ -26,7 +26,7 @@
           <tr>
             <td><%= r[:name] %></td>
             <td><%= r[:corp_name] %></td>
-            <td><%= r[:fleets] %></td>
+            <td><%= r[:points] %></td>
             <td><%= number_to_currency(r[:payout]) %></td>
           </tr>
         <% end %>        
@@ -40,7 +40,7 @@
         <tr>
           <th>Name</th>
           <th>Corp</th>
-          <th>Fleets</th>
+          <th>Points</th>
           <th>Reward</th>
         </tr>
       </thead>
@@ -51,7 +51,7 @@
           <tr>
             <td><%= r[:name] %></td>
             <td><%= r[:corp_name] %></td>
-            <td><%= r[:fleets] %></td>
+            <td><%= r[:points] %></td>
             <td><%= number_to_currency(r[:payout]) %></td>
           </tr>
         <% end %>        

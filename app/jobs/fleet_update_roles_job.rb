@@ -1,5 +1,5 @@
 class FleetUpdateRolesJob < Resque::Job
-  @queue = :high
+  @queue = :medium
 
   def self.perform(fleet_id)
     FleetPosition.where(:fleet_id => fleet_id,:rules_applied => 0).each { |fp|

@@ -14,7 +14,11 @@ class ImportIgbPapsJob < Resque::Job
       puts row
       when_date = row[6].split("/")
       fleet_at = DateTime.parse(when_date[2]+"-"+when_date[0]+"-"+when_date[1] +" " + row[7])
-      @fleet = Fleet.find_or_create_by(:description => row[3]) if @fleet.nil? or @fleet.description != row["Fleet"]
+      @fleet = Fleet.where("description = ? AND created_at >= ? AND created_at <= ?",row[3], fleet_at - 2.hours, fleet_at + 2.hours).first
+      if @fleet.nil?
+        @fleet = Fleet.create(:description => row[3], :fleet_at => fleet_at)
+      end
+      #@fleet = Fleet.find_or_create_by(:description => row[3]) if @fleet.nil? or @fleet.description != row["Fleet"]
       @fleet.fleet_at = fleet_at
       @fleet.created_at = fleet_at
       #@fleet.modified_at = fleet_at

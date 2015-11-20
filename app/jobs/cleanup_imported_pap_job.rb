@@ -1,5 +1,5 @@
 class CleanupImportedPapJob < Resque::Job
-  @queue = :high
+  @queue = :low
 
   def self.perform()
     FleetPosition.where(:character_id => 0).each { |fp|
