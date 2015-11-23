@@ -13,15 +13,15 @@
   <ul class="dropdown-menu">
     <li><a href="/fleets/">Open Fleets</a></li>
     <% if current_user and current_user.can_make_paps? %>
-    <li><a href="/fleets/">Create Fleet</a></li>
-    <li><a href="/fleets/ping_helper">Ping Helper</a></li>
+      <li><a href="/fleets/">Create Fleet</a></li>
+      <li><a href="/fleets/ping_helper">Ping Helper</a></li>
     <% end %>
     <% if current_user %>
-    <li role="separator" class="divider"></li>
-    <li><a href="/fleets/rewards">Rewards</a></li>
-    <% if current_user and current_user.fleet_commander? %>
-    <li><a href="/fleets/fc_rewards">FC Rewards</a></li>
-    <% end %>
+      <li role="separator" class="divider"></li>
+      <li><a href="/fleets/rewards">Rewards</a></li>
+      <% if current_user and current_user.fleet_commander? %>
+      <li><a href="/fleets/fc_rewards">FC Rewards</a></li>
+      <% end %>
     <% end %>
   </ul>
 </li>
