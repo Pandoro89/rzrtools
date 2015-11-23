@@ -231,4 +231,70 @@ class Fleet < ActiveRecord::Base
 
     return retRewards
   end
+
+  def self.fc_rewards(month, year)
+    month_dt = Date.parse("#{year}-#{month}-01")
+    # get list of fleets/positions for FC role, for 
+    # loop each entry, calculate the points based on position
+    # Add to the final array [name, fc_points, cofc_points, logi_points, fc_fleets, cofc_fleets, logi_fleets]
+    # - Then, return this array for display  we can do a 2 table layout for FC activity and points/payout
+    # - 
+
+    retFcRewards = {}
+    FleetPosition.where("special_role != 'none' AND special_role IS NOT NULL AND created_at >= ? AND created_at < ? AND fleet_id NOT IN (SELECT id FROM fleets WHERE status > 1)",month_dt,month_dt +1.month).each {|fp|
+      name = (!p.main_name.nil?) ? p.main_name : p.char_name;
+      if retFcRewards[name].nil?
+        retFcRewards[name] = {:name => name, :fc_fleets => 0, :fc_points => 0, :cofc_fleets => 0, :cofc_points => 0, :logi_fleets => 0, :logi_points => 0}
+      end
+      fleet_size = Fleet.find(fp.fleet_id).fleet_positions.count
+      if fp.special_role == 'FC'
+        retFcRewards[name][:fc_fleets] += 1
+      elsif fp.special_role == 'Co-FC'
+        retFcRewards[name][:cofc_fleets] += 1
+      elsif fp.special_role == 'Logi FC'
+        retFcRewards[name][:logi_fleets] += 1
+      end
+    }
+
+    retFcRewards.reject {|k,v|
+      v[:fc_fleets] == 0 and v[:cofc_fleets] == 0 and v[:logi_fleets] == 0
+    }
+
+
+    retFcRewards.flatten
+  end
+
+  def self.fc_fleet_size_points(fleet_size, position)
+    if position == "FC"
+      if fleet_size <= 20
+        return 1
+      elsif fleet_size <= 60
+        return 2
+      elsif fleet_size <= 100
+        return 2
+      else 
+        return 1
+      end
+    elsif position == "Co-FC"
+      if fleet_size <= 20
+        return 1
+      elsif fleet_size <= 60
+        return 2
+      elsif fleet_size <= 100
+        return 2
+      else 
+        return 1
+      end
+    elsif position == "Logi FC"
+      if fleet_size <= 20
+        return 1
+      elsif fleet_size <= 60
+        return 2
+      elsif fleet_size <= 100
+        return 2
+      else 
+        return 1
+      end
+    end
+  end
 end 

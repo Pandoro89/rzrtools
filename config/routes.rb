@@ -37,9 +37,10 @@ Rails.application.routes.draw do
   get 'profile' =>  'users#profile', :as => 'profile'
 
   resources :fleets, param: :token do
-    get    'rewards'   => 'fleets#rewards', :on => :collection, :as => 'rewards'
+    get    'rewards'       => 'fleets#rewards',     :on => :collection, :as => 'rewards'
+    get    'fc_rewards'    => 'fleets#fc_rewards',  :on => :collection, :as => 'fc_rewards'
     get    'ping_helper'   => 'fleets#ping_helper', :on => :collection, :as => 'ping_helper'
-    get    ':token/manage' => 'fleets#manage', :on => :collection, :as => 'manage'
+    get    ':token/manage' => 'fleets#manage',      :on => :collection, :as => 'manage'
     get    ':token/detail' => 'fleets#detail', :on => :collection, :as => 'detail'
     get    ':token/detail' => 'fleets#close', :on => :collection, :as => 'close'
     # post   ':token' => 'fleets#update'
