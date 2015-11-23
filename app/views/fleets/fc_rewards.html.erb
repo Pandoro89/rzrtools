@@ -1,0 +1,67 @@
+<div class="row">
+<p>
+  <%= bootstrap_form_tag(:method => "get") do |f| %>
+    <%= select_month(@month.to_i) %>
+    <%= select_year(@year.to_i, start_year: 2014, end_year: Date.today.strftime("%Y").to_i, selected: @year) %>
+    <%= f.submit 'Change Month', class: "btn btn-primary" %>
+  <% end %>
+</p>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h4>Fleet Count</h4>
+    <table class="table table-stripped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>FC</th>
+          <th>Co-FC</th>
+          <th>Logi</th>
+          <th>Participants</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @fc_rewards.each do |k,r|
+          
+         %>
+          <tr>
+            <td><%= r[:name] %></td>
+            <td><%= r[:fc_fleets] %></td>
+            <td><%= r[:cofc_fleets] %></td>
+            <td><%= r[:logi_fleets] %></td>
+            <td><%= r[:fc_size]+ r[:cofc_size] +r[:logi_size] %></td>
+          </tr>
+        <% end %>        
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <h4>Fleet Rewards</h4>
+    <table class="table table-stripped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Plex</th>
+          <th>Total Points</th>
+          <th>FC</th>
+          <th>Co-FC</th>
+          <th>Logi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @fc_rewards.each do |k,r|
+          
+         %>
+          <tr>
+            <td><%= r[:name] %></td>
+            <td><%= r[:plex] %></td>
+            <td><%= r[:points] %></td>
+            <td><%= r[:fc_points] %></td>
+            <td><%= r[:cofc_points] %></td>
+            <td><%= r[:logi_points] %></td>
+          </tr>
+        <% end %>        
+      </tbody>
+    </table>
+  </div>
+</div>

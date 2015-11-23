@@ -242,58 +242,96 @@ class Fleet < ActiveRecord::Base
 
     retFcRewards = {}
     FleetPosition.where("special_role != 'none' AND special_role IS NOT NULL AND created_at >= ? AND created_at < ? AND fleet_id NOT IN (SELECT id FROM fleets WHERE status > 1)",month_dt,month_dt +1.month).each {|fp|
-      name = (!p.main_name.nil?) ? p.main_name : p.char_name;
+      name = (!fp.main_name.nil?) ? fp.main_name : fp.char_name;
       if retFcRewards[name].nil?
-        retFcRewards[name] = {:name => name, :fc_fleets => 0, :fc_points => 0, :cofc_fleets => 0, :cofc_points => 0, :logi_fleets => 0, :logi_points => 0}
+        retFcRewards[name] = {:name => name, :points => 0, :plex => 0, :fc_fleets => 0, :fc_points => 0, :fc_size => 0, :cofc_fleets => 0, :cofc_points => 0, :cofc_size=>0, :logi_fleets => 0, :logi_points => 0, :logi_size => 0}
       end
       fleet_size = Fleet.find(fp.fleet_id).fleet_positions.count
       if fp.special_role == 'FC'
         retFcRewards[name][:fc_fleets] += 1
+        retFcRewards[name][:fc_size] += fleet_size
+        retFcRewards[name][:fc_points] += Fleet.fc_fleet_size_points(fleet_size,"FC")
       elsif fp.special_role == 'Co-FC'
         retFcRewards[name][:cofc_fleets] += 1
+        retFcRewards[name][:cofc_size] += fleet_size
+        retFcRewards[name][:cofc_points] += Fleet.fc_fleet_size_points(fleet_size,"Co-FC")
       elsif fp.special_role == 'Logi FC'
         retFcRewards[name][:logi_fleets] += 1
+        retFcRewards[name][:logi_size] += fleet_size
+        retFcRewards[name][:logi_points] += Fleet.fc_fleet_size_points(fleet_size,"Logi FC")
       end
+    }
+
+    retFcRewards.each {|k,v|
+      retFcRewards[k][:plex] += Fleet.fc_plex_by_points(v[:fc_points] + v[:cofc_points] + v[:logi_points])
+      retFcRewards[k][:points] += v[:fc_points] + v[:cofc_points] + v[:logi_points]
     }
 
     retFcRewards.reject {|k,v|
       v[:fc_fleets] == 0 and v[:cofc_fleets] == 0 and v[:logi_fleets] == 0
     }
 
+    retFcRewards = Hash[retFcRewards.sort_by{ |_, v| -v[:points] }] # .sort_by{|_key, value| value[:fleets]}.reverse!
 
-    retFcRewards.flatten
+
+    retFcRewards
+  end
+
+  def self.fc_plex_by_points(points)
+    return 0 if points <= 0
+    if points >= 60 and points < 150
+      return 1
+    elsif points >= 150 and points < 300 
+      return 2
+    elsif  points >= 300 
+      return 3
+    end
+
+    0
   end
 
   def self.fc_fleet_size_points(fleet_size, position)
     if position == "FC"
       if fleet_size <= 20
-        return 1
+        return 2
+      elsif fleet_size <= 40
+        return 4
       elsif fleet_size <= 60
-        return 2
+        return 6
+      elsif fleet_size <= 80
+        return 8
       elsif fleet_size <= 100
-        return 2
+        return 10
       else 
-        return 1
+        return 10
       end
     elsif position == "Co-FC"
       if fleet_size <= 20
         return 1
+      elsif fleet_size <= 40
+        return 2
       elsif fleet_size <= 60
-        return 2
+        return 3
+      elsif fleet_size <= 80
+        return 4
       elsif fleet_size <= 100
-        return 2
+        return 4
       else 
-        return 1
+        return 4
       end
     elsif position == "Logi FC"
       if fleet_size <= 20
+        return 0.5
+      elsif fleet_size <= 40
         return 1
       elsif fleet_size <= 60
+        return 1.5
+      elsif fleet_size <= 80
         return 2
       elsif fleet_size <= 100
         return 2
       else 
-        return 1
+        return 2
       end
     end
   end
