@@ -17,7 +17,7 @@ Role.create(:name => "Troika")
 Role.create(:name => "Military Advisor")
 Role.create(:name => "Scout Commander")
 Role.create(:name => "Corp Leadership")
-Role.create(:name => "FC")
+Role.create(:name => "Fleet Commander")
 Role.create(:name => "Scout")
 Role.create(:name => "Razor Member")
 

@@ -71,6 +71,8 @@ class Fleet < ActiveRecord::Base
     pap.save
     # Resque.enqueue SingleFleetPositionRulesJob pap.id
     FleetPositionRule.apply_rules(pap.id)
+
+    return pap
   end
 
   def join_with_special_role(character, special_role)

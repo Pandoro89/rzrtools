@@ -83,6 +83,9 @@ gem "capistrano-resque", "~> 0.2.2", require: false
 
 gem 'dalli'
 
+gem 'rgl'
+gem 'dijkstra'
+
 group :web do
   gem 'haml'
   gem "haml-rails", "~> 0.9"

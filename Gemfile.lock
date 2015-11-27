@@ -36,6 +36,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    algorithms (0.6.1)
     ar_transaction_changes (1.0.2)
       activerecord (>= 3.0, < 5.0)
     arel (6.0.3)
@@ -85,6 +86,7 @@ GEM
     daemons (1.2.3)
     dalli (2.7.4)
     debug_inspector (0.0.2)
+    dijkstra (0.0.2)
     eaal (0.1.16)
       faraday (>= 0.8.4)
       hpricot (>= 0.6)
@@ -231,6 +233,9 @@ GEM
       resque
       sass-rails
       twitter-bootstrap-rails
+    rgl (0.5.1)
+      algorithms (~> 0.6.1)
+      stream (~> 0.5.0)
     rolify (4.1.1)
     roman-numerals (0.3.0)
     ruby_parser (3.7.2)
@@ -272,6 +277,7 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     static_model (1.1.0)
+    stream (0.5)
     thin (1.6.4)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -330,6 +336,7 @@ DEPENDENCIES
   cityhash
   coffee-rails (~> 4.1.0)
   dalli
+  dijkstra
   eaal
   haml
   haml-rails (~> 0.9)
@@ -355,6 +362,7 @@ DEPENDENCIES
   resque-scheduler-web
   resque-status
   resque-web
+  rgl
   rolify
   roman-numerals
   safe_cookies

@@ -16,7 +16,7 @@ class TravelController < ApplicationController
     results = g.shortest_path(params[:travel][:to_system_id].to_i,params[:travel][:from_system_id].to_i)
     logger.debug [params[:travel][:from_system_id].to_i,params[:travel][:to_system_id].to_i]
     logger.debug results
-    @travel_systems = results[0].map {|r| Eve::SolarSystem.find(r)}
+    @travel_systems = results.map {|r| Eve::SolarSystem.find(r)}
 
     respond_to do |format|
       format.html { render :layout => !request.xhr? }
