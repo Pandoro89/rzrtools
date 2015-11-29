@@ -21,6 +21,7 @@ class ImportIgbPapsJob < Resque::Job
       #@fleet = Fleet.find_or_create_by(:description => row[3]) if @fleet.nil? or @fleet.description != row["Fleet"]
       @fleet.fleet_at = fleet_at
       @fleet.created_at = fleet_at
+      @fleet.status = 1
       #@fleet.modified_at = fleet_at
       @fleet.save
       @pap = FleetPosition.find_or_create_by(:char_name => row[0], :fleet_id => @fleet.id)
