@@ -14,6 +14,12 @@ class Admin::JumpBridgesController < Admin::ApplicationController
   end
 
   def create
+    if params[:jump_bridge][:from_solar_system_id].to_i == 0 or params[:jump_bridge][:to_solar_system_id].to_i == 0
+      @jump_bridge = JumpBridge.new(form_params)
+      flash[:error] = "Invalid system."
+      return render 'new'
+    end
+
     @jump_bridge = JumpBridge.create(form_params)
     if @jump_bridge.save
       flash[:success] = "Jump bridge saved."
