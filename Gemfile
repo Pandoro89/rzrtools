@@ -34,6 +34,7 @@ gem 'mysql2'
 gem 'transaction_retry'
 gem 'static_model'
 gem "paranoia", "~> 2.0"
+gem "auto_strip_attributes", "~> 2.0"
 
 
 gem 'resque'

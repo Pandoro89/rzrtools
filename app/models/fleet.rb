@@ -16,6 +16,8 @@ class Fleet < ActiveRecord::Base
 
   before_create :initialize_fleet
 
+  auto_strip_attributes :fc_name, :fleet_name, :description
+
   # validates :fleet_name, :presence => true, :if => :condition_testing?
 
   scope :open, -> { where(status: 0) }

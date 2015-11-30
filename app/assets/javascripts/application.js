@@ -20,9 +20,4 @@
 //= require jquery.inputmask.bundle.min
 //= require bootstrap-sprockets
 //= require nested_form_fields
-//= require_tree .
-
-
-$( document ).ready(function() {
-  $("abbr.timeago").timeago();
-});
+//# ### require_tree .
