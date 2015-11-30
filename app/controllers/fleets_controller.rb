@@ -22,7 +22,8 @@ class FleetsController < ApplicationController
   end
 
   def new
-    @fleet = Fleet.new(fleet_params)
+    @fleet = Fleet.new(fleet_params) if params[:fleet] and params[:fleet][:fc_name]
+    @fleet ||= Fleet.new
   end
 
   def create
