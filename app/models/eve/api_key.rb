@@ -45,9 +45,6 @@ class Eve::ApiKey < ActiveRecord::Base
         char.eve_api_key_id = id
         char.save
         first_razor_char_id = char.id if ALLIANCE_ID.to_i == character.allianceID.to_i and first_razor_char_id == 0
-        puts "char: #{char.id}"
-        puts "first_razor_char_id: #{first_razor_char_id}"
-        puts "ALLIANCE_ID: #{character.allianceID} == #{ALLIANCE_ID}"
     }
 
     # TODO: We should really diff the char_id's so we can know when a character "disappears" from the api, and do something with it
