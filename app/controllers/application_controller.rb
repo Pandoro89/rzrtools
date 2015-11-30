@@ -73,9 +73,6 @@ class ApplicationController < ActionController::Base
 
   def require_igb_razor_or_user
     get_character_and_force_update
-    logger.debug("--------")
-    logger.debug("----:: #{@current_character}")
-    logger.debug("----:: #{@current_user}")
     if !(@current_character and @current_character.alliance_id == ALLIANCE_ID) and !(current_user and current_user.has_role? ROLE_RAZOR_MEMBER)
       flash.now[:error] = "IGB and Trusted Site Required"
       flash.now[:notice] = "You must be using the Eve in-game-browser and mark the site as 'trusted' to list or create fleets. If you're already in a fleet, you can copy the direct fleet URL while in-game to your out of game browser."
