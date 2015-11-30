@@ -113,14 +113,17 @@ class Character < ActiveRecord::Base
   end
 
   def self.create_from_razor_smf(id, char_name, main_char_id, main_char_name)
-    c = Character.find_or_initialize_by_char_name(char_name)
-    m = Character.find_or_initialize_by_char_name(main_char_name)
+    c = Character.find_or_initialize_by_id(id)
+    m = Character.find_or_initialize_by_id(main_char_id)
+    c.char_name = char_name if c.char_name.nil?
     m.id = main_char_id
+    m.char_name = main_char_name if m.main_char_name.nil?
     m.save
     c.id = id
     c.main_char_id = main_char_id
-    c.main_name = main_char_name
+    c.main_name = m.char_name
     c.save
+    
   end
 
   def set_from_env(env)
