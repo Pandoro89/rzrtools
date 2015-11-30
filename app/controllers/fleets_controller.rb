@@ -5,7 +5,7 @@ class FleetsController < ApplicationController
   # TODO Find a way to do this as a background task instead
   before_filter :purge_fleets, :only => [:index]
   before_filter :require_igb_razor_or_user, :only => [:index]
-  before_filter :require_fc_or_higher, :only => [:create, :manage, :destroy, :close, :fc_rewards]
+  before_filter :require_fc_or_higher, :only => [:create, :show, :manage, :destroy, :close, :fc_rewards]
 
   # autocomplete :character, :char_name
   autocomplete :group, :name, :class_name => "Eve::Group"
@@ -33,7 +33,6 @@ class FleetsController < ApplicationController
     end
 
     @fleet = Fleet.new(fleet_params)
-    @fleet.fc_name = 
 
     if @fleet.save
       @fleet.update_column(:created_by_id, current_user.id)
@@ -74,8 +73,6 @@ class FleetsController < ApplicationController
       @fleet.remove_with_special_role(character, params[:fleet_position][:special_role])
     end
 
-    logger.debug request.xhr?
-    logger.debug "--- xhr" if request.xhr?
 
     @special_roles = FleetPosition.where(:fleet => @fleet, :special_role => params[:fleet_position][:special_role])
     respond_to do |format|
