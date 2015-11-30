@@ -27,12 +27,13 @@ class FleetsController < ApplicationController
   end
 
   def create
-    @fleet = Fleet.where(:fc_name => fleet_params[:fleet][:fc_name], :fleet_name => fleet_params[:fleet][:fleet_name], :status => 0).first
+    @fleet = Fleet.where(:fc_name => params[:fleet][:fc_name], :fleet_name => params[:fleet][:fleet_name], :status => 0).first
     if !@fleet.nil?
-      redirect_to :action => "manage", :token => @fleet.token
+      return redirect_to :action => "manage", :token => @fleet.token
     end
 
     @fleet = Fleet.new(fleet_params)
+    @fleet.fc_name = 
 
     if @fleet.save
       @fleet.update_column(:created_by_id, current_user.id)
