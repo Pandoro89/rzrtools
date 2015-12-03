@@ -115,7 +115,7 @@ class Character < ActiveRecord::Base
   def self.create_from_razor_smf(id, char_name, main_char_id, main_char_name)
     c = Character.where(:id => id).first
     c = Character.new(:char_name => char_name) if c.nil?
-    m = Character.where(:id => main_char_id)
+    m = Character.where(:id => main_char_id).first
     m = Character.new(:char_name => char_name) if m.nil?
     c.char_name = char_name if c.char_name.nil?
     m.id = main_char_id

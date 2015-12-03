@@ -35,6 +35,7 @@ gem 'transaction_retry'
 gem 'static_model'
 gem "paranoia", "~> 2.0"
 gem "auto_strip_attributes", "~> 2.0"
+gem 'rolify'
 
 
 gem 'resque'
@@ -66,7 +67,8 @@ gem 'pry-rails'
 
 gem 'eaal'
 
-gem 'rolify'
+
+gem 'google_drive'
 
 # gem 'whenever', :require => nil
 gem 'will_paginate'
