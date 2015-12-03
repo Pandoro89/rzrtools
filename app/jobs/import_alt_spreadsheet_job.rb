@@ -7,8 +7,8 @@ class ImportAltSpreadsheetJob < Resque::Job
   def self.perform()
 
     # The client ID and client secret you obtained in the step above.
-    CLIENT_ID = ...
-    CLIENT_SECRET = ...
+    CLIENT_ID = "..."
+    CLIENT_SECRET = "..."
 
     session = GoogleDrive.saved_session("./stored_token.json", nil, CLIENT_ID, CLIENT_SECRET)
 
