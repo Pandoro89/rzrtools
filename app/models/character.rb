@@ -119,7 +119,7 @@ class Character < ActiveRecord::Base
     m = Character.new(:char_name => char_name) if m.nil?
     c.char_name = char_name if c.char_name.nil?
     m.id = main_char_id
-    m.char_name = main_char_name if m.main_char_name.nil?
+    m.char_name = main_char_name if m.char_name.nil?
     m.save
     c.id = id
     c.main_char_id = main_char_id
