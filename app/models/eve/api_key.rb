@@ -34,8 +34,9 @@ class Eve::ApiKey < ActiveRecord::Base
     first_razor_char_id = 0
     api = EAAL::API.new(key_code, vcode)
     result = api.Characters
-    result.characters.each{|character|
-        char = Character.find_or_initialize_by_char_name(character.name)
+    result.characters.each{ |character|
+        char = Character.where(:id => character.characterID).first
+        char ||= Character.new(:id => character.characterID, :char_name => character.name)
         char.id = character.characterID
         char.user_id = user_id
         char.alliance_id = character.allianceID

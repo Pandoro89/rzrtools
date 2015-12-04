@@ -71,7 +71,9 @@ Rails.application.routes.draw do
       post ':id/role_add' => 'users#role_add', :on => :collection, :as => 'role_add'
       post ':id/role_delete' => 'users#role_delete', :on => :collection, :as => 'role_delete'
     end
-    resources :operations
+    resources :operations, :only => [] do
+      match 'manual_alts' => 'operations#manual_alts', :via => [:get, :post], :on => :collection, :as => :manual_alts
+    end
     resources :jump_bridges
     resources :watchlists
     resources :fleet_position_rules

@@ -113,19 +113,29 @@ class Character < ActiveRecord::Base
   end
 
   def self.create_from_razor_smf(id, char_name, main_char_id, main_char_name)
+    api = EAAL::API.new("", "")
+    api.scope = "eve"
+
     c = Character.where(:id => id).first
     c = Character.new(:char_name => char_name) if c.nil?
     m = Character.where(:id => main_char_id).first
     m = Character.new(:char_name => char_name) if m.nil?
-    c.char_name = char_name if c.char_name.nil?
-    m.id = main_char_id
-    m.char_name = main_char_name if m.char_name.nil?
-    m.save
     c.id = id
+    if c.char_name.nil?
+      result = api.CharacterName(:ids => c.id)
+      c.char_name = result.characters.first.name
+      c.char_name = char_name if c.char_name.nil?
+    end
+    m.id = main_char_id
+    if m.char_name.nil?
+      result = api.CharacterName(:ids => m.id)
+      m.char_name = result.characters.first.name
+      m.char_name = main_char_name if m.char_name.nil?
+    end
+    m.save
     c.main_char_id = main_char_id
     c.main_name = m.char_name
     c.save
-
   end
 
   def set_from_env(env)

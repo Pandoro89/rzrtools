@@ -28,7 +28,7 @@ import_igb_fc_pap_job:
   description: "Update fc igb pap"
 cleanup_imported_pap_job:
   every:
-    - "1h"
+    - "6h"
   queue: low
   custom_job_class: "CleanupImportedPapJob"
   args:
