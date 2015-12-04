@@ -40,3 +40,10 @@ close_fleets_job:
   custom_job_class: "CloseFleetsJob"
   args:
   description: "close open fleets"
+fleets_update_roles_job:
+  every:
+    - "3h"
+  queue: medium
+  custom_job_class: "FleetsUpdateRolesJob"
+  args:
+  description: "update roles for fleets"
