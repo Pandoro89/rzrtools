@@ -21,7 +21,7 @@ class Admin::OperationsController < Admin::ApplicationController
           end
           if main_c.nil?
             main_c = c
-          else
+          elsif c.char_name != main_c.char_name
             c.main_name = main_c.char_name
             c.main_char_id = main_c.id
           end
