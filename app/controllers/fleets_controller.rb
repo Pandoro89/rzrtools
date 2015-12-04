@@ -5,7 +5,7 @@ class FleetsController < ApplicationController
   # TODO Find a way to do this as a background task instead
   before_filter :purge_fleets, :only => [:index]
   before_filter :require_igb_razor_or_user, :only => [:index]
-  before_filter :require_fc_or_higher, :only => [:create, :show, :manage, :destroy, :close, :fc_rewards]
+  before_filter :require_fc_or_higher, :only => [:create, :show, :manage, :destroy, :close, :fc_rewards, :special_role, :remove_role]
 
   # autocomplete :character, :char_name
   autocomplete :group, :name, :class_name => "Eve::Group"
@@ -99,18 +99,18 @@ class FleetsController < ApplicationController
 
   def rewards
     @month = params[:date][:month] if params[:date] and params[:date][:month]
-    @month ||= DateTime.now.strftime("%m") 
+    @month ||= (DateTime.now - 1.month).strftime("%m") 
     @year = params[:date][:year] if params[:date] and params[:date][:year]
-    @year ||= DateTime.now.strftime("%Y")
+    @year ||= (DateTime.now - 1.month).strftime("%Y")
     @other_pilot_rewards = Fleet.pilot_rewards_other_points(@month, @year)
     @logi_pilot_rewards = Fleet.pilot_rewards_logistics_points(@month, @year)
   end
 
   def fc_rewards
     @month = params[:date][:month] if params[:date] and params[:date][:month]
-    @month ||= DateTime.now.strftime("%m") 
+    @month ||= (DateTime.now - 1.month).strftime("%m") 
     @year = params[:date][:year] if params[:date] and params[:date][:year]
-    @year ||= DateTime.now.strftime("%Y")
+    @year ||= (DateTime.now - 1.month).strftime("%Y")
 
     @fc_rewards = Fleet.fc_rewards(@month, @year)
   end
