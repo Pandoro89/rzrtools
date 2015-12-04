@@ -17,7 +17,8 @@ class Admin::OperationsController < Admin::ApplicationController
           c = Character.where(:char_name => t).first
           if c.nil?
             result = api.CharacterID(:names => t)
-            c = Character.new(:char_name => t, :id => result.characters.first.characterID) 
+            c = Character.where(:id => result.characters.first.characterID).first
+            c = Character.new(:char_name => t, :id => result.characters.first.characterID) if c.nil?
           end
           if main_c.nil?
             main_c = c
