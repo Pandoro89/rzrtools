@@ -37,6 +37,7 @@ class CleanupImportedPapJob < Resque::Job
       begin
         result2 = api.CharacterInfo(:characterID => char.id)
       rescue EveAPIException522
+        char.delete
         next
       end
       char.corporation_id = result2.corporationID
