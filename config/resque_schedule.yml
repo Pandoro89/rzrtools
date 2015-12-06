@@ -47,3 +47,17 @@ fleets_update_roles_job:
   custom_job_class: "FleetsUpdateRolesJob"
   args:
   description: "update roles for fleets"
+export_members_csv_job:
+  every:
+    - "3h"
+  queue: medium
+  custom_job_class: "ExportMembersCsvJob"
+  args:
+  description: "export csv for external tools"
+export_members_csv_job:
+  every:
+    - "3h"
+  queue: medium
+  custom_job_class: "ExportMembersCsvJob"
+  args:
+  description: "export csv for external tools"

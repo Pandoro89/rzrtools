@@ -70,6 +70,7 @@ class Fleet < ActiveRecord::Base
       pap = FleetPosition.where(:fleet_id => self.id,:character_id => character.id).first
     end
     pap.set_from_env(character.env)
+    pap.main_name = character.main_name
     pap.save
     # Resque.enqueue SingleFleetPositionRulesJob pap.id
     FleetPositionRule.apply_rules(pap.id)

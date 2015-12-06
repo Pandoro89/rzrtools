@@ -1,4 +1,6 @@
 class ExportMembersCsvJob
+  @queue = :low
+  
   def self.perform()
     file_path = Rails.root.join('public','static','pap','a','741557221','members_current.csv')
 

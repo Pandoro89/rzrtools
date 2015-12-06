@@ -43,7 +43,7 @@ class Character < ActiveRecord::Base
   property :region_id,          type: :integer, limit: 8 , default: "0"
   property :region_name,        type: :string, limit: 255, default: ""
   property :user_id,            type: :integer, default: "0"
-  property :main_char_id,            type: :integer, default: "0"
+  property :main_char_id,       type: :integer, default: "0"
   timestamps
   #property :tag_id,             :integer
 

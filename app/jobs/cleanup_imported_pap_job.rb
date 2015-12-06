@@ -22,9 +22,10 @@ class CleanupImportedPapJob < Resque::Job
       end
     }
     FleetPosition.where(:ship_group_id => 0).each {|fp|
-      @item = Eve::Group.where(:name => fp.ship_group_name).first
+      @item = Eve::Group.where(:name => fp.ship_group_name).first if !fp.ship_group_name.nil? and fp.ship_group_name != ""
+      @item ||= Eve::InvType.where(:id => fp.ship_type_id).first.try(:eve_group)
       if @item 
-        fp.update_attributes(:ship_group_id => @item.id)
+        fp.update_attributes(:ship_group_id => @item.id, :ship_group_name => @item.name)
       else
         # TODO, fetch?
       end
@@ -33,7 +34,11 @@ class CleanupImportedPapJob < Resque::Job
     api = EAAL::API.new("", "")
     api.scope = "eve"
     Character.where(:corporation_id => 0).each {|char|
-      result2 = api.CharacterInfo(:characterID => char.id)
+      begin
+        result2 = api.CharacterInfo(:characterID => char.id)
+      rescue EveAPIException522
+        next
+      end
       char.corporation_id = result2.corporationID
       char.corp_name = result2.corporation
       begin

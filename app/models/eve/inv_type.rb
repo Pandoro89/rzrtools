@@ -14,5 +14,6 @@ class Eve::InvType < ActiveRecord::Base
   property :icon_id,            type: :integer 
   # GROUPID TYPENAME  DESCRIPTION MASS  VOLUME  CAPACITY  PORTIONSIZE RACEID  BASEPRICE PUBLISHED MARKETGROUPID ICONID  SOUNDID
 
+  belongs_to :eve_group, class_name: "Eve::Group"
 
 end

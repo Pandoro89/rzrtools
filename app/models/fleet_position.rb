@@ -59,5 +59,10 @@ class FleetPosition < ActiveRecord::Base
     self.ship_id = env["HTTP_EVE_SHIPID"]
     self.ship_type_name = env["HTTP_EVE_SHIPTYPENAME"]
     self.ship_type_id = env["HTTP_EVE_SHIPTYPEID"]
+    item = Eve::InvType.where(:id => self.ship_type_id).first
+    if item and item.eve_group
+      self.ship_group_id = item.eve_group.id
+      self.ship_group_name = item.eve_group.name
+    end
   end
 end

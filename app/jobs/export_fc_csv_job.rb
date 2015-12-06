@@ -1,4 +1,6 @@
 class ExportFcCsvJob
+  @queue = :low
+  
   def self.perform()
     month_dt = Date.today.beginning_of_month
     file_path = Rails.root.join('public','static','pap','a','741557221','members_fc_'+month_dt.strftime('%Y%m')+'.csv')
