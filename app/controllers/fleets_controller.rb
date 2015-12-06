@@ -53,6 +53,7 @@ class FleetsController < ApplicationController
     if @fleet
       @fleet.join(@current_character)
     end
+    @pap_corp_members = FleetPosition.where(:fleet => @fleet,:corporation_id => @current_character.env["HTTP_EVE_CORPID"])
   end
 
   def special_role

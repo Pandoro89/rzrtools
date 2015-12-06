@@ -3,6 +3,20 @@
     <h4><%= t('.fleet', :default => "Joining Fleet") %></h4>
   </div>
   <div class="panel-body">
-  Your position has been recorded
+  <% if @current_character.env['HTTP_EVE_STATIONID'].to_i > 0 %>
+     You are <strong>docked</strong>, and will not be recorded in this fleet.
+  <% else %>
+    <strong>Your position has been recorded in <%= @current_character.env['HTTP_EVE_SHIPTYPENAME'] %>.</strong>
+    <hr />
+    <div class="row">
+      <div class="col-md-6">
+      <strong>Other people in your corp:</strong><br/>
+        <% @pap_corp_members.each do |m| %>
+          <%= m.char_name %><br/>
+        <% end %>
+      </div>
+      <div class="col-md-6"><img src="https://imageserver.eveonline.com/Corporation/<%= @current_character.env['HTTP_EVE_CORPID'] %>_128.png"/></div>
+    </div>
+  <% end %>
   </div>
 </div>
