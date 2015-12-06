@@ -35,11 +35,11 @@ class FleetPosition < ActiveRecord::Base
   add_index [:fleet_id,:character_id], name: 'fleet_character'
 
   def docked
-    return "docked" if !station_name.nil?
+    return "docked" if station_id > 0
   end
 
   def docked?
-    true if !station_name.nil?
+    true if station_id > 0
     false
   end
 
@@ -55,6 +55,7 @@ class FleetPosition < ActiveRecord::Base
     self.constellation_name = env["HTTP_EVE_CONSTELLATIONNAME"]
     self.solar_system_name = env["HTTP_EVE_SOLARSYSTEMNAME"]
     self.station_name = env["HTTP_EVE_STATIONNAME"]
+    self.station_id = env["HTTP_EVE_STATIONID"]
     self.ship_name = env["HTTP_EVE_SHIPNAME"]
     self.ship_id = env["HTTP_EVE_SHIPID"]
     self.ship_type_name = env["HTTP_EVE_SHIPTYPENAME"]
@@ -64,5 +65,6 @@ class FleetPosition < ActiveRecord::Base
       self.ship_group_id = item.eve_group.id
       self.ship_group_name = item.eve_group.name
     end
+    self.station_name = nil if self.station_name == 'NULL'
   end
 end
