@@ -31,6 +31,7 @@ class ImportIgbFcPapsJob < Resque::Job
       @pap.created_at = fleet_at
       @pap.main_name = row[1]
       @pap.main_name = @char.main_name if @pap.main_name.nil? or @pap.main_name == ""
+      @pap.main_name = nil if @pap.main_name == ""
       @pap.special_role = row[5]
       @pap.ship_type_name = row[6]
       @ship_item = Eve::InvType.where(:name => @pap.ship_type_name).first
