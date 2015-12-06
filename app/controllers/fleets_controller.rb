@@ -36,7 +36,7 @@ class FleetsController < ApplicationController
 
     if @fleet.save
       @fleet.update_column(:created_by_id, current_user.id)
-      redirect_to :action => "manage", :token => @fleet.token
+      return redirect_to :action => "manage", :token => @fleet.token
     end
 
     render 'new'
