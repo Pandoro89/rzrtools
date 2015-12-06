@@ -53,5 +53,10 @@ class CleanupImportedPapJob < Resque::Job
       Eve::CorporationCache.add_or_update(result2.corporationID,result2.corporation) if result2.corporationID
       FleetPosition.where(:char_name => char.char_name).update_all(:character_id => char.id)
     }
+
+    FleetPosition.where("main_name IS NULL or main_name = ''").each{ |fp|
+      char = Character.where(:id => fp.character_id)
+      fp.update_attributes(:main_name => char.main_name) if !char.main_name.nil? and char.main_name != "" 
+    }
   end
 end
