@@ -55,7 +55,7 @@ class CleanupImportedPapJob < Resque::Job
     }
 
     FleetPosition.where("main_name IS NULL or main_name = ''").each{ |fp|
-      char = Character.where(:id => fp.character_id)
+      char = Character.where(:id => fp.character_id).first
       fp.update_attributes(:main_name => char.main_name) if !char.main_name.nil? and char.main_name != "" 
     }
   end
