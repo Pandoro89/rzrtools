@@ -137,7 +137,7 @@ class Fleet < ActiveRecord::Base
     max_places=20
     retRewards = {}
     paps.each {|p| 
-      name = (!p.main_name.nil?) ? p.main_name : p.char_name;
+      name = (!p.main_name.nil? and p.main_name.strip != "") ? p.main_name : p.char_name;
       if retRewards[name].nil?
         retRewards[name] = {:name => name, :corp_name =>  p.corp_name, :fleets => 1, :payout => nil, :place => -1}
       else
@@ -190,7 +190,7 @@ class Fleet < ActiveRecord::Base
     max_places=20
     retRewards = {}
     paps.each {|p| 
-      name = (!p.main_name.nil?) ? p.main_name : p.char_name;
+      name = (!p.main_name.nil? and p.main_name.strip != "") ? p.main_name : p.char_name;
       if retRewards[name].nil?
         retRewards[name] = {:name => name, :corp_name =>  p.corp_name, :points => p.points, :payout => nil, :place => -1}
       else
