@@ -104,7 +104,7 @@ class Fleet < ActiveRecord::Base
   def self.pilot_rewards_other(m, y)
     first_date = DateTime.parse("#{y}-#{m}-1 00:00:00")
     fleet_ids= Fleet.where("fleet_at >= ? and fleet_at < ?", first_date, first_date.at_beginning_of_month.next_month).collect {|f| f.id }
-    paps=FleetPosition.where("fleet_id IN (?) AND fleet_role != ?", fleet_ids, "Logistics").order(:main_name, :char_name)
+    paps=FleetPosition.where("alliance_id = ? AND fleet_id IN (?) AND fleet_role != ?", ALLIANCE_ID, fleet_ids, "Logistics").order(:main_name, :char_name)
 
     Fleet.pilot_rewards(paps, 3_000_000_000)
   end
@@ -112,7 +112,7 @@ class Fleet < ActiveRecord::Base
   def self.pilot_rewards_logistics(m, y)
     first_date = DateTime.parse("#{y}-#{m}-1 00:00:00")
     fleet_ids= Fleet.where("fleet_at >= ? and fleet_at < ?", first_date, first_date.at_beginning_of_month.next_month).collect {|f| f.id }
-    paps = FleetPosition.where("fleet_id IN (?) AND fleet_role = ?", fleet_ids, "Logistics").order(:main_name, :char_name)
+    paps = FleetPosition.where("alliance_id = ? AND fleet_id IN (?) AND fleet_role = ?", ALLIANCE_ID, fleet_ids, "Logistics").order(:main_name, :char_name)
 
     Fleet.pilot_rewards(paps, 3_000_000_000)
   end
@@ -120,7 +120,7 @@ class Fleet < ActiveRecord::Base
   def self.pilot_rewards_other_points(m, y)
     first_date = DateTime.parse("#{y}-#{m}-1 00:00:00")
     fleet_ids= Fleet.where("fleet_at >= ? and fleet_at < ?", first_date, first_date.at_beginning_of_month.next_month).collect {|f| f.id }
-    paps=FleetPosition.where("fleet_id IN (?) AND fleet_role != ?", fleet_ids, "Logistics").order(:main_name, :char_name)
+    paps=FleetPosition.where("alliance_id = ? AND fleet_id IN (?) AND fleet_role != ?", ALLIANCE_ID, fleet_ids, "Logistics").order(:main_name, :char_name)
 
     Fleet.pilot_rewards_points(paps, 3_000_000_000)
   end
@@ -128,7 +128,7 @@ class Fleet < ActiveRecord::Base
   def self.pilot_rewards_logistics_points(m, y)
     first_date = DateTime.parse("#{y}-#{m}-1 00:00:00")
     fleet_ids= Fleet.where("fleet_at >= ? and fleet_at < ?", first_date, first_date.at_beginning_of_month.next_month).collect {|f| f.id }
-    paps = FleetPosition.where("fleet_id IN (?) AND fleet_role = ?", fleet_ids, "Logistics").order(:main_name, :char_name)
+    paps = FleetPosition.where("alliance_id = ? AND fleet_id IN (?) AND fleet_role = ?", ALLIANCE_ID, fleet_ids, "Logistics").order(:main_name, :char_name)
 
     Fleet.pilot_rewards_points(paps, 3_000_000_000)
   end
@@ -247,7 +247,7 @@ class Fleet < ActiveRecord::Base
     # - 
 
     retFcRewards = {}
-    FleetPosition.where("special_role != 'none' AND special_role IS NOT NULL AND created_at >= ? AND created_at < ? AND fleet_id NOT IN (SELECT id FROM fleets WHERE status > 1)",month_dt,month_dt +1.month).each {|fp|
+    FleetPosition.where("alliance_id = ? AND special_role != 'none' AND special_role IS NOT NULL AND created_at >= ? AND created_at < ? AND fleet_id NOT IN (SELECT id FROM fleets WHERE status > 1)", ALLIANCE_ID,month_dt,month_dt +1.month).each {|fp|
       name = (!fp.main_name.nil?) ? fp.main_name : fp.char_name;
       if retFcRewards[name].nil?
         retFcRewards[name] = {:name => name, :points => 0, :plex => 0, :fc_fleets => 0, :fc_points => 0, :fc_size => 0, :cofc_fleets => 0, :cofc_points => 0, :cofc_size=>0, :logi_fleets => 0, :logi_points => 0, :logi_size => 0}

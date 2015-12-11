@@ -54,10 +54,10 @@ export_members_csv_job:
   custom_job_class: "ExportMembersCsvJob"
   args:
   description: "export csv for external tools"
-export_members_csv_job:
+export_fc_csv_job:
   every:
     - "3h"
   queue: medium
-  custom_job_class: "ExportMembersCsvJob"
+  custom_job_class: "ExportFCCsvJob"
   args:
   description: "export csv for external tools"
