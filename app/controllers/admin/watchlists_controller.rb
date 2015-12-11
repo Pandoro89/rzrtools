@@ -23,6 +23,7 @@ class Admin::WatchlistsController < Admin::ApplicationController
       result2 = api.CharacterInfo(:characterID => c.characterID)
       @watchlist.corp_id = result2.corporationID
       @watchlist.corp_name = result2.corporation
+      @watchlist.char_id = c.characterID
       begin
         @watchlist.alliance_id = result2.allianceID if result2.allianceID
         @watchlist.alliance_name = result2.alliance if result2.alliance
