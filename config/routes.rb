@@ -73,6 +73,7 @@ Rails.application.routes.draw do
     end
     resources :operations, :only => [] do
       match 'manual_alts' => 'operations#manual_alts', :via => [:get, :post], :on => :collection, :as => :manual_alts
+      match 'manual_jump_bridges' => 'operations#manual_jump_bridges', :via => [:get, :post], :on => :collection, :as => :manual_jump_bridges
     end
     resources :jump_bridges
     resources :watchlists
