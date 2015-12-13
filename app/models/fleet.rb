@@ -248,7 +248,7 @@ class Fleet < ActiveRecord::Base
 
     retFcRewards = {}
     FleetPosition.where("alliance_id = ? AND special_role != 'none' AND special_role IS NOT NULL AND created_at >= ? AND created_at < ? AND fleet_id NOT IN (SELECT id FROM fleets WHERE status > 1)", ALLIANCE_ID,month_dt,month_dt +1.month).each {|fp|
-      name = (!fp.main_name.nil?) ? fp.main_name : fp.char_name;
+      name = (!fp.main_name.nil? and fp.main_name.strip != "") ? fp.main_name : fp.char_name;
       if retFcRewards[name].nil?
         retFcRewards[name] = {:name => name, :points => 0, :plex => 0, :fc_fleets => 0, :fc_points => 0, :fc_size => 0, :cofc_fleets => 0, :cofc_points => 0, :cofc_size=>0, :logi_fleets => 0, :logi_points => 0, :logi_size => 0}
       end
