@@ -87,6 +87,10 @@ class Fleet < ActiveRecord::Base
     pap.special_role = special_role
     pap.char_name = character.char_name
     pap.main_name = character.main.char_name if character.main
+    pap.alliance_id = character.alliance_id
+    pap.alliance_name = character.alliance_name
+    pap.corporation_id = character.corporation_id
+    pap.corp_name = character.corp_name
     pap.save
   end
 

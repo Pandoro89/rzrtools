@@ -17,7 +17,7 @@
       <td><%= w.alliance_name %></td>
       <td><%= (w.fc?) ? 'FC' : w.ship_type_name%></td>
       <td><%= w.solar_system_name%></td>
-      <td><abbr class="timeago" title="<%= w.last_seen_at.to_formatted_s(:iso8601)  %>"></abbr></td>
+      <td><abbr class="timeago" title="<%= w.last_seen_at.to_formatted_s(:iso8601) if !w.last_seen_at.nil? %>"></abbr></td>
       <td><%= link_to "Edit", edit_admin_watchlist_path(w.id) %></td>
     </tr>
   <% end %>
