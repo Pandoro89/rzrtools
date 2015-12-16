@@ -50,14 +50,14 @@ fleets_update_roles_job:
 export_members_csv_job:
   every:
     - "3h"
-  queue: medium
+  queue: low
   custom_job_class: "ExportMembersCsvJob"
   args:
   description: "export csv for external tools"
 export_fc_csv_job:
   every:
     - "3h"
-  queue: medium
+  queue: low
   custom_job_class: "ExportFCCsvJob"
   args:
   description: "export csv for external tools"

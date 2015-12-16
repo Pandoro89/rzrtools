@@ -36,6 +36,7 @@ class Fleet < ActiveRecord::Base
 
   def to_s
     # We use this to match our exported information, otherwise we don't really care
+    return description if fleet_name.nil? or fleet_name == ""
     "#{fleet_name}, #{fc_name}, #{fleet_time}, #{fleet_coms}"
   end
 
