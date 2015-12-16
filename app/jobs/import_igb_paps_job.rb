@@ -26,10 +26,13 @@ class ImportIgbPapsJob < Resque::Job
       @fleet.save
       @pap = FleetPosition.find_or_create_by(:char_name => row[0], :fleet_id => @fleet.id)
       @char = Character.where(:char_name => @pap.char_name).first
+      if @char.nil?
+        Resque.enqueue ImportCharacterByNameJob, @pap.char_name
+      end
       @pap.character_id = @char.id if !@char.nil?
       @pap.created_at = fleet_at
       @pap.main_name = row[1]
-      @pap.main_name = @char.main_name if @pap.main_name.nil? or @pap.main_name == ""
+      @pap.main_name = @char.main_name if @char and (@pap.main_name.nil? or @pap.main_name == "")
       @pap.main_name = nil if @pap.main_name == ""
       @pap.ship_type_name = row[4]
       @ship_item = Eve::InvType.where(:name => @pap.ship_type_name).first
