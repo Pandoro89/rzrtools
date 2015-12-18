@@ -24,7 +24,7 @@ class FleetPositionRule < ActiveRecord::Base
       return if pap.nil? or pap.ship_type_id == 0
 
       where("1=1", pap.ship_type_id).each { |r| 
-        if r.eve_group_id == Eve::InvType.where(:id => pap.ship_type_id).first.eve_group_id
+        if r.eve_group_id == Eve::InvType.where(:id => pap.ship_type_id).first.try(:eve_group_id)
           pap.fleet_role = r.fleet_role
           pap.points = r.points
           pap.rules_applied = 1

@@ -5,6 +5,7 @@ namespace :import do
     path = Rails.root.join('tmp/inv_types.csv') # or, whatever
     CSV.foreach(path) do |row|
       if !row[0].nil? and row[10].to_i == 1
+        next if row[2].nil?
         item = Eve::InvType.find_or_create_by(id: row[0])
         item.eve_group_id = row[1]
         item.name = Iconv.conv('iso-8859-15', 'utf-8', row[2].gsub("\xC2\x96",'').gsub("\xC2\x93",'').gsub("\xC2\x94",'').gsub("\xC2\x91",'').gsub("\xC2\x92",'').strip)
@@ -28,6 +29,7 @@ namespace :import do
     path = Rails.root.join('tmp/inv_groups.csv') # or, whatever
     CSV.foreach(path) do |row|
       if !row[0].nil? and row[8].to_i == 1
+        next if row[2].nil?
         item = Eve::Group.find_or_create_by(id: row[0])
         item.eve_category_id = row[1]
         item.name = Iconv.conv('iso-8859-15', 'utf-8', row[2].gsub("\xC2\x96",'').gsub("\xC2\x93",'').gsub("\xC2\x94",'').gsub("\xC2\x91",'').gsub("\xC2\x92",'').strip)
