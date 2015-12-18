@@ -32,8 +32,12 @@ class Eve::ApiKey < ActiveRecord::Base
   
   def update_characters
     first_razor_char_id = 0
-    api = EAAL::API.new(key_code, vcode)
-    result = api.Characters
+    begin
+      api = EAAL::API.new(key_code, vcode)
+      result = api.Characters
+    rescue 
+      return 
+    end
     result.characters.each{ |character|
         char = Character.where(:id => character.characterID).first
         char ||= Character.new(:id => character.characterID, :char_name => character.name)
