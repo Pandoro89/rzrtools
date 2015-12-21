@@ -58,6 +58,12 @@ export_fc_csv_job:
   every:
     - "3h"
   queue: low
-  custom_job_class: "ExportFCCsvJob"
+  custom_job_class: "ExportFcCsvJob"
+  args:
+  description: "export csv for external tools"
+export_last_months_csv_job:
+  cron: "1 12 1 * *"
+  queue: low
+  custom_job_class: "ExportLastMonthsCsvJob"
   args:
   description: "export csv for external tools"
