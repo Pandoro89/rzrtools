@@ -26,7 +26,7 @@ class Fleet < ActiveRecord::Base
 
   def initialize_fleet
     self.token = Digest::SHA1.hexdigest([Time.now, rand].join)
-    self.close_at = DateTime.now + 1.hour
+    self.close_at = DateTime.now + 2.hour
     self.fleet_at = DateTime.now
   end
 
