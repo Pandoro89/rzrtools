@@ -24,12 +24,14 @@ class Admin::UsersController < Admin::ApplicationController
     redirect_to admin_user_path
   end
 
-  def delete
-    if @user.delete
+  def destroy
+    if @user.destroy
       flash[:success] = "User deleted."
     else
       flash[:error] = "The use could not be deleted."
     end
+
+    redirect_to admin_user_path
   end
 
   protected 
