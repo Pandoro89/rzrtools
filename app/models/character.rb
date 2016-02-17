@@ -94,6 +94,10 @@ class Character < ActiveRecord::Base
     end
     return tag
   end
+
+  def is_blue?
+    BLUE_LIST.include?(alliance_id)
+  end
   
   def in_fleet?(fleet)
     fleet_id == fleet.id

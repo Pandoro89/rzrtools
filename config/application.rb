@@ -8,6 +8,8 @@ Bundler.require(*Rails.groups)
 
 ALLIANCE_ID = 741557221
 
+BLUE_LIST =  %w[1006830534 1695357456 150097440 1900696668 99004425 824518128 679584932]
+
 module RzrTools
   class Application < Rails::Application
 

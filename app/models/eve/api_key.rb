@@ -32,6 +32,7 @@ class Eve::ApiKey < ActiveRecord::Base
   
   def update_characters
     first_razor_char_id = 0
+    first_blue_char_id = 0
     begin
       api = EAAL::API.new(key_code, vcode)
       result = api.Characters
@@ -50,13 +51,17 @@ class Eve::ApiKey < ActiveRecord::Base
         char.eve_api_key_id = id
         char.save
         first_razor_char_id = char.id if ALLIANCE_ID.to_i == character.allianceID.to_i and first_razor_char_id == 0
+        first_blue_char_id = char.id if BLUE_LIST.include?(character.allianceID.to_i) and first_blue_char_id == 0
     }
 
     # TODO: We should really diff the char_id's so we can know when a character "disappears" from the api, and do something with it
 
     if (user.main_char_id.nil? or user.main_char_id == 0) and first_razor_char_id > 0
       user.update_attributes(:main_char_id => first_razor_char_id)
-      user.add_role ROLE_RAZOR_MEMBER 
+      user.add_role ROLE_RAZOR_MEMBER
+    elsif (user.main_char_id.nil? or user.main_char_id == 0) and first_blue_char_id > 0
+      user.update_attributes(:main_char_id => first_blue_char_id)
+      user.add_role ROLE_RAZOR_MEMBER
     end
   end
 

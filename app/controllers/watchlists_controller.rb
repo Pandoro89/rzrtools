@@ -1,6 +1,6 @@
 class WatchlistsController < ApplicationController
-  before_filter :require_igb_razor_or_user
-  autocomplete :alliance_cache, :name, :class_name => "Eve::AllianceCache"
+  before_filter :require_igb_blue_or_user
+  autocomplete  :alliance_cache, :name, :class_name => "Eve::AllianceCache"
 
   def index
     @watchlists = []
@@ -11,6 +11,8 @@ class WatchlistsController < ApplicationController
     else
       @watchlists = Watchlist.where("last_seen_at >= ?",DateTime.now-6.hours).order(:last_seen_at => :desc)
     end
+
+    @watchlists.where('alliance_id != ?', ALLIANCE_ID) if blue_user?
   end
 
   def alliance

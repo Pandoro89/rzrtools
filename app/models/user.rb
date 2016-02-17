@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
   property :email,                          type: :string, limit: 50
   property :generation,                     type: :integer, default: "1"
   property :last_login_at,                  type: :datetime
-  property :main_char_id,                     type: :integer
-  property :deleted_at,                    type: :datetime
+  property :main_char_id,                   type: :integer
+  property :deleted_at,                     type: :datetime
   timestamps
 
   has_many :api_keys, class_name: "Eve::ApiKey"
@@ -49,6 +49,7 @@ class User < ActiveRecord::Base
     add_role "Razor Member" if role == "Fleet Commander"
     add_role "Razor Member" if role == "Admin"
     add_role "Razor Member" if role == "Troika"
+    add_role "Blue Member"  if main_char and main_char.is_blue?
   end
 
   def admin?
@@ -73,6 +74,10 @@ class User < ActiveRecord::Base
 
   def razor_member?
     has_role? "Razor Member"
+  end
+
+  def blue_member?
+    has_role? "Blue Member"
   end
 
   def can_make_paps?

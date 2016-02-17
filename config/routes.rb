@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :signatures
+
   resources :api_keys
 
   resources :users do
@@ -41,8 +43,8 @@ Rails.application.routes.draw do
     get    'fc_rewards'    => 'fleets#fc_rewards',  :on => :collection, :as => 'fc_rewards'
     get    'ping_helper'   => 'fleets#ping_helper', :on => :collection, :as => 'ping_helper'
     get    ':token/manage' => 'fleets#manage',      :on => :collection, :as => 'manage'
-    get    ':token/detail' => 'fleets#detail', :on => :collection, :as => 'detail'
-    get    ':token/detail' => 'fleets#close', :on => :collection, :as => 'close'
+    get    ':token/detail' => 'fleets#detail',      :on => :collection, :as => 'detail'
+    get    ':token/detail' => 'fleets#close',       :on => :collection, :as => 'close'
     # post   ':token' => 'fleets#update'
     # patch  ':token' => 'fleets#update'
     # put    ':token' => 'fleets#update'
