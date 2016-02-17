@@ -1,6 +1,6 @@
 class Admin::UsersController < Admin::ApplicationController
-  before_filter :require_military_advisor_or_higher
-  before_filter :find_user, :except => [:index]
+  before_action :require_military_advisor_or_higher
+  before_action :find_user, :except => [:index]
 
   def index
     params[:page] = 1 if !params[:page]
@@ -31,12 +31,12 @@ class Admin::UsersController < Admin::ApplicationController
       flash[:error] = "The use could not be deleted."
     end
 
-    redirect_to admin_user_path
+    return redirect_to admin_user_path
   end
 
   protected 
     def find_user
-      @user = User.find(params[:id])
+      @user = User.where(id: params[:id]).try(:first)
       redirect_to admin_users_path if @user.nil?
     end
 end
