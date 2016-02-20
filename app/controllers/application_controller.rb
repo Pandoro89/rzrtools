@@ -3,12 +3,20 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  before_action :letsencrypt
+
+  def letsencrypt
+    if request.fullpath == '/.well-known/acme-challenge/R5Y0Zu8NrHS2jvrmJUGzJKfsKmOc87p-JemnplUWGpI'
+      return render :text => 'R5Y0Zu8NrHS2jvrmJUGzJKfsKmOc87p-JemnplUWGpI.L7ZzjMfTneqEq-tqKGaIN0E8rl4PchxHMpTxhbdMptY'
+    end
+  end
+
   def authorize_admin_user
   end
 
   def authorize_current_user 
     unless current_user
-      redreict_to :new_session_path
+      redirect_to :new_session_path
     end
   end
 
@@ -80,7 +88,8 @@ class ApplicationController < ActionController::Base
 
   def require_igb_blue_or_user
     get_character_and_force_update
-    if !(@current_character and (@current_character.alliance_id == ALLIANCE_ID or BLUE_LIST.include?(@current_character.alliance_id))) and !(current_user and (current_user.has_role? ROLE_RAZOR_MEMBER or current_user.has_role? ROLE_BLUE_MEMBER))
+    pp "----- #{BLUE_LIST.include?(@current_character.alliance_id.to_s)} , #{@current_character.alliance_id} in #{BLUE_LIST}"
+    if !(@current_character and (@current_character.alliance_id == ALLIANCE_ID or BLUE_LIST.include?(@current_character.alliance_id.to_s))) and !(current_user and (current_user.has_role? ROLE_RAZOR_MEMBER or current_user.has_role? ROLE_BLUE_MEMBER))
       flash.now[:error] = "IGB and Trusted Site Required"
       flash.now[:notice] = "You must be using the Eve in-game-browser and mark the site as 'trusted' to list or create fleets. If you're already in a fleet, you can copy the direct fleet URL while in-game to your out of game browser."
       @request_trust = true
