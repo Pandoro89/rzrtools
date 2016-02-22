@@ -9,6 +9,7 @@ class Fleet < ActiveRecord::Base
   property :close_at,                    type: :datetime
   property :status,                      type: :integer, default: "0"
   property :created_by_id,               type: :integer
+  property :hidden,               type: :boolean, default: "0"
   timestamps
 
   has_many :fleet_positions
@@ -20,7 +21,8 @@ class Fleet < ActiveRecord::Base
 
   # validates :fleet_name, :presence => true, :if => :condition_testing?
 
-  scope :open, -> { where(status: 0) }
+  scope :open, -> { where(status: 0, hidden: false) }
+  scope :open_with_hidden, -> { where(status: 0) }
   scope :closed, -> { where(status: 1) }
   scope :ignored, -> { where(status: 2) }
 

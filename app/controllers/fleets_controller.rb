@@ -1,11 +1,11 @@
 class FleetsController < ApplicationController
-  before_filter :get_character, :only => [:join, :index]
-  before_filter :require_igb, :only => [:join, :leave]
-  before_filter :find_fleet_by_token, :only => [:show, :join, :close, :purge, :edit, :update, :destroy, :special_role, :remove_role, :detail]
+  before_action :get_character, :only => [:join, :index]
+  before_action :require_igb, :only => [:join, :leave]
+  before_action :find_fleet_by_token, :only => [:show, :join, :close, :purge, :edit, :update, :destroy, :special_role, :remove_role, :detail]
   # TODO Find a way to do this as a background task instead
-  before_filter :purge_fleets, :only => [:index]
-  before_filter :require_igb_razor_or_user, :only => [:index]
-  before_filter :require_fc_or_higher, :only => [:create, :show, :manage, :destroy, :close, :fc_rewards, :special_role, :remove_role]
+  before_action :purge_fleets, :only => [:index]
+  before_action :require_igb_razor_or_user, :only => [:index]
+  before_action :require_fc_or_higher, :only => [:create, :show, :manage, :destroy, :close, :fc_rewards, :special_role, :remove_role]
 
   # autocomplete :character, :char_name
   autocomplete :group, :name, :class_name => "Eve::Group"
@@ -128,7 +128,7 @@ class FleetsController < ApplicationController
 
 
     def fleet_params
-      params.require(:fleet).permit(:fc_name, :fleet_name, :fleet_time, :fleet_coms, :description)
+      params.require(:fleet).permit(:fc_name, :fleet_name, :fleet_time, :fleet_coms, :description, :hidden)
     end
 
 end
