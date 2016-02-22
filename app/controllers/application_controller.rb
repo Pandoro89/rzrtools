@@ -88,8 +88,7 @@ class ApplicationController < ActionController::Base
 
   def require_igb_blue_or_user
     get_character_and_force_update
-    pp "----- #{BLUE_LIST.include?(@current_character.alliance_id.to_s)} , #{@current_character.alliance_id} in #{BLUE_LIST}"
-    if !(@current_character and (@current_character.alliance_id == ALLIANCE_ID or BLUE_LIST.include?(@current_character.alliance_id.to_s))) and !(current_user and (current_user.has_role? ROLE_RAZOR_MEMBER or current_user.has_role? ROLE_BLUE_MEMBER))
+    if !(@current_character and @current_character.alliance_id and (@current_character.alliance_id == ALLIANCE_ID or BLUE_LIST.include?(@current_character.alliance_id.to_s))) and !(current_user and (current_user.has_role? ROLE_RAZOR_MEMBER or current_user.has_role? ROLE_BLUE_MEMBER))
       flash.now[:error] = "IGB and Trusted Site Required"
       flash.now[:notice] = "You must be using the Eve in-game-browser and mark the site as 'trusted' to list or create fleets. If you're already in a fleet, you can copy the direct fleet URL while in-game to your out of game browser."
       @request_trust = true

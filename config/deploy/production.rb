@@ -27,9 +27,9 @@ set :resque_environment_task, true
 
 server '46.101.77.93', user: 'rzrtools', roles: %w{web app db}
 set :nginx_server_name, 'app.eve-razor.com'
-set :nginx_use_ssl, false
-#set :nginx_ssl_cert, '/home/rzrtools/ebfbc329-ffbb-47aa-9c4e-34f47724e09f.public.pem'
-#set :nginx_ssl_cert_key, '/home/rzrtools/ebfbc329-ffbb-47aa-9c4e-34f47724e09f.private.pem'
+set :nginx_use_ssl, true
+set :nginx_ssl_cert, '/home/rzrtools/certs/certs.pem'
+set :nginx_ssl_cert_key, '/home/rzrtools/certs/certs.key'
 
 
 # Configuration

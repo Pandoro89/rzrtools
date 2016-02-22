@@ -8,8 +8,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'users#me'
 
-# config/routes.rb
-
+  mount LetsencryptPlugin::Engine, at: '/'  # It must be at root level
 
   resque_web_constraint = lambda do |request|
     cu = User.find_by_id(request.session[:user_id])

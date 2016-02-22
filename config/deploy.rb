@@ -47,7 +47,7 @@ set :default_environment, {
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 # deploy.rb
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads', 'public/static')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'certificates', 'challenge', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads', 'public/static')
 #set :linked_files, fetch(:linked_files, []).push( 'config/secrets.yml')
 
 # Default value for default_env is {}
