@@ -5,15 +5,16 @@ class Watchlist < ActiveRecord::Base
   property :corp_id,            type: :integer,limit: 8, default: "0" 
   property :corp_name,          type: :string, limit: 255, default: ""
   property :alliance_name,      type: :string, limit: 255, default: ""
-  property :alliance_id,            type: :integer,limit: 8, default: "0" 
+  property :alliance_id,        type: :integer,limit: 8, default: "0" 
   property :solar_system_name,  type: :string, limit: 255, default: ""
-  property :solar_system_id,            type: :integer,limit: 8, default: "0" 
+  property :solar_system_id,    type: :integer,limit: 8, default: "0" 
   property :ship_type_name,     type: :string, limit: 255, default: ""
-  property :ship_type_id,            type: :integer,limit: 8, default: "0" 
-  property :last_seen_at,            type: :datetime
-  property :deleted_at,                    type: :datetime
-  property :wl_type,               type: :integer, default: "1" # 1 = Ship, 2 = FC
-  property :z_kill_id,            type: :integer,limit: 8
+  property :ship_type_id,       type: :integer,limit: 8, default: "0" 
+  property :last_seen_at,       type: :datetime
+  property :locator_seen_at,    type: :datetime
+  property :deleted_at,         type: :datetime
+  property :wl_type,            type: :integer, default: "1" # 1 = Ship, 2 = FC
+  property :z_kill_id,          type: :integer,limit: 8
   property :comment,            type: :text
   timestamps
   acts_as_paranoid

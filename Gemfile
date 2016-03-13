@@ -29,6 +29,7 @@ gem 'bootstrap-sass', '~> 3.3.5'
 gem 'bootstrap_form'
 
 
+
 gem 'mini_record'
 gem 'mysql2'
 gem 'transaction_retry'
@@ -66,6 +67,7 @@ gem 'redis'
 gem 'pry-rails'
 
 gem 'eaal'
+#gem 'reve'
 
 
 gem 'google_drive'
@@ -100,6 +102,7 @@ group :web do
 end
 
 group :development, :test do
+  gem 'http_logger'
   gem 'capistrano-unicorn-nginx'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
