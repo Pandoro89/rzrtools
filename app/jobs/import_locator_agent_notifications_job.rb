@@ -21,7 +21,7 @@ class ImportLocatorAgentNotificationsJob < Resque::Job
         notification_ids = []
         notification_dates = {}
         result.notifications.each do |r|
-          #next unless r.typeID == AGENT_LOCATES_CHARACTER
+          next unless r.typeID == AGENT_LOCATES_CHARACTER
           if r.notificationID.to_i > char.last_notification_id
             notification_ids.push r.notificationID.to_i 
             notification_dates[r.notificationID.to_s] = DateTime.parse(r.sentDate)
@@ -67,7 +67,7 @@ class ImportLocatorAgentNotificationsJob < Resque::Job
         result2["eveapi"]["result"]["rowset"]["row"].each do |r|
           if r["__content__"]
             match = /characterID: ([\d]*)$/.match(r["__content__"])
-            c_id = match[1]
+            c_id = match[1] if match
             
             targetString = r["__content__"].partition('targetLocation:').last
             match = /5: ([\d]*)$/.match(targetString)
