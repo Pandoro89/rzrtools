@@ -16,7 +16,7 @@
       <td><button type="button" onclick="CCPEVE.addContact(<%= w.id%>)">+</button></td>
       <td><%= w.char_name%></td>
       <td><%= w.alliance_name%></td>
-      <td><%= (w.wl_type==2) ? 'FC' : w.ship_type_name%></td>
+      <td><%= (w.wl_type==2) ? 'FC' : (w.station_id > 0) ? "DOCKED (#{w.ship_type_name})" : w.ship_type_name%></td>
       <td><a href="http://evemaps.dotlan.net/search?q=<%= w.solar_system_name%>"><%= w.solar_system_name%></a> (<%= w.solar_system.try(:region).try(:name)%>)</td>
       <td><%=((!w.z_kill_id.nil?)?"<a href=\"https://zkillboard.com/kill/#{w.z_kill_id}/\" target=\"_blank\">Last Seen</a>":"").html_safe%> <abbr class="timeago" title="<%= w.last_seen_at.to_formatted_s(:iso8601) if !w.last_seen_at.nil? %>"></abbr></td>
       <td><abbr class="timeago" title="<%= w.locator_seen_at.to_formatted_s(:iso8601) if !w.locator_seen_at.nil? %>"></abbr></td>

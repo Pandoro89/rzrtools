@@ -10,6 +10,7 @@ class Watchlist < ActiveRecord::Base
   property :solar_system_id,    type: :integer,limit: 8, default: "0" 
   property :ship_type_name,     type: :string, limit: 255, default: ""
   property :ship_type_id,       type: :integer,limit: 8, default: "0" 
+  property :station_id,         type: :integer,limit: 8, default: "0" 
   property :last_seen_at,       type: :datetime
   property :locator_seen_at,    type: :datetime
   property :deleted_at,         type: :datetime

@@ -86,6 +86,8 @@ class ImportLocatorAgentNotificationsJob < Resque::Job
               w.solar_system_name = Eve::SolarSystem.find(s_id).name
               w.last_seen_at = notification_dates[r["notificationID"].to_s]
               w.locator_seen_at = notification_dates[r["notificationID"].to_s]
+              w.station_id = 0
+              w.station_id = st_id.to_i if st_id and st_id.to_i > 0
               w.save
 
               char.last_notification_id = r["notificationID"].to_i if r["notificationID"].to_i > char.last_notification_id
