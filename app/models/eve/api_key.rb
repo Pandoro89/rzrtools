@@ -22,12 +22,17 @@ class Eve::ApiKey < ActiveRecord::Base
   end
 
   def update_access_mask
-    api = EAAL::API.new(key_code, vcode)
-    result = api.APIKeyInfo
-    self.access_mask = result.key.attribs["accessMask"]
-    # self.expires_at = DateTime.parse(result.key.attribs["expires"])
-    self.save
-    return
+    begin
+      api = EAAL::API.new(key_code, vcode)
+      result = api.APIKeyInfo
+      self.access_mask = result.key.attribs["accessMask"]
+      # self.expires_at = DateTime.parse(result.key.attribs["expires"])
+      self.save
+      return
+    rescue EveAPIException222
+      user.
+      self.delete
+    end
   end
   
   def update_characters
@@ -61,7 +66,7 @@ class Eve::ApiKey < ActiveRecord::Base
       user.add_role ROLE_RAZOR_MEMBER
     elsif user and (user.main_char_id.nil? or user.main_char_id == 0) and first_blue_char_id > 0
       user.update_attributes(:main_char_id => first_blue_char_id)
-      user.add_role ROLE_RAZOR_MEMBER
+      user.add_role ROLE_BLUE_MEMBER
     end
   end
 

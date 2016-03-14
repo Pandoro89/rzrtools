@@ -104,9 +104,13 @@ class User < ActiveRecord::Base
   end
 
   def self.remove_roles_for_non_alliance
+    
     User.all.each do |u|
-      u.roles.each {|r| u.roles.delete(r)} if Character.where(:user_id => u.id, :alliance_id => ALLIANCE_ID).count == 0
+      readd_blue = (Character.where(:user_id => u.id, :alliance_id => BLUE_LIST).count > 0)
+      u.roles.each {|r| u.roles.delete(r) if r != ROLE_BLUE_MEMBER} if Character.where(:user_id => u.id, :alliance_id => ALLIANCE_ID).count == 0
+      u.add_role ROLE_BLUE_MEMBER if readd_blue
     end
+
   end
 
 end
