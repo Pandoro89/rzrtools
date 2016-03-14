@@ -3,8 +3,10 @@
 class ImportLocatorAgentNotificationsJob < Resque::Job
   @queue = :high
 
-  def self.perform()
-    Eve::ApiKey.all.each do |ak|
+  def self.perform(char_ids = [])
+    query = Eve::ApiKey.all
+    query = Eve::ApiKey.all
+    query.each do |ak|
       ak.characters.each do |char|
         result = nil
         begin

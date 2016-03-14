@@ -7,6 +7,7 @@
       <th>What</th>
       <th>System</th>
       <th>When</th>
+      <th>Locator</th>
       <th></th>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
       <td><abbr class="timeago" title="<%= w.last_seen_at.to_formatted_s(:iso8601) if !w.last_seen_at.nil? %>"></abbr></td>
       <td><% if !w.comment.nil? %><button class="btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<%= w.comment%>">comment</button>
       <% end %></td>
+      <td><abbr class="timeago" title="<%= w.locator_seen_at.to_formatted_s(:iso8601) if !w.locator_seen_at.nil? %>"></abbr></td>
       <td><%= link_to "Edit", edit_admin_watchlist_path(w.id) %></td>
     </tr>
   <% end %>
