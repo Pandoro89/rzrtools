@@ -5,8 +5,8 @@ class ImportLocatorAgentNotificationsJob < Resque::Job
 
   def self.perform(api_key_ids = [],char_ids = [])
     query = Eve::ApiKey.all
-    query = Eve::ApiKey.where(:id => api_key_ids) if api_key_ids
-    query = Eve::ApiKey.where(:characters => {:id => char_ids}) if char_ids
+    query = Eve::ApiKey.where(:id => api_key_ids) if api_key_ids and api_key_ids.size > 0
+    query = Eve::ApiKey.where(:characters => {:id => char_ids}) if char_ids and char_ids.size > 0
     query.each do |ak|
       ak.characters.each do |char|
         result = nil
