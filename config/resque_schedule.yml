@@ -26,6 +26,13 @@ close_fleets_job:
   custom_job_class: "CloseFleetsJob"
   args:
   description: "close open fleets"
+import_locator_agent_notifications_job:
+  every:
+    - "15m"
+  queue: high
+  custom_job_class: "ImportLocatorAgentNotificationsJob"
+  args:
+  description: "import locator"
 fleets_update_roles_job:
   every:
     - "3h"
