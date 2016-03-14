@@ -30,7 +30,7 @@ class Eve::ApiKey < ActiveRecord::Base
       self.save
       return
     rescue EveAPIException222
-      user.
+      user.delete
       self.delete
     end
   end
