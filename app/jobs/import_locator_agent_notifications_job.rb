@@ -25,7 +25,7 @@ class ImportLocatorAgentNotificationsJob < Resque::Job
         notification_dates = {}
         result.notifications.each do |r|
           pp r
-          next unless r.typeID == AGENT_LOCATES_CHARACTER
+          next unless r.typeID.to_i == AGENT_LOCATES_CHARACTER.to_i
           if r.notificationID.to_i > char.last_notification_id
             notification_ids.push r.notificationID.to_i 
             notification_dates[r.notificationID.to_s] = DateTime.parse(r.sentDate)
