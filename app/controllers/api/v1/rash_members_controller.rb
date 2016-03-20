@@ -14,7 +14,7 @@ class Api::V1::RashMembersController < Api::V1::BaseController
     return render(json: [], status: 403) if @current_user.nil?
 
     if params[:account_string] and params[:data]
-      logger.debug(RASH_CHANNEL)
+      logger.debug("-- #{RASH_CHANNEL}")
       notifier = Slack::Notifier.new RASH_CHANNEL, channel: '#rash', username: 'Razor Bot'
 
       notifier.ping(params[:data])
