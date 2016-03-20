@@ -30,7 +30,7 @@ class Eve::ApiKey < ActiveRecord::Base
       self.save
       return
     rescue EveAPIException222
-      user.delete
+      user.delete if EAAL::API.where(:user => user).count == 0
       self.delete
     end
   end

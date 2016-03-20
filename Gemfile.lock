@@ -195,7 +195,7 @@ GEM
     mime-types (2.99.1)
     mimetype-fu (0.1.2)
     mini_portile2 (2.0.0)
-    mini_record (0.4.6)
+    mini_record (0.4.7)
       activerecord (>= 3.2.0)
     minitest (5.8.4)
     mono_logger (1.1.0)
