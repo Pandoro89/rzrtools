@@ -5,7 +5,7 @@ class Api::V1::RashMembersController < Api::V1::BaseController
   def index
     return render(json: [], status: 403) if @current_user.nil?
 
-    rash = RashMember.where(:user_id => @current_id.id).first
+    rash = RashMember.where(:user_id => @current_user.id).first
 
     render(json: rash.to_json)
   end
