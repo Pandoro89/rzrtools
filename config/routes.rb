@@ -1,4 +1,4 @@
-rapiequire "resque_web"
+require "resque_web"
 ResqueWeb::Engine.eager_load! # hack
 
 Rails.application.routes.draw do
