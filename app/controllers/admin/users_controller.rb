@@ -4,7 +4,12 @@ class Admin::UsersController < Admin::ApplicationController
 
   def index
     params[:page] = 1 if !params[:page]
-    @users = User.paginate(:page => params[:page])
+
+    if params[:name]
+      use_name = "%#{params[:name]}%"
+      @users = User.where("username LIKE ? OR username LIKE ? OR 0<(SELECT COUNT(*) FROM characters WHERE user_id = `users`.id AND char_name LIKE ?)",use_name,use_name,use_name).paginate(:page => params[:page]) if params[:name]
+  end
+    @users ||= User.paginate(:page => params[:page])
   end
 
   def show
