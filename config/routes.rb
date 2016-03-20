@@ -85,7 +85,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :characters, only: [:index, :create, :show, :update, :destroy]
-      resources :rash_members, only: [:show, :report]
+      resources :rash_members, only: [:index, :show, :report]
     end
   end
 
