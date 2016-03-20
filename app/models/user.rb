@@ -85,12 +85,12 @@ class User < ActiveRecord::Base
   end  
 
 
-  def self.login(username, password)
+  def self.login(username, password, api = false)
     return nil if username.blank?
 
     user = User.where(:username => username).first
     if user and user.authenticate(password)
-      user.generation = user.generation + 1
+      user.generation = user.generation + 1 if !api
       user.last_login_at = DateTime.now
       user.save!
       return user 

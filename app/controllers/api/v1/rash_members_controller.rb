@@ -3,7 +3,7 @@ class Api::V1::RashMembersController < Api::V1::BaseController
   before_action :authenticate_by_user
 
   def index
-    return render(json: [], status: 200) if !@current_user
+    return render(json: [], status: 403) if @current_user.nil?
 
     rash = RashMember.where(:user_id => @current_id.id).first
 
