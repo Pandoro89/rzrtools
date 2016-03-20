@@ -1,4 +1,4 @@
-class Api::V1::RashMemebersController < Api::V1::BaseController
+class Api::V1::RashMembersController < Api::V1::BaseController
 
   before_action :authenticate_by_user
 
