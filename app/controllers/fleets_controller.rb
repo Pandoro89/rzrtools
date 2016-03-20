@@ -19,6 +19,8 @@ class FleetsController < ApplicationController
   end
 
   def index
+    @fleets = Fleet.where(status: 0) if current_user and current_user.admin?
+    @fleets ||= Fleet.open
   end
 
   def new

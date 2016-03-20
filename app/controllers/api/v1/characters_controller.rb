@@ -1,5 +1,7 @@
 class Api::V1::CharactersController < Api::V1::BaseController
 
+  before_action :authenticate_by_key
+
   def index
     render(json: [], status: 200)
   end
