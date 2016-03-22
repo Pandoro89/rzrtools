@@ -97,7 +97,8 @@ class ImportLocatorAgentNotificationsJob < Resque::Job
               end
             end
           rescue => e
-            logger.debug(e)
+            pp r
+            pp e
           end
         end
 
