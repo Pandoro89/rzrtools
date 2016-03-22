@@ -16,7 +16,7 @@ class Api::V1::RashMembersController < Api::V1::BaseController
     if params[:bot_name] and params[:data]
       
 
-      mark_data = ReverseMarkdown.convert(params[:data])
+      mark_data = ReverseMarkdown.convert(params[:data].gsub(/<font(.*)">/,'').gsub("</font>",''))
 
       logger.debug("-- #{RASH_CHANNEL} :: #{params[:data]} :: #{mark_data}")
 
