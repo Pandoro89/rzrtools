@@ -22,7 +22,13 @@ class Api::V1::RashMembersController < Api::V1::BaseController
 
       notifier = Slack::Notifier.new RASH_CHANNEL, channel: '#rash', username: 'Razor Bot'
 
-      notifier.ping(mark_data)
+      a_ok_note = {
+        fallback: params[:data],
+        text: mark_data,
+        mrkdwn_in: ["text"]
+      }
+
+      notifier.ping(params[:bot_name], attachments: [a_ok_note])
     end
 
     render(json: {}, status: 200)
