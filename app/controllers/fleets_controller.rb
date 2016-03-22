@@ -20,7 +20,7 @@ class FleetsController < ApplicationController
 
   def index
     @fleets = Fleet.where(status: 0) if current_user and current_user.admin?
-    @fleets ||= Fleet.open
+    @fleets ||= Fleet.open.where("close_at <= ?",DateTime.now)
   end
 
   def new
