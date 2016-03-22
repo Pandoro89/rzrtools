@@ -67,9 +67,10 @@ class ImportLocatorAgentNotificationsJob < Resque::Job
 #   </result>
 #   <cachedUntil>2026-03-11 16:54:20</cachedUntil>
 # </eveapi>
+        next if result2.nil? or result2["eveapi"].nil? or result2["eveapi"]["result"].nil? or result2["eveapi"]["result"]["rowset"].nil?
 
         result2["eveapi"]["result"]["rowset"]["row"].each do |r|
-          if r["__content__"]
+          if !r.nil? and r["__content__"]
             pp r
             match = /characterID: ([\d]*)$/.match(r["__content__"])
             c_id = match[1] if match
