@@ -70,30 +70,34 @@ class ImportLocatorAgentNotificationsJob < Resque::Job
         next if result2.nil? or result2["eveapi"].nil? or result2["eveapi"]["result"].nil? or result2["eveapi"]["result"]["rowset"].nil?
 
         result2["eveapi"]["result"]["rowset"]["row"].each do |r|
-          if !r.nil? and r["__content__"]
-            pp r
-            match = /characterID: ([\d]*)$/.match(r["__content__"])
-            c_id = match[1] if match
-            
-            targetString = r["__content__"].partition('targetLocation:').last
-            match = /5: ([\d]*)$/.match(targetString)
-            s_id = match[1]
-            match = /15: ([\d]*)$/.match(targetString)
-            st_id = match[1] if !match.nil? and match.size > 0
+          begin
+            if !r.nil? and r["__content__"]
+              pp r
+              match = /characterID: ([\d]*)$/.match(r["__content__"])
+              c_id = match[1] if match
+              
+              targetString = r["__content__"].partition('targetLocation:').last
+              match = /5: ([\d]*)$/.match(targetString)
+              s_id = match[1]
+              match = /15: ([\d]*)$/.match(targetString)
+              st_id = match[1] if !match.nil? and match.size > 0
 
-            w = Watchlist.where(:char_id => c_id).first
-            if w 
-              w.solar_system_id = s_id
-              w.solar_system_name = Eve::SolarSystem.find(s_id).name
-              # Dont update both, w.last_seen_at = notification_dates[r["notificationID"].to_s]
-              w.locator_seen_at = notification_dates[r["notificationID"].to_s]
-              w.station_id = 0
-              w.station_id = st_id.to_i if st_id and st_id.to_i > 0
-              w.save
+              w = Watchlist.where(:char_id => c_id).first
+              if w 
+                w.solar_system_id = s_id
+                w.solar_system_name = Eve::SolarSystem.find(s_id).name
+                # Dont update both, w.last_seen_at = notification_dates[r["notificationID"].to_s]
+                w.locator_seen_at = notification_dates[r["notificationID"].to_s]
+                w.station_id = 0
+                w.station_id = st_id.to_i if st_id and st_id.to_i > 0
+                w.save
 
-              char.last_notification_id = r["notificationID"].to_i if r["notificationID"].to_i > char.last_notification_id
-              char.save
+                char.last_notification_id = r["notificationID"].to_i if r["notificationID"].to_i > char.last_notification_id
+                char.save
+              end
             end
+          rescue => e
+            logger.debug(e)
           end
         end
 
