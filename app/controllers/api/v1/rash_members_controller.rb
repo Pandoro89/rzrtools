@@ -13,11 +13,14 @@ class Api::V1::RashMembersController < Api::V1::BaseController
   def report
     return render(json: [], status: 403) if @current_user.nil?
 
-    if params[:account_string] and params[:data]
+    if params[:bot_name] and params[:data]
       logger.debug("-- #{RASH_CHANNEL}")
+
+      mark_data = ReverseMarkdown.convert(params[:data])
+
       notifier = Slack::Notifier.new RASH_CHANNEL, channel: '#rash', username: 'Razor Bot'
 
-      notifier.ping(params[:data])
+      notifier.ping(mark_data)
     end
 
     render(json: {}, status: 200)

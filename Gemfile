@@ -39,6 +39,7 @@ gem "auto_strip_attributes", "~> 2.0"
 gem 'rolify'
 
 gem 'slack-notifier'
+gem 'reverse_markdown'
 
 gem 'resque'
 gem 'resque-pool'
