@@ -1,5 +1,5 @@
 class WatchlistsController < ApplicationController
-  before_action :require_igb_blue_or_user
+  before_action :require_blue_user
   autocomplete  :alliance_cache, :name, :class_name => "Eve::AllianceCache"
 
   def index
