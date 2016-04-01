@@ -1,4 +1,4 @@
-class UpdateApiKeyJob < Resque::Job
+class UpdateAllCharactersJob < Resque::Job
   @queue = :high
 
   def self.perform
