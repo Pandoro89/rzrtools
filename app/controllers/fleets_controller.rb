@@ -53,7 +53,7 @@ class FleetsController < ApplicationController
 
   def join
     if @fleet
-      @fleet.join(@current_character)
+      @fleet.join(@current_character, request.remote_ip)
     end
     @pap_corp_members = FleetPosition.where(:fleet => @fleet,:corporation_id => @current_character.env["HTTP_EVE_CORPID"])
   end

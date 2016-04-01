@@ -67,11 +67,12 @@ class Fleet < ActiveRecord::Base
     
   end
 
-  def join(character)
+  def join(character, remote_ip)
     pap = FleetPosition.create(:fleet => self, :character => character) if FleetPosition.where(:fleet_id => self.id,:character_id => character.id).count < 1
     if pap.nil?
       pap = FleetPosition.where(:fleet_id => self.id,:character_id => character.id).first
     end
+    pap.last_ip = remote_ip
     pap.set_from_env(character.env)
     return nil if !pap.station_id.nil? and pap.station_id > 0
     pap.main_name = character.main_name
