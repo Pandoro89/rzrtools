@@ -1,6 +1,6 @@
 class Admin::FleetPositionRulesController < ApplicationController
-  before_filter :require_global_admin
-  before_filter :find_fleet_position_rule, :except => [:index,:new,:create]
+  before_action :require_global_admin
+  before_action :find_fleet_position_rule, :except => [:index,:new,:create]
 
   def index
     @fleet_position_rules = FleetPositionRule.all.order(:fleet_role => :asc, :points => :desc)

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :find_user, :except => [:ping, :new, :create, :reset_password, :recover_password]
-  #before_filter :require_global_admin, :except => [:ping, :show, :profile] # show has it's own auth check
+  before_action :find_user, :except => [:ping, :new, :create, :reset_password, :recover_password]
+  #before_action :require_global_admin, :except => [:ping, :show, :profile] # show has it's own auth check
   # TODO Check for valid user ID
 
   def me 

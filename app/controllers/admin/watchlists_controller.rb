@@ -1,6 +1,6 @@
 class Admin::WatchlistsController < Admin::ApplicationController
-  before_filter :require_scout_commander_or_higher
-  before_filter :find_watchlist, :except => [:index, :new, :create]
+  before_action :require_scout_commander_or_higher
+  before_action :find_watchlist, :except => [:index, :new, :create]
 
   def index
     @watchlists = Watchlist.all.order(:alliance_name => :asc, :char_name => :asc)

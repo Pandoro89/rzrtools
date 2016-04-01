@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   property :email,                          type: :string, limit: 50
   property :generation,                     type: :integer, default: "1"
   property :last_login_at,                  type: :datetime
+  property :last_ip,                        type: :string, limit: 50
   property :main_char_id,                   type: :integer
   property :deleted_at,                     type: :datetime
   timestamps
@@ -85,7 +86,7 @@ class User < ActiveRecord::Base
   end  
 
 
-  def self.login(username, password, api = false)
+  def self.login(username, password, ip, api = false)
     return nil if username.blank?
 
     user = User.where(:username => username).first

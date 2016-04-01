@@ -27,6 +27,7 @@ class FleetPosition < ActiveRecord::Base
   property :fleet_role,         type: :string, limit: 255, default: "Other" #as: "ENUM('Other','Fleet','Logistics','Command_Ship','Black_Ops','Capital','Super.Titan')"
   property :special_role,       type: :string, limit: 255, default: "none"  #as: "ENUM('none','FC','Co-FC','Logi_FC','Scout','Prober','Target_Caller')"
   property :points,             type: :integer, default: "1"
+  property :last_ip,            type: :string, limit: 50
   timestamps
 
   belongs_to :fleet

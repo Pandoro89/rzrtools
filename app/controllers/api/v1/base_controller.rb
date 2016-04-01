@@ -19,7 +19,7 @@ class Api::V1::BaseController < ActionController::Base
 
   def authenticate_by_user
 
-    if user = authenticate_with_http_basic { |u, p| User.login(u, p, true) }
+    if user = authenticate_with_http_basic { |u, p| User.login(u, p, request.remote_ip, true) }
       @current_user = user
     else
       request_http_basic_authentication

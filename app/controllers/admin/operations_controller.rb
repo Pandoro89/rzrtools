@@ -1,5 +1,5 @@
 class Admin::OperationsController < Admin::ApplicationController
-  before_filter :require_global_admin
+  before_action :require_global_admin
 
   def manual_jump_bridges
     if request.post?

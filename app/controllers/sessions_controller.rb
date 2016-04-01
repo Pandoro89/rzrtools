@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.login(params[:session][:username],params[:session][:password])
+    user = User.login(params[:session][:username],params[:session][:password], request.remote_ip)
     if user
       # Log the user in and redirect to the user's show page.
       flash.discard(:error) # discard previous errors with a successful login

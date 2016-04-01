@@ -1,6 +1,6 @@
 class Admin::JumpBridgesController < Admin::ApplicationController
-  before_filter :require_scout_commander_or_higher
-  before_filter :find_jump_bridge, :except => [:index, :new, :create]
+  before_action :require_scout_commander_or_higher
+  before_action :find_jump_bridge, :except => [:index, :new, :create]
 
   def index
     @jump_bridges = JumpBridge.all
