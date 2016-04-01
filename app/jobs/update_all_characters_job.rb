@@ -4,7 +4,8 @@ class UpdateAllCharactersJob < Resque::Job
   def self.perform
     api = EAAL::API.new("", "")
     api.scope = "eve"
-    Character.all.each do |row|
+    Character.where("updated_at <= ?", DateTime.now-24.hours).each do |row|
+      begin
       result = api.CharacterID(:names => row.char_name)
       result.characters.each {|c|
         char = Character.find_or_create_by(:id => c.characterID)
@@ -24,7 +25,11 @@ class UpdateAllCharactersJob < Resque::Job
         Eve::CorporationCache.add_or_update(result2.corporationID,result2.corporation) if result2.corporationID
         FleetPosition.where(:char_name => name).update_all(:character_id => char.id)
       }
+    rescue EveAPIException105
+      #noop
     end
+    end
+
   end
 
 end
