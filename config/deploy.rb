@@ -56,7 +56,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'keys', 'certificates', 'c
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-set :whenever_environment
+#set :whenever_environment
 require "whenever/capistrano"
 
 set :workers, { "statused,high" => 2, "high,medium" => 1, "medium,low" => 1 }
@@ -109,7 +109,7 @@ namespace :deploy do
   #before 'deploy:updating', 'resque:scheduler:stop'
   before 'deploy:updating', 'deploy:cleanup_resque'
   after 'deploy:finishing', 'resque:start'
-  after 'deploy:finishing', 'resque:scheduler:start'
+  after 'deploy:finishing', 'resque:scheduler:stop'
 
 
 end
