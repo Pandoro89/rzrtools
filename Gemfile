@@ -44,9 +44,9 @@ gem 'reverse_markdown'
 gem 'resque'
 gem 'resque-pool'
 gem 'resque-status'
-gem 'resque-scheduler'
+#gem 'resque-scheduler'
 gem 'resque-web', require: 'resque_web'
-gem 'resque-scheduler-web'
+#gem 'resque-scheduler-web'
 
 
 gem 'nested_form_fields'
@@ -74,7 +74,7 @@ gem 'eaal'
 
 gem 'google_drive'
 
-# gem 'whenever', :require => nil
+gem 'whenever', :require => nil
 gem 'will_paginate'
 # gem 'active_model_serializers'
 gem 'secure_headers'

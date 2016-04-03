@@ -19,3 +19,48 @@
 
 # Learn more: http://github.com/javan/whenever
 env :MAILTO, ''
+job_type :resque, "curl -d k=:keycode&j=:task :app_url/api/v1/cron/ :output"
+
+if environment == "production"
+  set :app_url, "http://app.eve-razor.com"
+elsif environment =~ /dev|test/
+  set :app_url, "http://localhost:3000"
+end
+
+set :keycode, "vmEAzt6XmrOkT3sA"
+
+every 1.hours do
+  resque "ImportZkillboardWatchlistJob"
+end
+
+every 6.hours do
+  resque "CleanupImportedPapJob"
+end
+
+every 1.hours do
+  resque "UpdateApiKeysJob"
+end
+
+every 5.minutes do
+  resque "CloseFleetsJob"  
+end
+
+every 30.minutes do
+  resque "ImportLocatorAgentNotificationsJob"
+end
+
+every 3.hours do 
+  resque "FleetsUpdateRolesJob"
+end
+
+every 3.hours do 
+  resque "ExportMembersCsvJob"
+end
+
+every 3.hours do
+  resque "ExportFcCsvJob"
+end
+
+every 1.month do
+  resque "ExportLastMonthsCsvJob"
+end

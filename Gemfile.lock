@@ -83,6 +83,7 @@ GEM
     capistrano-unicorn-nginx (3.4.0)
       capistrano (>= 3.1)
       sshkit (>= 1.2.0)
+    chronic (0.10.2)
     cityhash (0.8.1)
     coderay (1.1.0)
     coffee-rails (4.1.0)
@@ -283,9 +284,6 @@ GEM
       redis (~> 3.0)
       resque (~> 1.25)
       rufus-scheduler (~> 3.0)
-    resque-scheduler-web (0.0.4)
-      resque-scheduler (~> 4.0)
-      resque-web (~> 0)
     resque-status (0.5.0)
       resque (~> 1.19)
     resque-web (0.0.6)
@@ -391,6 +389,8 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
+    whenever (0.9.4)
+      chronic (>= 0.6.3)
     will_paginate (3.0.7)
 
 PLATFORMS
@@ -436,8 +436,6 @@ DEPENDENCIES
   responders
   resque
   resque-pool
-  resque-scheduler
-  resque-scheduler-web
   resque-status
   resque-web
   reverse_markdown
@@ -459,6 +457,7 @@ DEPENDENCIES
   unicorn
   unicorn-worker-killer
   web-console (~> 2.0)
+  whenever
   will_paginate
 
 BUNDLED WITH

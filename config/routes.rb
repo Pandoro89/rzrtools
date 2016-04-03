@@ -88,6 +88,9 @@ Rails.application.routes.draw do
       resources :rash_members, only: [:index, :show, :report] do
         post 'report' => 'rash_members#report', :on => :collection
       end
+      resources :cron, only: [] do
+        post 'run' => 'cron#run', :on => :collection
+      end
     end
   end
 
