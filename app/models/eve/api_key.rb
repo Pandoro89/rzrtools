@@ -29,7 +29,7 @@ class Eve::ApiKey < ActiveRecord::Base
       # self.expires_at = DateTime.parse(result.key.attribs["expires"])
       self.save
       return
-    rescue EveAPIException222
+    rescue
       user.delete if EAAL::API.where(:user => user).count == 0
       self.delete
     end
