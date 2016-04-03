@@ -20,12 +20,12 @@
 # Learn more: http://github.com/javan/whenever
 # env :MAILTO, ''
 
-my_env = Rails.env
+#my_env = Rails.env
 job_type :resque, "curl -d k=:keycode&j=:task :app_url/api/v1/cron/ :output"
 
-if my_env == "production"
+if environment == "production"
   set :app_url, "http://app.eve-razor.com"
-elsif my_env =~ /dev|test/
+elsif environment =~ /dev|test/
   set :app_url, "http://localhost:3000"
 else
   set :app_url, "http://app.eve-razor.com"
