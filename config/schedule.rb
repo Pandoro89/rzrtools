@@ -21,7 +21,7 @@
 # env :MAILTO, ''
 
 #my_env = Rails.env
-job_type :resque, "curl -d \"k=:keycode&j=:task\" :app_url/api/v1/cron/ :output"
+job_type :resque, "curl -d \"k=:keycode&j=:task\" :app_url/api/v1/cron/run :output"
 
 if environment == "production"
   set :app_url, "http://app.eve-razor.com"
