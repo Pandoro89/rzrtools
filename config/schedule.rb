@@ -21,7 +21,7 @@
 # env :MAILTO, ''
 
 #my_env = Rails.env
-job_type :resque, "curl -d k=:keycode&j=:task :app_url/api/v1/cron/ :output"
+job_type :resque, "curl -d \"k=:keycode&j=:task\" :app_url/api/v1/cron/ :output"
 
 if environment == "production"
   set :app_url, "http://app.eve-razor.com"
@@ -32,6 +32,7 @@ else
 end
 
 set :keycode, "vmEAzt6XmrOkT3sA"
+set :output, File.join(Whenever.path, "log", "cron.log")
 
 every 1.hours do
   resque "ImportZkillboardWatchlistJob"
