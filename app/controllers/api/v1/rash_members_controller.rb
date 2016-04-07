@@ -13,6 +13,8 @@ class Api::V1::RashMembersController < Api::V1::BaseController
   def report
     return render(json: [], status: 403) if @current_user.nil?
 
+    rash = RashMember.where(:user_id => @current_user.id).first
+
     if params[:bot_name] and params[:data]
       
 
@@ -27,6 +29,8 @@ class Api::V1::RashMembersController < Api::V1::BaseController
         text: mark_data,
         mrkdwn_in: ["text"]
       }
+
+      RashHistory.create(:user_id => @current_user.id, :rash_member_id => rash.id, :bot => params[:bot_name], :message => params[:data], :message_markdown => mark_data)
 
       notifier.ping(params[:bot_name], attachments: [a_ok_note])
     end
