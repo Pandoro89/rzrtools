@@ -1,4 +1,4 @@
-class RashMember < ActiveRecord::Base
+class RashHistory < ActiveRecord::Base
   create_table options: "ENGINE=InnoDB ROW_FORMAT=COMPRESSED DEFAULT CHARSET=utf8mb4"
   property :user_id,           type: :integer, default: "0"
   property :rash_member_id,    type: :integer, default: "0"
