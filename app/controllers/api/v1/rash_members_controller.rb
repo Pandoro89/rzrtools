@@ -32,7 +32,11 @@ class Api::V1::RashMembersController < Api::V1::BaseController
 
       RashHistory.create(:user_id => @current_user.id, :rash_member_id => rash.id, :bot => params[:bot_name], :message => params[:data], :message_markdown => mark_data)
 
-      notifier.ping(params[:bot_name], attachments: [a_ok_note])
+      if rash.irc? and params[:data] =~ Regexp.union(rash.irc_filter.split("|"))
+        notifier.ping(params[:bot_name], attachments: [a_ok_note])
+      elsif !rash.irc?
+        notifier.ping(params[:bot_name], attachments: [a_ok_note])
+      end
     end
 
     render(json: {}, status: 200)
