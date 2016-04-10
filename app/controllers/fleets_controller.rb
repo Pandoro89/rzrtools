@@ -5,7 +5,7 @@ class FleetsController < ApplicationController
   # TODO Find a way to do this as a background task instead
   before_action :purge_fleets, :only => [:index]
   before_action :require_igb_razor_or_user, :only => [:index]
-  before_action :require_fc_or_higher, :only => [:create, :show, :manage, :destroy, :close, :fc_rewards, :special_role, :remove_role]
+  before_action :require_fc_or_higher, :only => [:new, :create, :show, :manage, :destroy, :close, :fc_rewards, :special_role, :remove_role]
 
   # autocomplete :character, :char_name
   autocomplete :group, :name, :class_name => "Eve::Group"
