@@ -9,7 +9,7 @@ class Fleet < ActiveRecord::Base
   property :close_at,                    type: :datetime
   property :status,                      type: :integer, default: "0"
   property :created_by_id,               type: :integer
-  property :hidden,               type: :boolean, default: "0"
+  property :hidden,                      type: :boolean, default: "0"
   timestamps
 
   has_many :fleet_positions
