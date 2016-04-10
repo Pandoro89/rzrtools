@@ -48,6 +48,8 @@ gem 'resque-status'
 gem 'resque-web', require: 'resque_web'
 #gem 'resque-scheduler-web'
 
+gem 'money'
+
 
 gem 'nested_form_fields'
 gem 'roman-numerals'

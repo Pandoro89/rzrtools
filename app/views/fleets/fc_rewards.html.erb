@@ -41,7 +41,7 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>Plex</th>
+          <th><%= (@show_plex) ? "Plex" : "Reward" %></th>
           <th>Total Points</th>
           <th>FC</th>
           <th>Co-FC</th>
@@ -54,7 +54,7 @@
          %>
           <tr>
             <td><%= r[:name] %></td>
-            <td><%= r[:plex] %></td>
+            <td><%= (@show_plex) ? r[:plex] : Money.new(r[:isk_reward], "EUR").format(:symbol => true) %></td>
             <td><%= r[:points] %></td>
             <td><%= r[:fc_points] %></td>
             <td><%= r[:cofc_points] %></td>

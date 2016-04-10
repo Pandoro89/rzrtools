@@ -115,6 +115,10 @@ class FleetsController < ApplicationController
     @year = params[:date][:year] if params[:date] and params[:date][:year]
     @year ||= (DateTime.now - 1.month).strftime("%Y")
 
+    @show_date = Date.parse("#{@year}-#{@month}-01")
+    @show_plex = true if @show_date <= Date.parse("2016-02-01")
+    @show_plex ||= false
+
     @fc_rewards = Fleet.fc_rewards(@month, @year)
   end
 

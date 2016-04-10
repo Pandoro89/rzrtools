@@ -248,6 +248,73 @@ class Fleet < ActiveRecord::Base
 
   def self.fc_rewards(month, year)
     month_dt = Date.parse("#{year}-#{month}-01")
+
+    return Fleet.fc_rewards_plex(month, year) if month_dt <= Date.parse("2016-02-01")
+
+    # get list of fleets/positions for FC role, for 
+    # loop each entry, calculate the points based on position
+    # Add to the final array [name, fc_points, cofc_points, logi_points, fc_fleets, cofc_fleets, logi_fleets]
+    # - Then, return this array for display  we can do a 2 table layout for FC activity and points/payout
+    # - 
+
+    retFcRewards = {}
+    FleetPosition.where("alliance_id = ? AND special_role != 'none' AND special_role IS NOT NULL AND created_at >= ? AND created_at < ? AND fleet_id NOT IN (SELECT id FROM fleets WHERE status > 1)", ALLIANCE_ID,month_dt,month_dt +1.month).each {|fp|
+      name = (!fp.main_name.nil? and fp.main_name.strip != "") ? fp.main_name : fp.char_name;
+      if retFcRewards[name].nil?
+        retFcRewards[name] = {:name => name, :points => 0, :plex => 0, :fc_fleets => 0, :fc_points => 0, :fc_size => 0, :cofc_fleets => 0, :cofc_points => 0, :cofc_size=>0, :logi_fleets => 0, :logi_points => 0, :logi_size => 0}
+      end
+      fleet_size = Fleet.find(fp.fleet_id).fleet_positions.count
+      if fp.special_role == 'FC'
+        retFcRewards[name][:fc_fleets] += 1
+        retFcRewards[name][:fc_size] += fleet_size
+        retFcRewards[name][:fc_points] += Fleet.fc_fleet_size_points(fleet_size,"FC")
+      elsif fp.special_role == 'Co-FC'
+        retFcRewards[name][:cofc_fleets] += 1
+        retFcRewards[name][:cofc_size] += fleet_size
+        retFcRewards[name][:cofc_points] += Fleet.fc_fleet_size_points(fleet_size,"Co-FC")
+      elsif fp.special_role == 'Logi FC'
+        retFcRewards[name][:logi_fleets] += 1
+        retFcRewards[name][:logi_size] += fleet_size
+        retFcRewards[name][:logi_points] += Fleet.fc_fleet_size_points(fleet_size,"Logi FC")
+      end
+    }
+
+                     
+    isk_per_bucket = 1000000000
+    isk_bucket = 0
+    isk_per_point = 0
+    bucket_points = 0
+    fcs_bucket = 0
+
+    retFcRewards.each {|k,v|
+      retFcRewards[k][:points] += v[:fc_points] + v[:cofc_points] + v[:logi_points]
+      isk_bucket += (retFcRewards[k][:points] > 40) ? isk_per_bucket : 0
+      fcs_bucket += (retFcRewards[k][:points] > 40) ? 1 : 0
+      bucket_points += retFcRewards[k][:points] if retFcRewards[k][:points] > 40
+    }
+
+    retFcRewards.reject {|k,v|
+      v[:fc_fleets] == 0 and v[:cofc_fleets] == 0 and v[:logi_fleets] == 0
+    }
+
+    isk_per_point = (isk_bucket / bucket_points).round
+    #logger.debug("-- Bucket: #{isk_bucket}, FC: #{fcs_bucket}, ISK PER P: #{isk_per_point}, Points: #{bucket_points}")
+
+    retFcRewards.each {|k,v|
+      if retFcRewards[k][:points] > 40
+        retFcRewards[k][:isk_reward] = ((retFcRewards[k][:points]*isk_per_point)).round*100
+      else
+        retFcRewards[k][:isk_reward] = 0
+      end
+    }
+
+    retFcRewards = Hash[retFcRewards.sort_by{ |_, v| -v[:points] }] # .sort_by{|_key, value| value[:fleets]}.reverse!
+
+    retFcRewards
+  end
+
+  def self.fc_rewards_plex(month, year)
+    month_dt = Date.parse("#{year}-#{month}-01")
     # get list of fleets/positions for FC role, for 
     # loop each entry, calculate the points based on position
     # Add to the final array [name, fc_points, cofc_points, logi_points, fc_fleets, cofc_fleets, logi_fleets]
@@ -277,7 +344,7 @@ class Fleet < ActiveRecord::Base
     }
 
     retFcRewards.each {|k,v|
-      retFcRewards[k][:plex] += Fleet.fc_plex_by_points(v[:fc_points] + v[:cofc_points] + v[:logi_points])
+      retFcRewards[k][:plex] += Fleet.fc_plex_by_points_plex(v[:fc_points] + v[:cofc_points] + v[:logi_points])
       retFcRewards[k][:points] += v[:fc_points] + v[:cofc_points] + v[:logi_points]
     }
 
@@ -291,7 +358,7 @@ class Fleet < ActiveRecord::Base
     retFcRewards
   end
 
-  def self.fc_plex_by_points(points)
+  def self.fc_plex_by_points_plex(points)
     return 0 if points <= 0
     if points >= 60 and points < 150
       return 1
