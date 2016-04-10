@@ -297,7 +297,7 @@ class Fleet < ActiveRecord::Base
       v[:fc_fleets] == 0 and v[:cofc_fleets] == 0 and v[:logi_fleets] == 0
     }
 
-    isk_per_point = (isk_bucket / bucket_points).round
+    isk_per_point = (isk_bucket / bucket_points).round if bucket_points > 0
     #logger.debug("-- Bucket: #{isk_bucket}, FC: #{fcs_bucket}, ISK PER P: #{isk_per_point}, Points: #{bucket_points}")
 
     retFcRewards.each {|k,v|
