@@ -66,6 +66,10 @@ every 3.hours do
   resque "ExportFcCsvJob"
 end
 
+every 1.days do
+  resque "UpdateLetsEncryptJob"
+end
+
 every 1.month do
   resque "ExportLastMonthsCsvJob"
 end
