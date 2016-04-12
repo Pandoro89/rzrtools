@@ -2,11 +2,7 @@ class Api::V1::BaseController < ActionController::Base
   protect_from_forgery with: :null_session
 
   before_action :destroy_session
-  force_ssl if: :ssl_configured?
 
-  def ssl_configured?
-    !Rails.env.development?
-  end
 
   def destroy_session
     request.session_options[:skip] = true

@@ -5,12 +5,6 @@ class ApplicationController < ActionController::Base
 
   before_action :letsencrypt
 
-  force_ssl if: :ssl_configured?
-
-  def ssl_configured?
-    !Rails.env.development?
-  end
-  
   def letsencrypt
     if request.fullpath == '/.well-known/acme-challenge/R5Y0Zu8NrHS2jvrmJUGzJKfsKmOc87p-JemnplUWGpI'
       return render :text => 'R5Y0Zu8NrHS2jvrmJUGzJKfsKmOc87p-JemnplUWGpI.L7ZzjMfTneqEq-tqKGaIN0E8rl4PchxHMpTxhbdMptY'
