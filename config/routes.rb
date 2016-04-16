@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   end
 
   resources :signatures
+  resources :scans, param: :token
 
   resources :api_keys
 

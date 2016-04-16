@@ -5,7 +5,7 @@ class RashMember < ActiveRecord::Base
   property :jabber,             type: :string, limit: 50
   property :irc,                type: :boolean, default: "0"
   property :irc_filter,         type: :text
-  property :jabber_filter,         type: :text
+  property :jabber_filter,      type: :text
   property :relay_for,          type: :text
   timestamps
 

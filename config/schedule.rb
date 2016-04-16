@@ -24,7 +24,7 @@
 job_type :resque, "curl -d \"k=:keycode&j=:task\" :app_url/api/v1/cron/run :output"
 
 if environment == "production"
-  set :app_url, "http://app.eve-razor.com"
+  set :app_url, "https://app.eve-razor.com"
 elsif environment =~ /dev|test/
   set :app_url, "http://localhost:3000"
 else
