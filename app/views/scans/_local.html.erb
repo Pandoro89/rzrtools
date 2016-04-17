@@ -5,7 +5,7 @@
 @alliances.each do |aid|
 %>
   <tr>
-    <td><img src="https://image.eveonline.com/Alliance/<%= aid %>_64.png"/></td><td><%= @scan.scan_results.where(:alliance_id => aid).count %></td>    
+    <td><img src="https://image.eveonline.com/Alliance/<%= aid %>_64.png"/></td><td><%= @scan.scan_results.where(:scan_type => "Local", :alliance_id => aid).count %></td>    
   </tr>  
   <% end %>
 </table>
