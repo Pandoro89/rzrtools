@@ -52,7 +52,7 @@ class Scan < ActiveRecord::Base
     t.lines.each {|line|
       line_items = line.split("\t")
       next if line_items.size == 0
-      sr = ScanResult.create(:scan_type => "DScan", :scan_id => id, :item_type_name => line_items[1])
+      sr = ScanResult.create(:scan_type => "DScan", :scan_id => id, :item_type_name => line_items[1]) if ScanResult.where(:scan_type => "DScan", :scan_id => id, :item_type_name => line_items[1]).count == 0
       item = Eve::InvType.where(:name => line_items[1]).first
       if item and item.eve_group
         sr.item_type_id = item.id
@@ -69,7 +69,7 @@ class Scan < ActiveRecord::Base
     t.lines.each {|line|
       line = line.strip
       next if line == ""
-      sr = ScanResult.create(:scan_type => "Local", :scan_id => id, :char_name => line.strip)
+      sr = ScanResult.create(:scan_type => "Local", :scan_id => id, :char_name => line.strip) if ScanResult.where(:scan_type => "Local", :scan_id => id, :char_name => line.strip).count == 0
       c = Character.where(:char_name => line.strip).first
       if c
         sr.character_id = c.id
@@ -86,7 +86,8 @@ class Scan < ActiveRecord::Base
     t.lines.each {|line|
       line_items = line.split("\t")
       next if line_items.size == 0
-      sr = ScanResult.create(:scan_type => "Fleet",:scan_id => id, :char_name => line_items[0], :solar_system_name => line_items[1], :item_type_name => line_items[2], :item_group_name => line_items[3], :fleet_role => line_items[4], :fleet_skills => line_items[5], :fleet_position => line_items[6])
+      sr = ScanResult.where(:scan_type => "Fleet",:scan_id => id, :char_name => line_items[0]).first
+      sr ||= ScanResult.create(:scan_type => "Fleet",:scan_id => id, :char_name => line_items[0], :solar_system_name => line_items[1], :item_type_name => line_items[2], :item_group_name => line_items[3], :fleet_role => line_items[4], :fleet_skills => line_items[5], :fleet_position => line_items[6])
       item = Eve::InvType.where(:name => line_items[2]).first
       if item and item.eve_group
         sr.item_type_id = item.id
