@@ -1,5 +1,6 @@
 class ScansController < ApplicationController
   before_action :find_by_token, :only => [:show, :update]
+  before_action :get_character_and_force_update 
 
   def index
   end
@@ -39,10 +40,8 @@ class ScansController < ApplicationController
 
     if @scan
       @scan.parse_text(params[:scan_text])
-
       @scan.save
     end
-
 
     return redirect_to :action => "show", :token => @scan.token
   end
