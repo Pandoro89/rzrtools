@@ -1,0 +1,29 @@
+<% 
+@dscan_active = (@scan.scan_results.where(:scan_type => "DScan").count > 0) ? "active" : ""
+@local_active = (@dscan_active == "") ? "active" : ""
+%>
+<div class ="row">
+  <div class="col-md-9">
+    <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="<%= @local_active%>"><a href="#local" id="local-tab" role="tab" data-toggle="tab" aria-controls="local" aria-expanded="true">Local</a></li>
+    <li role="presentation" class="<%= @dscan_active%>"><a href="#dscan" role="tab" id="dscan-tab" data-toggle="tab" aria-controls="dscan" aria-expanded="false">DScan</a></li>
+    </ul> 
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane <%= @local_active%>" id="local">
+        <%= render 'local' %>
+      </div>
+      <div  role="tabpanel" class="tab-pane <%= @dscan_active%>" id="dscan">
+        <%= render 'dscan' %>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div><%= @scan.updated_at %></div>
+    <div><%= @scan.solar_system_name %></div>
+    <div><%= @scan.constellation_name %></div>
+    <hr />
+    <%= bootstrap_form_tag(:method => "patch") do |f| %>
+      <%= render 'form', :f => f %>
+    <% end %>
+  </div>
+</div>

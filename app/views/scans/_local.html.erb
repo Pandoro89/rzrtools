@@ -1,0 +1,11 @@
+<b>By Alliance (<%= @scan.scan_results.where(:scan_type => "Local").count %>)</b>
+<table class="table table-condensed">
+<%
+@alliances = @scan.scan_results.where(:scan_type => "Local").select("DISTINCT(alliance_id) as alliance_id").map(&:alliance_id)
+@alliances.each do |aid|
+%>
+  <tr>
+    <td><img src="https://image.eveonline.com/Alliance/<%= aid %>_64.png"/></td><td><%= @scan.scan_results.where(:alliance_id => aid).count %></td>    
+  </tr>  
+  <% end %>
+</table>

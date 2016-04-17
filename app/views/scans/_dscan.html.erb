@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-md-3">
+    <h4>All ships - <%= @scan.scan_results.where(:scan_type => "DScan", :eve_category_id => 6).count %></h4>
+    <table class="table table-condensed">
+    <% @dscan = @scan.scan_results.where(:scan_type => "DScan", :eve_category_id => 6).select("DISTINCT(item_type_id) as item_type_id").map(&:item_type_id)
+@dscan.each do |did|
+  %>
+      <tr>
+        <td><%= Eve::InvType.find(did).name %></td><td style="text-align:right;width:10%;"><%= @scan.scan_results.where(:scan_type => "DScan", :item_type_id => did).count %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="col-md-3">
+    <h4>Caps - <%= @scan.scan_results.where("scan_type = ? AND item_group_id IN (?)", "DScan", CAP_SHIP_GROUPS).count %></h4>
+    <table class="table table-condensed">
+    <% @dscan = @scan.scan_results.where("scan_type = ? AND item_group_id IN (?)", "DScan", CAP_SHIP_GROUPS).select("DISTINCT(item_type_id) as item_type_id").map(&:item_type_id)
+@dscan.each do |did|
+  %>
+      <tr>
+        <td><%= Eve::InvType.find(did).name %></td><td style="text-align:right;width:10%;"><%= @scan.scan_results.where(:scan_type => "DScan", :item_type_id => did).count %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="col-md-3">
+    <h4>Combat DScan</h4>
+    <table class="table table-condensed">
+    <% @dscan = @scan.scan_results.where(:scan_type => "DScan", :eve_category_id => 6).select("DISTINCT(item_group_id) as item_group_id").map(&:item_group_id)
+@dscan.each do |did|
+  %>
+      <tr>
+        <td><%= Eve::Group.find(did).name %></td><td style="text-align:right;width:10%;"><%= @scan.scan_results.where(:scan_type => "DScan", :item_group_id => did).count %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

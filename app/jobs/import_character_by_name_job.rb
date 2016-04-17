@@ -1,7 +1,7 @@
 class ImportCharacterByNameJob < Resque::Job
   @queue = :medium
 
-  def self.perform(name)
+  def self.perform(name, options={})
     api = EAAL::API.new("", "")
     api.scope = "eve"
     result = api.CharacterID(:names => name)
@@ -22,6 +22,7 @@ class ImportCharacterByNameJob < Resque::Job
       char.save
       Eve::CorporationCache.add_or_update(result2.corporationID,result2.corporation) if result2.corporationID
       FleetPosition.where(:char_name => name).update_all(:character_id => char.id)
+      ScanResult.where(:id => options[:scan_result_id]).first.update_attributes(:alliance_id => char.alliance_id, :alliance_name => char.alliance_id, :character_id => char.id, :corp_name => char.corp_name, :corporation_id => char.corporation_id) if options[:scan_result_id] and ScanResult.where(:id => options[:scan_result_id]).count > 0
     }
   end
 

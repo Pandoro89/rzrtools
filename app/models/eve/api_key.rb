@@ -30,8 +30,8 @@ class Eve::ApiKey < ActiveRecord::Base
       self.save
       return
     rescue
-      user.delete if EAAL::API.where(:user => user).count == 0
-      self.delete
+      # user.delete if Eve::ApiKey.where(:user => user).count == 0
+      # self.delete
     end
   end
   
