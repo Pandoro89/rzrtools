@@ -20,6 +20,7 @@ class ScanResult < ActiveRecord::Base
   property :fleet_role,    type: :string, limit: 255, default: ""
   property :fleet_skills,    type: :string, limit: 255, default: ""
   property :fleet_position,    type: :string, limit: 255, default: ""
+  property :raw_name,        type: :string, limit: 255, default: ""
 
   timestamps
 

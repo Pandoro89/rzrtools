@@ -18,6 +18,9 @@ if @scan.scan_type == "System"
         <%= render 'dscan' %>
       </div>
     </div>
+    <hr />
+    <div><%= link_to 'All Structures', show_structures_scans_path(@scan.token), {:class => 'load-more', 'data-target' => '#structure_container'} %></div>
+    <div id="structure_container"></div>
   </div>
   <div class="col-md-3">
     <div><%= @scan.updated_at %></div>

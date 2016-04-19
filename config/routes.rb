@@ -27,7 +27,9 @@ Rails.application.routes.draw do
   end
 
   resources :signatures
-  resources :scans, param: :token
+  resources :scans, param: :token do
+    get ':token/show_structures' => 'scans#show_structures',     :on => :collection, :as => "show_structures"
+  end
 
   resources :api_keys
 

@@ -1,11 +1,15 @@
 class ScansController < ApplicationController
-  before_action :find_by_token, :only => [:show, :update]
+  before_action :find_by_token, :only => [:show, :show_structures, :update]
   before_action :get_character_and_force_update 
 
   def index
   end
 
   def show
+  end
+
+  def show_structures
+    render :partial => "dscan_structure", :layout => false
   end
 
   def new
