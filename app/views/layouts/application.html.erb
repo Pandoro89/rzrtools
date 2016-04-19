@@ -23,6 +23,6 @@
     </div> <!-- /container -->
 
     <%= javascript_include_tag 'main'%>
-    <%= javascript_include_tag "application", params[:controller] %>
+    <%= javascript_include_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.js") %>
   </body>
 </html>

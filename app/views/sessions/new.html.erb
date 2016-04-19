@@ -15,7 +15,12 @@
       <%= f.submit  t('.sign_in', :default => "Sign in"), class: "btn btn-primary" %>
       &nbsp;
       &nbsp;
-      <%= link_to 'Register an Account',new_user_path %>
+      <%= link_to 'Register an Account',new_user_path %> 
+      &nbsp;
+      &nbsp;
+      |
+      &nbsp;&nbsp;
+      <%= link_to 'Recover Password', recover_password_users_path %>
     <% end %>
   </div>
 </div>

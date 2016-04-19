@@ -44,6 +44,20 @@ class User < ActiveRecord::Base
     }
   end
 
+  def self.find_by_recovery_code(token)
+    User.where(:password_recovery_code => token).first
+  end
+
+  def send_password_recovery_code
+    self.generation = self.generation + 1
+    self.password = Digest::SHA1.hexdigest([Time.now, rand].join)
+    self.password_recovery_code = Digest::SHA1.hexdigest([Time.now, rand].join)
+    self.password_recovery_code_sent_at = DateTime.now
+    self.save!(:validate => false)
+
+    Mailer.password_reset(self).deliver_now
+  end
+
   def before_add_method(role)
     # do something before it gets added
     add_role "Razor Member" if role == "Scout Commander"
@@ -90,7 +104,7 @@ class User < ActiveRecord::Base
     return nil if username.blank?
 
     user = User.where(:username => username).first
-    if user and user.authenticate(password)
+    if user and user.authenticate(password) and password != "" and !password.nil?
       user.generation = user.generation + 1 if !api
       user.last_login_at = DateTime.now
       user.save!

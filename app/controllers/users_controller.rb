@@ -45,6 +45,42 @@ class UsersController < ApplicationController
     end
   end
 
+  def reset_password
+    @user = User.find_by_recovery_code(params[:token])
+
+    if !@user 
+      flash[:error] = "Invalid recovery code."
+      return redirect_to '/'
+    end
+
+    pp "----- #{request.post?}"
+
+    if @user and (request.post? || request.patch?)
+      pp user_reset_params
+      @user.update(user_reset_params)
+      @user.password_recovery_code = nil
+      @user.password_recovery_code_sent_at = nil
+      @user.save
+      flash[:success] = "Password reset, please login to continue."
+      return redirect_to '/'
+    end
+  end
+
+  def recover_password
+    @email_sent = false
+    if request.post?
+      pp user_recover_params
+      @u = User.where(:email => user_recover_params[:email]).first
+      if @u
+        @u.send_password_recovery_code
+      end
+
+      flash[:success] = "Password recovery email sent."
+
+      @email_sent = true
+    end
+  end
+
 
   protected ###################################################
 
@@ -61,6 +97,14 @@ class UsersController < ApplicationController
 
   def eve_api_params
     params.require(:eve_api).permit(:key_code, :vcode)
+  end
+
+  def user_recover_params
+    params.require(:user).permit(:email)
+  end
+
+  def user_reset_params
+    params.require(:user).permit(:password, :password_confirmation)
   end
 
 end

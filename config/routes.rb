@@ -37,6 +37,8 @@ Rails.application.routes.draw do
     get :me, :on => :collection
     get :profile, :on => :collection
     patch :update, :on => :collection
+    match 'reset_password/:token' => "users#reset_password", :on => :collection, as: :reset_password, via: [:get, :post, :patch]
+    match :recover_password, :on => :collection, as: :recover_password, via: [:get, :post]
   end
   get 'profile' =>  'users#profile', :as => 'profile'
 
