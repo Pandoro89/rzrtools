@@ -1,1 +1,120 @@
-_fleet.html.erb
+<div class="row">
+  <div class="col-md-7">
+  <h4>General Info</h4> <%= @scan.updated_at %>
+  <table class="table table-condensed">
+    <tr><td>Pilots</td><td><%=@scan.scan_results.count%></td></tr>
+    <tr><td>Boss</td><td><%=@scan.scan_results.where("fleet_role LIKE '%(Boss)%'").select(:char_name).map(&:char_name).join(", ")%></td></tr>
+    <tr><td>Fleet Commander</td><td><%=@scan.scan_results.where("fleet_role LIKE 'Fleet Commander%'").select(:char_name).map(&:char_name).join(", ")%></td></tr>
+    <tr><td>Wing Commander</td><td><%=@scan.scan_results.where("fleet_role LIKE 'Wing Commander%'").select(:char_name).map(&:char_name).join(", ")%></td></tr>
+    <tr><td>Squad Commander</td><td><%=@scan.scan_results.where("fleet_role LIKE 'Squad Commander%'").select(:char_name).map(&:char_name).join(", ")%></td></tr>
+  </table>
+  <h4>Fleet Structure</h4>
+  <div>Comming Soon</div>
+  <h4>Fleet Mass</h4>
+  <div>Comming Soon</div>
+  <h4>Ships</h4>
+  <div class="row row-fluid">
+    <div class="col-md-3">
+      <table class="table table-condensed">
+        <tr><td>Type</td><td></td></tr>
+    <% @dscan = @scan.scan_results.where(:eve_category_id => 6).select("DISTINCT(item_group_id) as item_group_id").map(&:item_group_id)
+@dscan.each do |did|
+  %>
+      <tr>
+        <td><%= Eve::Group.find(did).name %></td><td style="text-align:right;width:10%;"><%= @scan.scan_results.where(:item_group_id => did).count %></td>
+      </tr>
+      <% end %>
+      </table>
+    </div>
+    <div class="col-md-3">
+      <table class="table table-condensed">
+        <tr><td>Caps</td><td></td></tr>
+    <% @dscan = @scan.scan_results.where("item_group_id IN (?)", CAP_SHIP_GROUPS).select("DISTINCT(item_type_id) as item_type_id").map(&:item_type_id)
+@dscan.each do |did|
+  %>
+      <tr>
+        <td><%= Eve::InvType.find(did).name %></td><td style="text-align:right;width:10%;"><%= @scan.scan_results.where(:item_type_id => did).count %></td>
+      </tr>
+      <% end %>
+      </table>
+    </div>
+    <div class="col-md-3">
+      <table class="table table-condensed">
+        <tr><td>All</td><td></td></tr>
+    <% @dscan = @scan.scan_results.where(:eve_category_id => 6).select("DISTINCT(item_type_id) as item_type_id").map(&:item_type_id)
+@dscan.each do |did|
+  %>
+      <tr>
+        <td><%= Eve::InvType.find(did).name %></td><td style="text-align:right;width:10%;"><%= @scan.scan_results.where(:item_type_id => did).count %></td>
+      </tr>
+      <% end %>
+      </table>
+    </div>
+
+  </div>
+    <h4>Fleet location</h4>
+    <div class="row">
+    <div class="col-md-3">
+      <table class="table table-condensed">
+    <% @dscan = @scan.scan_results.all.select("DISTINCT(solar_system_name) as solar_system_name").map(&:solar_system_name)
+@dscan.each do |did|
+  %>
+      <tr>
+        <td><%= did %></td><td style="text-align:right;width:10%;"><%= @scan.scan_results.where(:solar_system_name => did).count %></td>
+      </tr>
+      <% end %>
+      </table>
+    </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+  <h3>Skill FC 5</h3>
+  <table class="table table-condensed">
+  <%
+  @scan.scan_results.where("fleet_skills LIKE '5 -%'").each do |sr|
+  %>
+    <tr>
+      <td><%=sr.char_name%></td>
+      <td><%=sr.item_type_name%></td>
+      <td><%=sr.solar_system_name%></td>
+    </tr>
+  <% end %>
+  </table>
+  <h3>Skill WC 5</h3>
+  <table class="table table-condensed">
+  <%
+  @scan.scan_results.where("fleet_skills LIKE '%- 5 -%'").each do |sr|
+  %>
+    <tr>
+      <td><%=sr.char_name%></td>
+      <td><%=sr.item_type_name%></td>
+      <td><%=sr.solar_system_name%></td>
+    </tr>
+  <% end %>
+  </table>
+  <h3>Skill Leadership 5</h3>
+  <table class="table table-condensed">
+  <%
+  @scan.scan_results.where("fleet_skills LIKE '%- 5'").each do |sr|
+  %>
+    <tr>
+      <td><%=sr.char_name%></td>
+      <td><%=sr.item_type_name%></td>
+      <td><%=sr.solar_system_name%></td>
+    </tr>
+  <% end %>
+  </table>
+  <h3>Docked</h3>
+  <table class="table table-condensed">
+  <%
+  @scan.scan_results.where("solar_system_name LIKE '%(Docked)'").each do |sr|
+  %>
+    <tr>
+      <td><%=sr.char_name%></td>
+      <td><%=sr.item_type_name%></td>
+      <td><%=sr.solar_system_name%></td>
+    </tr>
+  <% end %>
+  </table>
+  </div>
+</div>

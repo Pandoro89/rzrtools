@@ -1,6 +1,8 @@
 <% 
 @dscan_active = (@scan.scan_results.where(:scan_type => "DScan").count > 0) ? "active" : ""
 @local_active = (@dscan_active == "") ? "active" : ""
+
+if @scan.scan_type == "System"
 %>
 <div class ="row">
   <div class="col-md-9">
@@ -27,3 +29,6 @@
     <% end %>
   </div>
 </div>
+<% else %>
+  <%= render 'fleet' %>
+<% end %>

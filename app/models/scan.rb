@@ -28,23 +28,21 @@ class Scan < ActiveRecord::Base
   end
 
   def parse_text(t)
-    pp t.lines.size
     return false if t.lines.size == 0
-    pp t.lines.first
-    pp t.lines.first.split("\t")
     if t.lines.first.split("\t").count == 3
       parse_dscan(t)
       return true
     elsif t.lines.first.split("\t").count >= 7
+      return false if scan_results.count > 0 and scan_type != "Fleet"
+      self.scan_type="Fleet"
+      self.save
       parse_fleet(t)
       return true
     elsif t.lines.first.split("\t").count == 1
-      pp "--- parse local"
       parse_local(t)
       return true
     end
 
-    pp "missed all"
     return false
   end
 
