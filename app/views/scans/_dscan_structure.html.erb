@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-3">
+    <h4>Structures - <%= @scan.scan_results.where(:scan_type => "DScan", :eve_category_id => [23]).count %></h4>
+    <table class="table table-condensed">
+    <% 
+    @dscan = @scan.scan_results.where(:scan_type => "DScan", :eve_category_id => [23]).select("DISTINCT(item_group_id) as item_group_id").map(&:item_group_id)
+@dscan.each do |did|
+  %>
+      <tr>
+        <td><%= Eve::Group.find(did).name %></td><td style="text-align:right;width:10%;"><%= @scan.scan_results.where(:scan_type => "DScan", :item_group_id => did).count %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
