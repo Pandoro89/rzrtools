@@ -1,4 +1,4 @@
-class Mailer < ApplicationMailer
+class Mailer < ActionMailer::Base
 
   def password_reset(user)
     @user = user
